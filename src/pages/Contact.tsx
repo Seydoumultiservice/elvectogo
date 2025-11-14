@@ -147,13 +147,13 @@ const Contact = () => {
                 </div>
                 <div className="h-96">
                   <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31767.789057610985!2d1.1464791!3d6.1731309!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1023e1c113185cf1%3A0x8898cc09bc6ebb4e!2sLom%C3%A9%2C%20Togo!5e0!3m2!1sfr!2s!4v1650464744985!5m2!1sfr!2s" 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.9776547884837!2d1.2462684!3d6.144028799999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1023e1fa8b4f5b87%3A0x7f8a2e1c9e3b4a5c!2sAdidogom%C3%A9%2C%20Lom%C3%A9%2C%20Togo!5e0!3m2!1sfr!2s!4v1650464744985!5m2!1sfr!2s" 
                     width="100%" 
                     height="100%" 
                     style={{ border: 0 }} 
                     loading="lazy" 
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="ELVEC-TOGO location"
+                    title="ELVEC-TOGO location - Adidogomé"
                   ></iframe>
                 </div>
               </div>
