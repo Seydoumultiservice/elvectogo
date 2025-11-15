@@ -7,6 +7,7 @@ import CarRentalSection from '../components/home/CarRentalSection';
 import CtaSection from '../components/home/CtaSection';
 import Partners from '../components/home/Partners';
 import VideoPresentation from '../components/home/VideoPresentation';
+import TrainingSection from '../components/home/TrainingSection';
 import Layout from '../components/layout/Layout';
 
 const Index = () => {
@@ -20,6 +21,7 @@ const Index = () => {
       <Partners />
       <Services />
       <VideoPresentation />
+      <TrainingSection />
       <EquipmentRental />
       <Gallery />
       <CarRentalSection />
