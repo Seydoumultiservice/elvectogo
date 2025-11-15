@@ -3,6 +3,7 @@ import { MapPin, Phone, Mail, Clock, Building, HelpCircle } from 'lucide-react';
 import Layout from '../components/layout/Layout';
 import SectionTitle from '../components/common/SectionTitle';
 import ContactForm from '../components/common/ContactForm';
+import AppointmentForm from '../components/contact/AppointmentForm';
 import AnimatedSection from '../components/animations/AnimatedSection';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Toaster } from 'sonner';
@@ -49,9 +50,12 @@ const Contact = () => {
         <div className="container mx-auto px-4">
           <Tabs defaultValue="contact" className="w-full">
             <AnimatedSection>
-              <TabsList className="grid grid-cols-3 w-full max-w-xl mx-auto mb-12">
+              <TabsList className="grid grid-cols-4 w-full max-w-2xl mx-auto mb-12">
                 <TabsTrigger value="contact" className="flex items-center gap-2">
                   <Mail className="h-4 w-4" /> Nous contacter
+                </TabsTrigger>
+                <TabsTrigger value="rendezvous" className="flex items-center gap-2">
+                  <Clock className="h-4 w-4" /> Rendez-vous
                 </TabsTrigger>
                 <TabsTrigger value="location" className="flex items-center gap-2">
                   <Building className="h-4 w-4" /> Nos bureaux
@@ -127,6 +131,14 @@ const Contact = () => {
                     <h3 className="text-2xl font-semibold mb-6 text-elvec-900">Formulaire de contact</h3>
                     <ContactForm />
                   </div>
+                </AnimatedSection>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="rendezvous" className="mt-0">
+              <div className="max-w-2xl mx-auto">
+                <AnimatedSection>
+                  <AppointmentForm />
                 </AnimatedSection>
               </div>
             </TabsContent>
