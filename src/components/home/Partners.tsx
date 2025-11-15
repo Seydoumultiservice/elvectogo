@@ -2,13 +2,6 @@ import { Handshake } from 'lucide-react';
 import AnimatedSection from '../animations/AnimatedSection';
 
 const Partners = () => {
-  const partners = [
-    { name: 'TRANSRAIL', logo: '/lovable-uploads/partenaires.png' },
-    { name: 'EIFFAGE', logo: '/lovable-uploads/partenaires.png' },
-    { name: 'PORT DE LOMÉ', logo: '/lovable-uploads/partenaires.png' },
-    { name: 'G.B.R. TRAVAUX PUBLICS', logo: '/lovable-uploads/partenaires.png' },
-  ];
-
   return (
     <section className="py-16 md:py-24 bg-gradient-to-b from-white to-elvec-50">
       <div className="container mx-auto px-4">
@@ -26,23 +19,15 @@ const Partners = () => {
           </div>
         </AnimatedSection>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
-          {partners.map((partner, index) => (
-            <AnimatedSection 
-              key={partner.name} 
-              delay={index * 100}
-              animationType="slide-up"
-            >
-              <div className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 p-6 flex items-center justify-center h-32 group hover:scale-105">
-                <div className="text-center">
-                  <p className="text-sm md:text-base font-semibold text-gray-700 group-hover:text-elvec-600 transition-colors">
-                    {partner.name}
-                  </p>
-                </div>
-              </div>
-            </AnimatedSection>
-          ))}
-        </div>
+        <AnimatedSection animationType="slide-up" delay={200}>
+          <div className="bg-white rounded-2xl p-8 md:p-12 shadow-2xl max-w-5xl mx-auto">
+            <img 
+              src="/lovable-uploads/partenaires-logos.png" 
+              alt="Partenaires ELVEC TOGO - TRANSRAIL, EIFFAGE, TOGO PORT, G.B.R. TRAVAUX PUBLICS"
+              className="w-full h-auto object-contain"
+            />
+          </div>
+        </AnimatedSection>
       </div>
     </section>
   );
