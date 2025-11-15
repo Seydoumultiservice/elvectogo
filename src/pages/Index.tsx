@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import Hero from '../components/home/Hero';
 import Services from '../components/home/Services';
@@ -6,6 +5,8 @@ import EquipmentRental from '../components/home/EquipmentRental';
 import Gallery from '../components/home/Gallery';
 import CarRentalSection from '../components/home/CarRentalSection';
 import CtaSection from '../components/home/CtaSection';
+import Partners from '../components/home/Partners';
+import VideoPresentation from '../components/home/VideoPresentation';
 import Layout from '../components/layout/Layout';
 
 const Index = () => {
@@ -16,7 +17,9 @@ const Index = () => {
   return (
     <Layout>
       <Hero />
+      <Partners />
       <Services />
+      <VideoPresentation />
       <EquipmentRental />
       <Gallery />
       <CarRentalSection />

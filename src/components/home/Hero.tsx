@@ -1,53 +1,56 @@
-
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Button from '../common/Button';
 
 const Hero = () => {
   return (
-    <section className="relative bg-gradient-to-r from-elvec-900 to-elvec-800 text-white overflow-hidden">
+    <section className="relative h-[80vh] min-h-[600px] overflow-hidden">
       {/* Background Image */}
       <div 
-        className="absolute inset-0 bg-cover bg-center opacity-20 mix-blend-overlay" 
+        className="absolute inset-0 bg-cover bg-center" 
         style={{ 
-          backgroundImage: `url('/lovable-uploads/0879026f-0ebf-429d-b447-6ee256248b60.png')` 
+          backgroundImage: `url('/lovable-uploads/banniere-hero.jpg')` 
         }}
-      ></div>
+      >
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
+      </div>
       
       {/* Content */}
-      <div className="container mx-auto px-4 py-20 md:py-32 relative z-10">
+      <div className="container mx-auto px-4 h-full relative z-10 flex items-center">
         <div className="max-w-3xl">
-          <span className="inline-block px-4 py-1 bg-elvec-500 text-white text-sm font-medium rounded-full mb-6 animate-pulse">
-            N°1 au Togo dans la location d'engins lourds
+          <span className="inline-block px-4 py-2 bg-elvec-500 text-white text-sm font-medium rounded-full mb-6 animate-pulse">
+            🏆 N°1 au Togo dans la location d'engins lourds
           </span>
-          <h1 className="text-4xl md:text-6xl font-display font-bold mb-6 animate-fade-in">
-            Entreprise de Location <br className="hidden md:block" />
-            d'Engins Lourds <span className="text-elvec-400">Professionnelle</span>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-display font-bold mb-6 animate-fade-in text-white leading-tight">
+            Parce que construire <br className="hidden md:block" />
+            est notre <span className="text-elvec-400">passion !</span>
           </h1>
-          <p className="text-lg md:text-xl text-gray-300 mb-8 animate-slide-up">
-            Nous proposons une large gamme d'engins lourds à la location, ainsi que des services de location de voitures avec chauffeur de qualité exceptionnelle.
+          <p className="text-lg md:text-xl text-gray-200 mb-8 animate-slide-up max-w-2xl">
+            ELVEC TOGO - La référence d'une prestation de qualité. 
+            Nous mettons à votre disposition une flotte moderne d'engins lourds et de véhicules 
+            pour tous vos projets de construction et d'aménagement.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 animate-slide-up">
-            <Link to="/services">
-              <Button variant="primary" size="lg" className="w-full sm:w-auto">
-                Nos Services
-              </Button>
-            </Link>
-            <Link to="/vehicules">
-              <Button variant="outline" size="lg" className="w-full sm:w-auto bg-transparent border-white text-white hover:bg-white/10">
-                Nos Véhicules
+            <Link to="/contact">
+              <Button variant="primary" size="lg" className="w-full sm:w-auto text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all">
+                Demander un devis
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
+            <a href="tel:+22870600306">
+              <Button variant="outline" size="lg" className="w-full sm:w-auto text-lg bg-white/10 backdrop-blur-sm border-white text-white hover:bg-white hover:text-elvec-600">
+                <Phone className="mr-2 h-5 w-5" />
+                Appelez-nous
+              </Button>
+            </a>
           </div>
         </div>
       </div>
       
       {/* Gradient overlay at the bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-elvec-900/70 to-transparent"></div>
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent"></div>
     </section>
   );
 };
 
 export default Hero;
-
