@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import FloatingActionButtons from '../common/FloatingActionButtons';
+import Chatbot from '../common/Chatbot';
 
 interface LayoutProps {
   children: ReactNode;
@@ -17,6 +18,7 @@ const Layout = ({ children }: LayoutProps) => {
       </main>
       <Footer />
       <FloatingActionButtons />
+      <Chatbot />
     </div>
   );
 };

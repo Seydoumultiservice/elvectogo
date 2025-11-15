@@ -1,82 +1,144 @@
-
 import { useState } from 'react';
+import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
 import SectionTitle from '../common/SectionTitle';
 import Button from '../common/Button';
 import AnimatedSection from '../animations/AnimatedSection';
 
 const Gallery = () => {
-  const [isHovered, setIsHovered] = useState<number | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const galleryItems = [
-    {
-      id: 1,
-      title: 'Excavation',
-      image: '/lovable-uploads/f7ba1d62-eae3-4d1d-be31-64d8282a9c53.png'
-    },
-    {
-      id: 2,
-      title: 'Compactage',
-      image: '/lovable-uploads/cd214fd5-039b-401a-900b-c2b1eee28e32.png'
-    },
-    {
-      id: 3,
-      title: 'Transport',
-      image: '/lovable-uploads/cc256fb8-05f3-4982-bdb2-6413414b3db1.png'
-    },
-    {
-      id: 4,
-      title: 'Construction',
-      image: '/lovable-uploads/d821c0ba-bf70-4f75-8546-dbc64980905b.png'
-    }
+    { type: 'image', src: '/lovable-uploads/excavation-chantier.jpg', title: 'Excavation de chantier' },
+    { type: 'image', src: '/lovable-uploads/equipe-elvec-2025.jpg', title: 'Équipe ELVEC 2025' },
+    { type: 'image', src: '/lovable-uploads/engin-bank-of-africa.jpg', title: 'Projet Bank of Africa' },
+    { type: 'image', src: '/lovable-uploads/bulldozer-action.jpg', title: 'Bulldozer en action' },
+    { type: 'image', src: '/lovable-uploads/agent-elvec-chantier.jpg', title: 'Agent ELVEC sur chantier' },
+    { type: 'image', src: '/lovable-uploads/excavatrice-port-lome.jpg', title: 'Excavatrice Port de Lomé' },
+    { type: 'image', src: '/lovable-uploads/projet-excavation-1.jpg', title: 'Projet d\'excavation' },
+    { type: 'image', src: '/lovable-uploads/projet-formation-1.jpg', title: 'Formation conduite d\'engins' },
+    { type: 'image', src: '/lovable-uploads/projet-terrassement-1.jpg', title: 'Terrassement' },
+    { type: 'image', src: '/lovable-uploads/equipe-bureau-1.jpg', title: 'Bureau ELVEC' },
+    { type: 'image', src: '/lovable-uploads/equipe-directeur.jpg', title: 'Direction ELVEC' },
+    { type: 'image', src: '/lovable-uploads/projet-electrique-1.jpg', title: 'Projet électrique' },
+    { type: 'image', src: '/lovable-uploads/projet-electrique-2.jpg', title: 'Ligne haute tension' },
+    { type: 'image', src: '/lovable-uploads/engin-komatsu.jpg', title: 'Engin Komatsu' },
+    { type: 'video', src: '/lovable-uploads/video-projet-1.mp4', title: 'Vidéo projet' },
   ];
 
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % galleryItems.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - 1 + galleryItems.length) % galleryItems.length);
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index);
+  };
+
+  const getVisibleThumbnails = () => {
+    const thumbnailCount = 6;
+    const startIndex = Math.max(0, Math.min(currentIndex - 2, galleryItems.length - thumbnailCount));
+    return galleryItems.slice(startIndex, startIndex + thumbnailCount);
+  };
+
   return (
-    <section className="py-20 bg-elvec-50">
+    <section className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <AnimatedSection>
           <SectionTitle 
             title="Galerie de nos Réalisations" 
-            subtitle="Découvrez quelques-uns de nos projets récents et l'expertise de notre équipe."
+            subtitle="Découvrez nos projets et notre équipement en action"
             centered
           />
         </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {galleryItems.map((item, index) => (
-            <AnimatedSection key={item.id} delay={index * 100} animationType="slide-up">
-              <div 
-                className="relative overflow-hidden rounded-lg shadow-md group"
-                onMouseEnter={() => setIsHovered(item.id)}
-                onMouseLeave={() => setIsHovered(null)}
+        <AnimatedSection delay={100}>
+          <div className="max-w-5xl mx-auto">
+            {/* Main Display */}
+            <div className="relative aspect-video bg-gray-900 rounded-lg overflow-hidden shadow-2xl mb-6">
+              {galleryItems[currentIndex].type === 'image' ? (
+                <img
+                  src={galleryItems[currentIndex].src}
+                  alt={galleryItems[currentIndex].title}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <video
+                  controls
+                  className="w-full h-full object-cover"
+                  poster="/lovable-uploads/excavation-chantier.jpg"
+                >
+                  <source src={galleryItems[currentIndex].src} type="video/mp4" />
+                  Votre navigateur ne supporte pas la lecture de vidéos.
+                </video>
+              )}
+
+              {/* Navigation Buttons */}
+              <button
+                onClick={prevSlide}
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/80 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110"
+                aria-label="Image précédente"
               >
-                <div className="aspect-w-4 aspect-h-3">
-                  <img 
-                    src={item.image} 
-                    alt={item.title} 
-                    className="object-cover w-full h-full transform transition-transform duration-500 group-hover:scale-110"
-                  />
-                </div>
-                <div className={`absolute inset-0 bg-gradient-to-t from-elvec-900/90 via-elvec-900/40 to-transparent transition-opacity duration-300 ${isHovered === item.id ? 'opacity-100' : 'opacity-70'}`}></div>
-                <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                  <h3 className="text-lg font-semibold">{item.title}</h3>
-                  {isHovered === item.id && (
-                    <p className="mt-2 text-sm text-white/80 transform transition-all duration-300 opacity-100 translate-y-0">
-                      Cliquez pour voir plus de détails sur ce projet
-                    </p>
-                  )}
-                </div>
+                <ChevronLeft className="h-6 w-6 text-gray-900" />
+              </button>
+              <button
+                onClick={nextSlide}
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/80 hover:bg-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110"
+                aria-label="Image suivante"
+              >
+                <ChevronRight className="h-6 w-6 text-gray-900" />
+              </button>
+
+              {/* Counter */}
+              <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-sm text-white px-4 py-2 rounded-full text-sm font-medium">
+                {currentIndex + 1} / {galleryItems.length}
               </div>
-            </AnimatedSection>
-          ))}
-        </div>
+
+              {/* Title Overlay */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                <h3 className="text-white text-xl font-semibold">{galleryItems[currentIndex].title}</h3>
+              </div>
+            </div>
+
+            {/* Thumbnails */}
+            <div className="flex gap-2 justify-center overflow-hidden">
+              {getVisibleThumbnails().map((item, index) => {
+                const actualIndex = galleryItems.indexOf(item);
+                return (
+                  <button
+                    key={actualIndex}
+                    onClick={() => goToSlide(actualIndex)}
+                    className={`relative w-24 h-16 rounded-md overflow-hidden transition-all duration-300 ${
+                      actualIndex === currentIndex
+                        ? 'ring-4 ring-elvec-500 scale-110'
+                        : 'opacity-60 hover:opacity-100'
+                    }`}
+                  >
+                    {item.type === 'image' ? (
+                      <img
+                        src={item.src}
+                        alt={item.title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gray-800 flex items-center justify-center">
+                        <Play className="h-6 w-6 text-white" fill="white" />
+                      </div>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        </AnimatedSection>
 
         <div className="mt-12 text-center">
           <Link to="/galerie">
-            <Button>
-              Explorer toute la galerie
-              <ArrowRight className="ml-2 h-5 w-5" />
+            <Button variant="primary">
+              Voir toute la galerie
             </Button>
           </Link>
         </div>
@@ -86,4 +148,3 @@ const Gallery = () => {
 };
 
 export default Gallery;
-
