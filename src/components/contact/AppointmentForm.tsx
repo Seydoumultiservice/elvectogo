@@ -31,6 +31,7 @@ import {
 } from '@/components/ui/select';
 import { toast } from 'sonner';
 import { cn } from '@/lib/utils';
+import { supabase } from '@/integrations/supabase/client';
 
 const appointmentSchema = z.object({
   fullName: z.string().min(2, 'Le nom doit contenir au moins 2 caractères').max(100),
@@ -65,13 +66,22 @@ const AppointmentForm = () => {
     setIsSubmitting(true);
 
     try {
-      // Simuler l'envoi (à remplacer par l'appel API vers Lovable Cloud)
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      console.log('Rendez-vous demandé:', {
-        ...data,
-        date: format(data.date, 'dd/MM/yyyy', { locale: fr }),
-      });
+      // Sauvegarder le rendez-vous dans la base de données
+      const { error } = await supabase
+        .from('appointments')
+        .insert([
+          {
+            full_name: data.fullName,
+            phone: data.phone,
+            email: data.email || null,
+            date: format(data.date, 'yyyy-MM-dd'),
+            time_slot: data.timeSlot,
+            message: data.message || null,
+            status: 'pending',
+          },
+        ]);
+
+      if (error) throw error;
 
       toast.success('Rendez-vous demandé avec succès!', {
         description: `Nous vous contacterons au ${data.phone} pour confirmer votre rendez-vous du ${format(data.date, 'dd MMMM yyyy', { locale: fr })} à ${data.timeSlot}.`,
@@ -80,6 +90,7 @@ const AppointmentForm = () => {
 
       form.reset();
     } catch (error) {
+      console.error('Error saving appointment:', error);
       toast.error('Une erreur est survenue', {
         description: 'Veuillez réessayer ou nous contacter directement.',
       });

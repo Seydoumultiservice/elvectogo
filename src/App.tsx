@@ -13,6 +13,10 @@ import Contact from "./pages/Contact";
 import NotFound from "./pages/NotFound";
 import Vehicles from "./pages/Vehicles";
 import Products from "./pages/Products";
+import Login from "./pages/Login";
+import Dashboard from "./pages/admin/Dashboard";
+import Appointments from "./pages/admin/Appointments";
+import ProtectedRoute from "./components/admin/ProtectedRoute";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +53,23 @@ const App = () => {
             <Route path="/galerie" element={<Gallery />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/vehicules" element={<Vehicles />} />
+            <Route path="/login" element={<Login />} />
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admin/rdv"
+              element={
+                <ProtectedRoute>
+                  <Appointments />
+                </ProtectedRoute>
+              }
+            />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
