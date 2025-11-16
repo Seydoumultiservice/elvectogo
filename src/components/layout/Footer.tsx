@@ -87,9 +87,17 @@ const Footer = () => {
       </div>
       
       {/* Copyright */}
-      <div className="bg-elvec-950 py-4">
-        <div className="container mx-auto px-4 text-center text-gray-400 text-sm">
-          <p>© {currentYear} ELVEC TOGO. Tous droits réservés.</p>
+      <div className="bg-elvec-700 py-4">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center text-center md:text-left text-gray-200 text-sm">
+            <p>© {currentYear} ELVEC TOGO. Tous droits réservés.</p>
+            <a
+              href="/login"
+              className="mt-2 md:mt-0 text-white/80 hover:text-white transition-colors text-xs"
+            >
+              Administration
+            </a>
+          </div>
         </div>
       </div>
     </footer>
