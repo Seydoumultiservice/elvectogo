@@ -16,6 +16,7 @@ import Products from "./pages/Products";
 import Login from "./pages/Login";
 import Dashboard from "./pages/admin/Dashboard";
 import Appointments from "./pages/admin/Appointments";
+import GalleryManagement from "./pages/admin/GalleryManagement";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -62,14 +63,22 @@ const App = () => {
                 </ProtectedRoute>
               }
             />
-            <Route
-              path="/admin/rdv"
-              element={
-                <ProtectedRoute>
-                  <Appointments />
-                </ProtectedRoute>
-              }
-            />
+          <Route
+            path="/admin/rdv"
+            element={
+              <ProtectedRoute>
+                <Appointments />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/galerie"
+            element={
+              <ProtectedRoute>
+                <GalleryManagement />
+              </ProtectedRoute>
+            }
+          />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
