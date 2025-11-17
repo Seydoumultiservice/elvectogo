@@ -1,10 +1,38 @@
 import { Play } from 'lucide-react';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import AnimatedSection from '../animations/AnimatedSection';
 
 const VideoPresentation = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && videoRef.current) {
+            videoRef.current.play().catch(() => {
+              // Autoplay might be blocked, user needs to interact
+            });
+          } else if (videoRef.current) {
+            videoRef.current.pause();
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
 
   const handlePlayClick = () => {
     if (videoRef.current) {
@@ -18,7 +46,7 @@ const VideoPresentation = () => {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-elvec-50 to-white">
+    <section ref={sectionRef} className="py-16 md:py-24 bg-gradient-to-b from-elvec-50 to-white">
       <div className="container mx-auto px-4">
         <AnimatedSection animationType="fade-in">
           <div className="text-center mb-12">
@@ -42,9 +70,13 @@ const VideoPresentation = () => {
               <video
                 ref={videoRef}
                 className="w-full aspect-video object-cover"
-                poster="/lovable-uploads/formation-hero.jpg"
+                poster="/lovable-uploads/formation-elvec-affiche.jpg"
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
+                autoPlay
+                muted
+                playsInline
+                loop
                 controls
               >
                 <source src="/lovable-uploads/video-presentation-principale.mp4" type="video/mp4" />
