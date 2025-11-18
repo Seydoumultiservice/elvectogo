@@ -42,10 +42,11 @@ const VideoPresentation = () => {
               <video
                 ref={videoRef}
                 className="w-full aspect-video object-cover"
-                poster="/lovable-uploads/formation-hero.jpg"
+                poster="/lovable-uploads/formation-elvec-affiche.jpg"
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
                 controls
+                preload="metadata"
               >
                 <source src="/lovable-uploads/video-presentation-principale.mp4" type="video/mp4" />
                 Votre navigateur ne supporte pas la lecture de vidéos.

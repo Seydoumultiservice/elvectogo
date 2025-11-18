@@ -86,11 +86,6 @@ const Gallery = () => {
                     <div className="overflow-hidden">
                       <img src={item.image} alt={item.title} className="object-cover w-full h-64 transform transition-transform duration-500 group-hover:scale-110" />
                     </div>
-                  ) : item.type === 'video' ? (
-                    <div className="relative">
-                      <video src={item.video} poster={item.thumbnail} controls className="w-full h-64 object-cover" preload="metadata">Vidéo non supportée</video>
-                      <div className="absolute top-2 right-2 bg-elvec-600 text-white text-xs px-2 py-1 rounded-full">Vidéo</div>
-                    </div>
                   ) : item.type === 'youtube' ? (
                     <div className="relative" aria-hidden={false}>
                       {loadedYouTube[item.id] ? (
