@@ -37,8 +37,15 @@ const Services = () => {
       title: 'Ponceaux',
       description: 'Nous installons des ponceaux pour assurer un drainage efficace sur vos chantiers.',
       longDescription: 'Les ponceaux assurent le drainage et l\'évacuation des eaux sur vos chantiers et routes, prévenant ainsi l\'érosion et les dégâts liés aux eaux pluviales. ELVEC TOGO maîtrise l\'installation de ponceaux de tous types : béton armé, métal, PVC, selon vos besoins spécifiques. Nos équipes réalisent une étude hydraulique préalable du terrain pour dimensionner correctement les ouvrages et garantir leur efficacité à long terme. Installation professionnelle avec garantie de conformité.',
-      images: ['/lovable-uploads/projet-electrique-1.jpg', '/lovable-uploads/projet-excavation-1.jpg'],
+      images: ['/lovable-uploads/ponceau-construction.jpg', '/lovable-uploads/projet-excavation-1.jpg'],
       features: ['Étude hydraulique complète', 'Installation professionnelle certifiée', 'Matériaux résistants aux intempéries', 'Garantie longue durée'],
+    },
+    agricole: {
+      title: 'Labour des Champs',
+      description: 'Services agricoles professionnels pour la préparation et l\'entretien de vos terres.',
+      longDescription: 'ELVEC TOGO accompagne les agriculteurs et exploitants agricoles dans la préparation et l\'entretien de leurs terres. Nous mettons à disposition des tracteurs et équipements agricoles modernes pour le labour, le défrichage, le nivellement et l\'aménagement de vos parcelles. Nos opérateurs qualifiés maîtrisent les techniques agricoles et assurent un travail de qualité dans le respect des sols et des cultures. Que ce soit pour de petites exploitations familiales ou de grandes surfaces agricoles, nous adaptons nos services à vos besoins spécifiques pour optimiser votre rendement.',
+      images: ['/lovable-uploads/chantier-excavatrice-1.jpg', '/lovable-uploads/chantier-terrassement-1.jpg', '/lovable-uploads/chantier-compacteur.jpg'],
+      features: ['Tracteurs et équipements modernes', 'Opérateurs expérimentés en agriculture', 'Tarifs adaptés aux exploitants', 'Service rapide et efficace', 'Préservation de la qualité des sols'],
     },
     posePave: {
       title: 'Pose de Pavé',
@@ -57,42 +64,13 @@ const Services = () => {
   };
 
   const services = [
-    {
-      title: 'Terrassement',
-      description: 'Nous offrons des services de terrassement pour préparer votre terrain pour la construction.',
-      icon: Tractor,
-      key: 'terrassement',
-    },
-    {
-      title: 'Démolition',
-      description: 'Nos équipes spécialisées assurent la démolition sécurisée de structures existantes.',
-      icon: Hammer,
-      key: 'demolition',
-    },
-    {
-      title: 'Piste Rurale',
-      description: 'Nous réalisons la construction et l\'entretien de pistes rurales pour améliorer l\'accès aux zones reculées.',
-      icon: Wrench,
-      key: 'pisteRurale',
-    },
-    {
-      title: 'Ponceaux',
-      description: 'Nous installons des ponceaux pour assurer un drainage efficace sur vos chantiers.',
-      icon: Building,
-      key: 'ponceaux',
-    },
-    {
-      title: 'Pose de Pavé',
-      description: 'Notre équipe est experte dans la pose de pavés pour vos allées, cours et espaces extérieurs.',
-      icon: HardHat,
-      key: 'posePave',
-    },
-    {
-      title: 'Pavage',
-      description: 'Nous proposons des services de pavage pour créer des surfaces durables et esthétiques.',
-      icon: Truck,
-      key: 'pavage',
-    },
+    { title: 'Terrassement', description: 'Préparation et aménagement de terrain pour tous vos projets de construction.', icon: Tractor, key: 'terrassement' },
+    { title: 'Démolition', description: 'Démolition sécurisée de bâtiments et structures existantes.', icon: Hammer, key: 'demolition' },
+    { title: 'Piste Rurale', description: 'Construction et entretien de pistes pour améliorer l\'accessibilité.', icon: Truck, key: 'pisteRurale' },
+    { title: 'Ponceaux', description: 'Installation de ponceaux pour un drainage optimal.', icon: Wrench, key: 'ponceaux' },
+    { title: 'Labour des Champs', description: 'Services agricoles pour la préparation et l\'entretien de vos terres.', icon: Tractor, key: 'agricole' },
+    { title: 'Compactage', description: 'Compactage de sol pour une base solide et stable.', icon: Building, key: 'compactage' },
+    { title: 'Aménagement', description: 'Aménagement et finition de vos espaces extérieurs.', icon: HardHat, key: 'amenagement' },
   ];
 
   const handleServiceClick = (serviceKey: string) => {

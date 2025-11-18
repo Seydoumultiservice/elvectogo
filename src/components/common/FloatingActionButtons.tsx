@@ -1,19 +1,33 @@
-import { Phone, MessageCircle } from 'lucide-react';
+import { Phone, MessageCircle, Building2 } from 'lucide-react';
 
 const FloatingActionButtons = () => {
   return (
     <div className="fixed bottom-6 left-6 flex flex-col gap-3 z-40">
-      {/* WhatsApp Button */}
+      {/* WhatsApp Commercial */}
       <a
         href="https://wa.me/22890940695"
         target="_blank"
         rel="noopener noreferrer"
         className="group flex items-center justify-center w-14 h-14 bg-[#25D366] hover:bg-[#20BA5A] text-white rounded-full shadow-lg transition-all duration-300 hover:scale-110"
-        aria-label="Contacter via WhatsApp"
+        aria-label="WhatsApp Commercial"
       >
         <MessageCircle className="w-6 h-6" />
         <span className="absolute left-16 bg-gray-900 text-white text-sm px-3 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
-          WhatsApp
+          WhatsApp Commercial
+        </span>
+      </a>
+
+      {/* WhatsApp Direction */}
+      <a
+        href="https://wa.me/22892748270"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="group flex items-center justify-center w-14 h-14 bg-[#128C7E] hover:bg-[#0E7A6E] text-white rounded-full shadow-lg transition-all duration-300 hover:scale-110"
+        aria-label="WhatsApp Direction"
+      >
+        <Building2 className="w-6 h-6" />
+        <span className="absolute left-16 bg-gray-900 text-white text-sm px-3 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+          WhatsApp Direction
         </span>
       </a>
       
