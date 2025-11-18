@@ -23,29 +23,23 @@ const Services = () => {
       title: 'Démolition',
       description: 'Nos équipes spécialisées assurent la démolition sécurisée de structures existantes.',
       longDescription: 'La démolition nécessite expertise et équipement spécialisé. ELVEC TOGO assure la démolition sécurisée de bâtiments, structures et ouvrages de toutes tailles. Nous utilisons des techniques modernes pour minimiser les nuisances sonores et les poussières, tout en garantissant la sécurité du site et des environs. Nos équipes sont formées aux normes de sécurité les plus strictes et disposent de tous les équipements de protection nécessaires. Nous gérons également l\'évacuation et le recyclage des déchets de démolition de manière responsable.',
-      images: ['/lovable-uploads/excavatrice-port-lome.jpg', '/lovable-uploads/engin-bank-of-africa.jpg'],
+      youtubeUrl: 'https://youtube.com/shorts/ln7E4ujuDbU?feature=share',
+      images: ['/lovable-uploads/DEMOLITION1.jpg', '/lovable-uploads/DEMOLITION12.jpg'],
       features: ['Sécurité maximale garantie', 'Gestion complète des déchets', 'Permis et autorisations gérés', 'Rapidité d\'exécution'],
     },
     pisteRurale: {
       title: 'Piste Rurale',
       description: 'Nous réalisons la construction et l\'entretien de pistes rurales pour améliorer l\'accès aux zones reculées.',
       longDescription: 'L\'aménagement de pistes rurales est essentiel pour désenclaver les zones reculées et faciliter le développement économique local. ELVEC TOGO construit et entretient des pistes rurales durables qui facilitent l\'accès aux villages et exploitations agricoles. Nous utilisons des niveleuses et compacteurs de dernière génération pour garantir des routes praticables en toute saison. Nos techniques éprouvées assurent une excellente drainage et une résistance optimale aux intempéries.',
-      images: ['/lovable-uploads/agent-elvec-chantier.jpg', '/lovable-uploads/projet-formation-1.jpg'],
+      images: ['/lovable-uploads/PISTE1.jpg', '/lovable-uploads/PISTE RURAL.jpg'],
       features: ['Techniques éprouvées', 'Matériaux de qualité sélectionnés', 'Entretien durable garanti', 'Impact social positif'],
     },
     ponceaux: {
       title: 'Ponceaux',
       description: 'Nous installons des ponceaux pour assurer un drainage efficace sur vos chantiers.',
       longDescription: 'Les ponceaux assurent le drainage et l\'évacuation des eaux sur vos chantiers et routes, prévenant ainsi l\'érosion et les dégâts liés aux eaux pluviales. ELVEC TOGO maîtrise l\'installation de ponceaux de tous types : béton armé, métal, PVC, selon vos besoins spécifiques. Nos équipes réalisent une étude hydraulique préalable du terrain pour dimensionner correctement les ouvrages et garantir leur efficacité à long terme. Installation professionnelle avec garantie de conformité.',
-      images: ['/lovable-uploads/ponceau-construction.jpg', '/lovable-uploads/projet-excavation-1.jpg'],
+      images: ['/lovable-uploads/PONCEAU &.jpg', '/lovable-uploads/PONCEAU é.jpg'],
       features: ['Étude hydraulique complète', 'Installation professionnelle certifiée', 'Matériaux résistants aux intempéries', 'Garantie longue durée'],
-    },
-    agricole: {
-      title: 'Labour des Champs',
-      description: 'Services agricoles professionnels pour la préparation et l\'entretien de vos terres.',
-      longDescription: 'ELVEC TOGO accompagne les agriculteurs et exploitants agricoles dans la préparation et l\'entretien de leurs terres. Nous mettons à disposition des tracteurs et équipements agricoles modernes pour le labour, le défrichage, le nivellement et l\'aménagement de vos parcelles. Nos opérateurs qualifiés maîtrisent les techniques agricoles et assurent un travail de qualité dans le respect des sols et des cultures. Que ce soit pour de petites exploitations familiales ou de grandes surfaces agricoles, nous adaptons nos services à vos besoins spécifiques pour optimiser votre rendement.',
-      images: ['/lovable-uploads/chantier-excavatrice-1.jpg', '/lovable-uploads/chantier-terrassement-1.jpg', '/lovable-uploads/chantier-compacteur.jpg'],
-      features: ['Tracteurs et équipements modernes', 'Opérateurs expérimentés en agriculture', 'Tarifs adaptés aux exploitants', 'Service rapide et efficace', 'Préservation de la qualité des sols'],
     },
     posePave: {
       title: 'Pose de Pavé',
@@ -64,13 +58,42 @@ const Services = () => {
   };
 
   const services = [
-    { title: 'Terrassement', description: 'Préparation et aménagement de terrain pour tous vos projets de construction.', icon: Tractor, key: 'terrassement' },
-    { title: 'Démolition', description: 'Démolition sécurisée de bâtiments et structures existantes.', icon: Hammer, key: 'demolition' },
-    { title: 'Piste Rurale', description: 'Construction et entretien de pistes pour améliorer l\'accessibilité.', icon: Truck, key: 'pisteRurale' },
-    { title: 'Ponceaux', description: 'Installation de ponceaux pour un drainage optimal.', icon: Wrench, key: 'ponceaux' },
-    { title: 'Labour des Champs', description: 'Services agricoles pour la préparation et l\'entretien de vos terres.', icon: Tractor, key: 'agricole' },
-    { title: 'Compactage', description: 'Compactage de sol pour une base solide et stable.', icon: Building, key: 'compactage' },
-    { title: 'Aménagement', description: 'Aménagement et finition de vos espaces extérieurs.', icon: HardHat, key: 'amenagement' },
+    {
+      title: 'Terrassement',
+      description: 'Nous offrons des services de terrassement pour préparer votre terrain pour la construction.',
+      icon: Tractor,
+      key: 'terrassement',
+    },
+    {
+      title: 'Démolition',
+      description: 'Nos équipes spécialisées assurent la démolition sécurisée de structures existantes.',
+      icon: Hammer,
+      key: 'demolition',
+    },
+    {
+      title: 'Piste Rurale',
+      description: 'Nous réalisons la construction et l\'entretien de pistes rurales pour améliorer l\'accès aux zones reculées.',
+      icon: Wrench,
+      key: 'pisteRurale',
+    },
+    {
+      title: 'Ponceaux',
+      description: 'Nous installons des ponceaux pour assurer un drainage efficace sur vos chantiers.',
+      icon: Building,
+      key: 'ponceaux',
+    },
+    {
+      title: 'Pose de Pavé',
+      description: 'Notre équipe est experte dans la pose de pavés pour vos allées, cours et espaces extérieurs.',
+      icon: HardHat,
+      key: 'posePave',
+    },
+    {
+      title: 'Pavage',
+      description: 'Nous proposons des services de pavage pour créer des surfaces durables et esthétiques.',
+      icon: Truck,
+      key: 'pavage',
+    },
   ];
 
   const handleServiceClick = (serviceKey: string) => {
