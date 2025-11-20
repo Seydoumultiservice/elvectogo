@@ -44,8 +44,7 @@ const TrainingSection = () => {
 
           {/* Contenu */}
           <AnimatedSection animationType="slide-up" delay={400}>
-            <div className="md:col-span-2">
-              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-2xl">
+            <div className="md:col-span-2 bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-2xl">
               {/* Détails de la formation */}
               <div className="mb-8">
                 <h3 className="text-2xl font-bold mb-6 flex items-center">
@@ -156,7 +155,6 @@ const TrainingSection = () => {
                   En savoir plus
                 </Link>
               </div>
-            </div>
           </AnimatedSection>
         </div>
       </div>
