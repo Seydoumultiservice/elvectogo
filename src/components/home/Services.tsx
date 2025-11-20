@@ -46,22 +46,15 @@ const Services = () => {
       title: 'Ponceaux',
       description: 'Nous installons des ponceaux pour assurer un drainage efficace sur vos chantiers.',
       longDescription: 'Les ponceaux assurent le drainage et l\'évacuation des eaux sur vos chantiers et routes, prévenant ainsi l\'érosion et les dégâts liés aux eaux pluviales. ELVEC TOGO maîtrise l\'installation de ponceaux de tous types : béton armé, métal, PVC, selon vos besoins spécifiques. Nos équipes réalisent une étude hydraulique préalable du terrain pour dimensionner correctement les ouvrages et garantir leur efficacité à long terme. Installation professionnelle avec garantie de conformité.',
-      images: ['/lovable-uploads/PONCEAU &.jpg', '/lovable-uploads/PONCEAU é.jpg'],
+      images: ['/lovable-uploads/ponceau-construction.jpg'],
       features: ['Étude hydraulique complète', 'Installation professionnelle certifiée', 'Matériaux résistants aux intempéries', 'Garantie longue durée'],
     },
-    posePave: {
-      title: 'Pose de Pavé',
-      description: 'Notre équipe est experte dans la pose de pavés pour vos allées, cours et espaces extérieurs.',
-      longDescription: 'La pose de pavés embellit vos espaces extérieurs tout en créant des surfaces durables et esthétiques. ELVEC TOGO pose des pavés autobloquants, pavés en béton ou en pierre naturelle selon vos préférences. Nos artisans qualifiés réalisent des motifs variés et assurent une finition impeccable. Idéal pour allées, cours, parkings, trottoirs et espaces publics. Le drainage naturel des pavés les rend particulièrement adaptés au climat tropical.',
-      images: ['/lovable-uploads/engin-komatsu.jpg', '/lovable-uploads/equipe-elvec-2025.jpg'],
-      features: ['Finitions soignées et esthétiques', 'Large choix de motifs', 'Drainage naturel intégré', 'Résistance exceptionnelle au temps'],
-    },
-    pavage: {
-      title: 'Pavage',
-      description: 'Nous proposons des services de pavage pour créer des surfaces durables et esthétiques.',
-      longDescription: 'Le pavage de routes et parkings nécessite savoir-faire technique et équipements performants. ELVEC TOGO réalise vos travaux de pavage en asphalte ou béton bitumineux selon les normes internationales. Nous préparons minutieusement la surface, appliquons les couches de base et de finition dans le respect des spécifications techniques. Résultat: des surfaces lisses, durables, esthétiques et conformes aux normes de circulation. Garantie de qualité sur tous nos travaux.',
-      images: ['/lovable-uploads/projet-electrique-2.jpg', '/lovable-uploads/equipe-directeur.jpg'],
-      features: ['Conformité aux normes techniques', 'Matériaux certifiés', 'Équipe expérimentée', 'Finition professionnelle impeccable'],
+    labourChamps: {
+      title: 'Labour des Champs',
+      description: 'Services de labour professionnel pour vos terres agricoles avec équipements modernes.',
+      longDescription: 'Le labour des champs est une étape fondamentale pour préparer vos terres agricoles. ELVEC TOGO met à votre disposition des tracteurs puissants et charrues modernes pour labourer efficacement vos parcelles. Notre équipe qualifiée réalise des travaux de labour en profondeur ou superficiel selon vos besoins culturaux. Nous intervenons sur tous types de sols et toutes superficies. Nos équipements récents garantissent un travail rapide, homogène et de qualité, optimisant ainsi le rendement de vos cultures.',
+      images: ['/lovable-uploads/formation-engins-lourds.jpg'],
+      features: ['Tracteurs puissants et performants', 'Labour adapté à chaque type de sol', 'Intervention rapide sur grandes surfaces', 'Tarifs compétitifs pour agriculteurs', 'Expertise en agriculture moderne'],
     },
   };
 
