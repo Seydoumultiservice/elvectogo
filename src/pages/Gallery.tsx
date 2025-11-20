@@ -1,53 +1,64 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Layout from '../components/layout/Layout';
 import SectionTitle from '../components/common/SectionTitle';
 import AnimatedSection from '../components/animations/AnimatedSection';
+import { supabase } from '@/integrations/supabase/client';
+import { Loader2 } from 'lucide-react';
 
 const Gallery = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
-  // Preload the main YouTube item so it appears first and starts playing
-  const [loadedYouTube, setLoadedYouTube] = useState<Record<number, boolean>>({14: true});
-  
-  const galleryItems = [
-    { id: 14, title: 'Présentation ELVEC (YouTube)', category: 'projets', type: 'youtube', youtubeUrl: 'https://www.youtube.com/watch?v=0OEQYhkBSJg', thumbnail: '/lovable-uploads/projet-excavation-1.jpg' },
-    { id: 1, title: 'Excavation de terrain', category: 'excavation', image: '/lovable-uploads/projet-excavation-1.jpg', type: 'image' },
-    { id: 2, title: 'Formation conduite', category: 'formation', image: '/lovable-uploads/projet-formation-1.jpg', type: 'image' },
-    { id: 3, title: 'Terrassement', category: 'terrassement', image: '/lovable-uploads/projet-terrassement-1.jpg', type: 'image' },
-    { id: 4, title: 'Bureau ELVEC', category: 'equipe', image: '/lovable-uploads/equipe-bureau-1.jpg', type: 'image' },
-    { id: 5, title: 'Direction', category: 'equipe', image: '/lovable-uploads/equipe-directeur.jpg', type: 'image' },
-    { id: 6, title: 'Ligne électrique', category: 'projets', image: '/lovable-uploads/projet-electrique-1.jpg', type: 'image' },
-    { id: 7, title: 'Installation 161 KV', category: 'projets', image: '/lovable-uploads/projet-electrique-2.jpg', type: 'image' },
-    { id: 8, title: 'Engin Komatsu', category: 'engins', image: '/lovable-uploads/engin-komatsu.jpg', type: 'image' },
-    { id: 9, title: 'Chargement', category: 'chargement', image: '/lovable-uploads/cc256fb8-05f3-4982-bdb2-6413414b3db1.png', type: 'image' },
-    { id: 10, title: 'Terrassement', category: 'terrassement', image: '/lovable-uploads/d821c0ba-bf70-4f75-8546-dbc64980905b.png', type: 'image' },
-    { id: 11, title: 'Transport', category: 'transport', image: '/lovable-uploads/5849e000-e611-4774-9d9e-c823996b8d14.png', type: 'image' },
-    { id: 12, title: 'Engins ELVEC', category: 'engins', image: '/lovable-uploads/1bd720bd-9635-455f-8849-f89512705c25.png', type: 'image' }
-  ];
+  const [galleryItems, setGalleryItems] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Helper to convert a YouTube URL to an embed URL (returns null if it can't parse)
-  const getYouTubeEmbedUrl = (url: string | undefined) => {
-    if (!url) return null;
-    const match = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
-    if (match && match[1]) {
-      // Add autoplay=1 and mute=1 so browsers allow autoplay; users can unmute in the player.
-      return `https://www.youtube.com/embed/${match[1]}?rel=0&autoplay=1&mute=1`;
+  useEffect(() => {
+    loadGalleryItems();
+  }, []);
+
+  const loadGalleryItems = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("gallery_items")
+        .select("*")
+        .eq("visible", true)
+        .order("order_index", { ascending: true });
+
+      if (error) throw error;
+      setGalleryItems(data || []);
+    } catch (error) {
+      console.error("Error loading gallery:", error);
+    } finally {
+      setLoading(false);
     }
-    return null;
+  };
+
+  const extractYouTubeId = (url: string): string | null => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return match && match[2].length === 11 ? match[2] : null;
   };
   
   const categories = [
     { id: 'all', name: 'Tous' },
-    { id: 'projets', name: 'Projets' },
-    { id: 'engins', name: 'Engins' },
-    { id: 'excavation', name: 'Excavation' },
-    { id: 'terrassement', name: 'Terrassement' },
-    { id: 'transport', name: 'Transport' },
-    { id: 'formation', name: 'Formation' },
-    { id: 'equipe', name: 'Équipe' }
+    ...Array.from(new Set(galleryItems.map(item => item.category))).map(cat => ({
+      id: cat,
+      name: cat?.charAt(0).toUpperCase() + cat?.slice(1) || 'Autre'
+    }))
   ];
   
-  const filteredItems = selectedCategory === 'all' ? galleryItems : galleryItems.filter(item => item.category === selectedCategory);
+  const filteredItems = selectedCategory === 'all' 
+    ? galleryItems 
+    : galleryItems.filter(item => item.category === selectedCategory);
+  
+  if (loading) {
+    return (
+      <Layout>
+        <div className="flex items-center justify-center min-h-screen">
+          <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        </div>
+      </Layout>
+    );
+  }
   
   return (
     <Layout>
