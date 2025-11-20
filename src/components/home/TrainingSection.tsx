@@ -24,11 +24,11 @@ const TrainingSection = () => {
         <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Image */}
           <AnimatedSection animationType="slide-right" delay={200}>
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-white">
               <img 
-                src="/lovable-uploads/formation-engins-lourds.jpg" 
-                alt="Formation conduite engins lourds ELVEC TOGO"
-                className="w-full h-[500px] object-cover"
+                src="/lovable-uploads/formation-elvec-poster.jpg" 
+                alt="Formation professionnelle ELVEC - BTP et Agriculture"
+                className="w-full h-auto object-contain"
               />
               <div className="absolute top-4 right-4 bg-elvec-500 text-white px-4 py-2 rounded-full font-bold animate-pulse">
                 PLACES LIMITÉES

@@ -23,8 +23,9 @@ const Services = () => {
       title: 'Démolition',
       description: 'Nos équipes spécialisées assurent la démolition sécurisée de structures existantes.',
       longDescription: 'La démolition nécessite expertise et équipement spécialisé. ELVEC TOGO assure la démolition sécurisée de bâtiments, structures et ouvrages de toutes tailles. Nous utilisons des techniques modernes pour minimiser les nuisances sonores et les poussières, tout en garantissant la sécurité du site et des environs. Nos équipes sont formées aux normes de sécurité les plus strictes et disposent de tous les équipements de protection nécessaires. Nous gérons également l\'évacuation et le recyclage des déchets de démolition de manière responsable.',
-      youtubeUrl: 'https://youtube.com/shorts/ln7E4ujuDbU?feature=share',
-      images: ['/lovable-uploads/DEMOLITION1.jpg', '/lovable-uploads/DEMOLITION12.jpg'],
+      youtubeVideoId: 'ln7E4ujuDbU',
+      videoUrl: '/lovable-uploads/DEMOLITION2.mp4',
+      images: ['/lovable-uploads/chantier-demolition.webp', '/lovable-uploads/equipements-securite-demolition.jpg'],
       features: ['Sécurité maximale garantie', 'Gestion complète des déchets', 'Permis et autorisations gérés', 'Rapidité d\'exécution'],
     },
     pisteRurale: {

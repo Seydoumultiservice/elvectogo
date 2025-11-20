@@ -6,8 +6,11 @@ import Layout from '../components/layout/Layout';
 import SectionTitle from '../components/common/SectionTitle';
 import Button from '../components/common/Button';
 import AnimatedSection from '../components/animations/AnimatedSection';
+import ImageZoomModal from '../components/common/ImageZoomModal';
 
 const AboutUs = () => {
+  const [zoomImage, setZoomImage] = useState<string | null>(null);
+  
   const currentProjects = [
     { title: 'Construction ligne transport énergie 161 KV Kara - Mango - Dapaong', partner: 'KEC International Limited', icon: Building2 },
     { title: 'Extension du port Lomé Container Terminal', partner: 'Eiffage Génie Civil', icon: Building2 },
@@ -40,10 +43,39 @@ const AboutUs = () => {
         <div className="container mx-auto px-4">
           <div className="flex flex-col lg:flex-row gap-12 items-center">
             <AnimatedSection className="w-full lg:w-1/2">
-              <div className="grid grid-cols-2 gap-4">
-                <img src="/lovable-uploads/directeur-materiel.jpg" alt="Directeur Matériel ELVEC TOGO" className="rounded-lg shadow-lg w-full h-auto object-cover" />
-                <img src="/lovable-uploads/assistante-direction.jpg" alt="Assistante de Direction ELVEC TOGO" className="rounded-lg shadow-lg w-full h-auto object-cover" />
-                <img src="/lovable-uploads/equipe-bureau-nouveau.jpg" alt="Équipe Bureau ELVEC TOGO" className="rounded-lg shadow-lg w-full h-auto object-cover col-span-2" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="group cursor-pointer" onClick={() => setZoomImage("/lovable-uploads/equipe-directeur-2.jpg")}>
+                  <img 
+                    src="/lovable-uploads/equipe-directeur-2.jpg" 
+                    alt="Directeur ELVEC TOGO" 
+                    className="rounded-lg shadow-lg w-full h-64 object-cover hover:shadow-2xl transition-all duration-300 transform group-hover:scale-105" 
+                  />
+                  <p className="text-center mt-2 font-semibold text-elvec-600">Directeur</p>
+                </div>
+                <div className="group cursor-pointer" onClick={() => setZoomImage("/lovable-uploads/directeur-materiel.jpg")}>
+                  <img 
+                    src="/lovable-uploads/directeur-materiel.jpg" 
+                    alt="Directeur Matériel ELVEC TOGO" 
+                    className="rounded-lg shadow-lg w-full h-64 object-cover hover:shadow-2xl transition-all duration-300 transform group-hover:scale-105" 
+                  />
+                  <p className="text-center mt-2 font-semibold text-elvec-600">Directeur Matériel</p>
+                </div>
+                <div className="group cursor-pointer" onClick={() => setZoomImage("/lovable-uploads/assistante-direction.jpg")}>
+                  <img 
+                    src="/lovable-uploads/assistante-direction.jpg" 
+                    alt="Assistante de Direction ELVEC TOGO" 
+                    className="rounded-lg shadow-lg w-full h-64 object-cover hover:shadow-2xl transition-all duration-300 transform group-hover:scale-105" 
+                  />
+                  <p className="text-center mt-2 font-semibold text-elvec-600">Assistante de Direction</p>
+                </div>
+                <div className="group cursor-pointer" onClick={() => setZoomImage("/lovable-uploads/equipe-bureau-nouveau.jpg")}>
+                  <img 
+                    src="/lovable-uploads/equipe-bureau-nouveau.jpg" 
+                    alt="Équipe Bureau ELVEC TOGO" 
+                    className="rounded-lg shadow-lg w-full h-64 object-cover hover:shadow-2xl transition-all duration-300 transform group-hover:scale-105" 
+                  />
+                  <p className="text-center mt-2 font-semibold text-elvec-600">Équipe Bureau</p>
+                </div>
               </div>
             </AnimatedSection>
             <AnimatedSection animationType="slide-right" className="w-full lg:w-1/2">
@@ -129,6 +161,12 @@ const AboutUs = () => {
           </AnimatedSection>
         </div>
       </section>
+
+      <ImageZoomModal 
+        isOpen={!!zoomImage} 
+        onClose={() => setZoomImage(null)} 
+        imageUrl={zoomImage || ''} 
+      />
     </Layout>
   );
 };
