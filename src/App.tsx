@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound";
 import Vehicles from "./pages/Vehicles";
 import Products from "./pages/Products";
 import Login from "./pages/Login";
+import InitAdmin from "./pages/InitAdmin";
 import Dashboard from "./pages/admin/Dashboard";
 import Appointments from "./pages/admin/Appointments";
 import GalleryManagement from "./pages/admin/GalleryManagement";
@@ -57,6 +58,7 @@ const App = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/vehicules" element={<Vehicles />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/init-admin" element={<InitAdmin />} />
             <Route path="/admin/devis" element={
               <ProtectedRoute>
                 <Quotes />
