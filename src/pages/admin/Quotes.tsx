@@ -2,21 +2,13 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { FileText, Eye, Phone, Mail, MapPin, Calendar } from 'lucide-react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import StatusBadge from '@/components/admin/StatusBadge';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
 
 interface Quote {
   id: string;
@@ -42,7 +34,6 @@ const Quotes = () => {
   useEffect(() => {
     loadQuotes();
     
-    // Real-time subscription
     const channel = supabase
       .channel('quotes_changes')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'quotes' }, () => {
@@ -102,20 +93,9 @@ const Quotes = () => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'pending': return 'bg-yellow-500';
-      case 'en_cours': return 'bg-blue-500';
-      case 'traite': return 'bg-green-500';
-      case 'refuse': return 'bg-red-500';
+      case 'completed': return 'bg-green-500';
+      case 'cancelled': return 'bg-red-500';
       default: return 'bg-gray-500';
-    }
-  };
-
-  const getStatusLabel = (status: string) => {
-    switch (status) {
-      case 'pending': return 'En attente';
-      case 'en_cours': return 'En cours';
-      case 'traite': return 'Traité';
-      case 'refuse': return 'Refusé';
-      default: return status;
     }
   };
 
@@ -131,7 +111,6 @@ const Quotes = () => {
           <p className="text-gray-600 mt-1">Gérez toutes les demandes de devis</p>
         </div>
 
-        {/* Filters */}
         <div className="flex gap-4">
           <Select value={filter} onValueChange={setFilter}>
             <SelectTrigger className="w-48">
@@ -150,33 +129,6 @@ const Quotes = () => {
           <div className="flex items-center justify-center h-64">
             <p className="text-gray-500">Chargement...</p>
           </div>
-        ) : (
-          <div className="bg-white rounded-lg shadow overflow-hidden">
-            <Table>
-                Demandes de Devis
-              </h2>
-              <p className="text-gray-600 mt-1">{filteredQuotes.length} demande(s)</p>
-            </div>
-          </div>
-
-          <Select value={filter} onValueChange={setFilter}>
-            <SelectTrigger className="w-48">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Tous les statuts</SelectItem>
-              <SelectItem value="pending">En attente</SelectItem>
-              <SelectItem value="en_cours">En cours</SelectItem>
-              <SelectItem value="traite">Traité</SelectItem>
-              <SelectItem value="refuse">Refusé</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        {loading ? (
-          <div className="flex items-center justify-center py-12">
-            <Loader2 className="h-8 w-8 animate-spin text-elvec-600" />
-          </div>
         ) : filteredQuotes.length === 0 ? (
           <div className="bg-white rounded-lg shadow p-12 text-center">
             <FileText className="h-16 w-16 text-gray-300 mx-auto mb-4" />
@@ -190,9 +142,7 @@ const Quotes = () => {
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
                       <h3 className="text-lg font-semibold text-gray-900">{quote.nom}</h3>
-                      <Badge className={getStatusColor(quote.status)}>
-                        {getStatusLabel(quote.status)}
-                      </Badge>
+                      <StatusBadge status={quote.status} />
                     </div>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mb-3">
@@ -237,14 +187,14 @@ const Quotes = () => {
             ))}
           </div>
         )}
-      </main>
+      </div>
 
       <Dialog open={detailsOpen} onOpenChange={setDetailsOpen}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
             <DialogTitle>Détails de la demande</DialogTitle>
             <DialogDescription>
-              Consultez et gérez cette demande de devis
+              Demande de devis de {selectedQuote?.nom}
             </DialogDescription>
           </DialogHeader>
 
@@ -253,83 +203,74 @@ const Quotes = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="text-sm font-medium text-gray-700">Nom</label>
-                  <p className="text-gray-900">{selectedQuote.nom}</p>
+                  <p className="text-sm text-gray-900">{selectedQuote.nom}</p>
                 </div>
                 <div>
                   <label className="text-sm font-medium text-gray-700">Téléphone</label>
-                  <p className="text-gray-900">{selectedQuote.telephone}</p>
+                  <p className="text-sm text-gray-900">{selectedQuote.telephone}</p>
                 </div>
                 {selectedQuote.email && (
                   <div>
                     <label className="text-sm font-medium text-gray-700">Email</label>
-                    <p className="text-gray-900">{selectedQuote.email}</p>
+                    <p className="text-sm text-gray-900">{selectedQuote.email}</p>
                   </div>
                 )}
                 {selectedQuote.adresse && (
                   <div>
                     <label className="text-sm font-medium text-gray-700">Adresse</label>
-                    <p className="text-gray-900">{selectedQuote.adresse}</p>
+                    <p className="text-sm text-gray-900">{selectedQuote.adresse}</p>
                   </div>
                 )}
               </div>
 
               <div>
                 <label className="text-sm font-medium text-gray-700">Besoin</label>
-                <p className="text-gray-900 bg-gray-50 p-3 rounded mt-1">{selectedQuote.besoin}</p>
+                <p className="text-sm text-gray-900 mt-1 p-3 bg-gray-50 rounded-lg">
+                  {selectedQuote.besoin}
+                </p>
               </div>
 
               <div>
-                <label className="text-sm font-medium text-gray-700 block mb-2">Statut</label>
-                <Select 
-                  value={selectedQuote.status} 
-                  onValueChange={(value) => setSelectedQuote({...selectedQuote, status: value})}
+                <label className="text-sm font-medium text-gray-700 mb-2 block">Statut</label>
+                <Select
+                  value={selectedQuote.status}
+                  onValueChange={handleStatusChange}
+                  disabled={updatingStatus}
                 >
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="pending">En attente</SelectItem>
-                    <SelectItem value="en_cours">En cours</SelectItem>
-                    <SelectItem value="traite">Traité</SelectItem>
-                    <SelectItem value="refuse">Refusé</SelectItem>
+                    <SelectItem value="completed">Traité</SelectItem>
+                    <SelectItem value="cancelled">Annulé</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div>
-                <label className="text-sm font-medium text-gray-700 block mb-2">Notes internes</label>
+                <label className="text-sm font-medium text-gray-700 mb-2 block">Notes internes</label>
                 <Textarea
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  placeholder="Ajoutez des notes..."
-                  className="min-h-[100px]"
+                  placeholder="Ajoutez des notes sur cette demande..."
+                  rows={4}
                 />
-              </div>
-
-              <div className="flex gap-3 pt-4">
-                <Button variant="outline" onClick={() => setDetailsOpen(false)} className="flex-1">
-                  Annuler
-                </Button>
-                <Button 
-                  onClick={() => handleStatusChange(selectedQuote.status)} 
-                  className="flex-1 bg-elvec-600 hover:bg-elvec-700"
-                  disabled={updatingStatus}
-                >
-                  {updatingStatus ? (
-                    <>
-                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Enregistrement...
-                    </>
-                  ) : (
-                    'Enregistrer'
-                  )}
-                </Button>
               </div>
             </div>
           )}
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setDetailsOpen(false)}>
+              Fermer
+            </Button>
+            <Button onClick={() => handleStatusChange(selectedQuote?.status || 'pending')} disabled={updatingStatus}>
+              {updatingStatus ? 'Enregistrement...' : 'Sauvegarder les notes'}
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
-    </div>
+    </AdminLayout>
   );
 };
 

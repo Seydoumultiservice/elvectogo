@@ -52,10 +52,10 @@ const Appointments = () => {
     setIsLoading(false);
   };
 
-  const updateStatus = async (id: string, status: string) => {
+  const updateStatus = async (id: string, newStatus: string) => {
     const { error } = await supabase
       .from('appointments')
-      .update({ status })
+      .update({ status: newStatus })
       .eq('id', id);
 
     if (error) {
@@ -66,171 +66,111 @@ const Appointments = () => {
     }
   };
 
-  const getStatusBadge = (status: string) => {
-    const variants: Record<string, 'default' | 'secondary' | 'destructive' | 'outline'> = {
-      pending: 'secondary',
-      confirmed: 'default',
-      cancelled: 'destructive',
-      completed: 'outline',
-    };
-
-    const labels: Record<string, string> = {
-      pending: 'En attente',
-      confirmed: 'Confirmé',
-      cancelled: 'Annulé',
-      completed: 'Terminé',
-    };
-
-    return (
-      <Badge variant={variants[status] || 'default'}>
-        {labels[status] || status}
-      </Badge>
-    );
-  };
-
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center gap-4">
-            <Link to="/admin">
-              <Button variant="outline" size="icon">
-                <ArrowLeft className="h-4 w-4" />
-              </Button>
-            </Link>
-            <div>
-              <h1 className="text-2xl font-bold text-elvec-900">Rendez-vous</h1>
-              <p className="text-sm text-gray-600">
-                Gérer les demandes de rendez-vous
-              </p>
-            </div>
-          </div>
+    <AdminLayout>
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">Gestion des Rendez-vous</h1>
+          <p className="text-gray-600 mt-1">Gérez toutes les demandes de rendez-vous</p>
         </div>
-      </header>
 
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
-        <div className="bg-white rounded-lg shadow">
-          {isLoading ? (
-            <div className="p-8 text-center text-gray-500">Chargement...</div>
-          ) : appointments.length === 0 ? (
-            <div className="p-8 text-center">
-              <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600">Aucun rendez-vous pour le moment</p>
-            </div>
-          ) : (
+        {isLoading ? (
+          <div className="flex items-center justify-center h-64">
+            <p className="text-gray-500">Chargement...</p>
+          </div>
+        ) : (
+          <div className="bg-white rounded-lg shadow overflow-hidden">
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Client</TableHead>
+                  <TableHead>Nom</TableHead>
                   <TableHead>Contact</TableHead>
                   <TableHead>Date & Heure</TableHead>
                   <TableHead>Message</TableHead>
                   <TableHead>Statut</TableHead>
-                  <TableHead>Actions</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {appointments.map((appointment) => (
-                  <TableRow key={appointment.id}>
-                    <TableCell className="font-medium">
-                      {appointment.full_name}
-                    </TableCell>
-                    <TableCell>
-                      <div className="space-y-1 text-sm">
-                        <div className="flex items-center gap-1">
-                          <Phone className="h-3 w-3 text-gray-400" />
-                          <a
-                            href={`tel:${appointment.phone}`}
-                            className="text-elvec-600 hover:underline"
-                          >
-                            {appointment.phone}
-                          </a>
-                        </div>
-                        {appointment.email && (
-                          <div className="flex items-center gap-1">
-                            <Mail className="h-3 w-3 text-gray-400" />
-                            <a
-                              href={`mailto:${appointment.email}`}
-                              className="text-elvec-600 hover:underline"
-                            >
-                              {appointment.email}
-                            </a>
-                          </div>
-                        )}
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      <div className="space-y-1">
-                        <div className="font-medium">
-                          {format(new Date(appointment.date), 'dd MMMM yyyy', {
-                            locale: fr,
-                          })}
-                        </div>
-                        <div className="text-sm text-gray-600">
-                          {appointment.time_slot}
-                        </div>
-                      </div>
-                    </TableCell>
-                    <TableCell>
-                      {appointment.message ? (
-                        <div className="max-w-xs truncate text-sm text-gray-600">
-                          <MessageSquare className="h-3 w-3 inline mr-1" />
-                          {appointment.message}
-                        </div>
-                      ) : (
-                        <span className="text-gray-400 text-sm">-</span>
-                      )}
-                    </TableCell>
-                    <TableCell>{getStatusBadge(appointment.status)}</TableCell>
-                    <TableCell>
-                      <div className="flex gap-2">
-                        {appointment.status === 'pending' && (
-                          <>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() =>
-                                updateStatus(appointment.id, 'confirmed')
-                              }
-                              className="text-green-600 hover:text-green-700"
-                            >
-                              <Check className="h-4 w-4" />
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              onClick={() =>
-                                updateStatus(appointment.id, 'cancelled')
-                              }
-                              className="text-red-600 hover:text-red-700"
-                            >
-                              <X className="h-4 w-4" />
-                            </Button>
-                          </>
-                        )}
-                        {appointment.status === 'confirmed' && (
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() =>
-                              updateStatus(appointment.id, 'completed')
-                            }
-                          >
-                            Marquer terminé
-                          </Button>
-                        )}
-                      </div>
+                {appointments.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={6} className="text-center py-8 text-gray-500">
+                      Aucun rendez-vous pour le moment
                     </TableCell>
                   </TableRow>
-                ))}
+                ) : (
+                  appointments.map((appointment) => (
+                    <TableRow key={appointment.id}>
+                      <TableCell className="font-medium">{appointment.full_name}</TableCell>
+                      <TableCell>
+                        <div className="space-y-1 text-sm">
+                          <div className="flex items-center gap-1">
+                            <Phone className="h-3 w-3 text-gray-400" />
+                            {appointment.phone}
+                          </div>
+                          {appointment.email && (
+                            <div className="flex items-center gap-1">
+                              <Mail className="h-3 w-3 text-gray-400" />
+                              {appointment.email}
+                            </div>
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell>
+                        <div className="space-y-1 text-sm">
+                          <div className="flex items-center gap-1">
+                            <Calendar className="h-3 w-3 text-gray-400" />
+                            {format(new Date(appointment.date), 'dd MMMM yyyy', { locale: fr })}
+                          </div>
+                          <div className="text-gray-600">{appointment.time_slot}</div>
+                        </div>
+                      </TableCell>
+                      <TableCell className="max-w-xs">
+                        {appointment.message ? (
+                          <div className="flex items-start gap-1 text-sm">
+                            <MessageSquare className="h-3 w-3 text-gray-400 mt-0.5 flex-shrink-0" />
+                            <span className="truncate">{appointment.message}</span>
+                          </div>
+                        ) : (
+                          <span className="text-gray-400 text-sm">Pas de message</span>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        <StatusBadge status={appointment.status} />
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex justify-end gap-2">
+                          {appointment.status === 'pending' && (
+                            <>
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                onClick={() => updateStatus(appointment.id, 'confirmed')}
+                                className="text-green-600 hover:text-green-700"
+                              >
+                                <Check className="h-4 w-4" />
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                onClick={() => updateStatus(appointment.id, 'cancelled')}
+                                className="text-red-600 hover:text-red-700"
+                              >
+                                <X className="h-4 w-4" />
+                              </Button>
+                            </>
+                          )}
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                )}
               </TableBody>
             </Table>
-          )}
-        </div>
-      </main>
-    </div>
+          </div>
+        )}
+      </div>
+    </AdminLayout>
   );
 };
 
