@@ -17,6 +17,7 @@ import * as z from 'zod';
 import { Mic, Upload, X, Send } from 'lucide-react';
 import { toast } from 'sonner';
 import VoiceRecorder from './VoiceRecorder';
+import { supabase } from '@/integrations/supabase/client';
 
 // 45MB in bytes
 const MAX_FILE_SIZE = 45 * 1024 * 1024;
@@ -107,24 +108,36 @@ const RequestQuoteDialog = ({ open, onOpenChange }: RequestQuoteDialogProps) => 
     setHasVoiceMessage(true);
   };
   
-  const onSubmit = (values: z.infer<typeof formSchema>) => {
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setIsSubmitting(true);
     
-    // Simulate form submission
-    setTimeout(() => {
-      console.log('Form values:', values);
-      console.log('Files:', files);
-      console.log('Voice message:', voiceMessageBlob);
-      
+    try {
+      const { error } = await supabase
+        .from('quotes')
+        .insert([{
+          nom: values.nom,
+          telephone: values.telephone,
+          email: values.email || null,
+          adresse: values.adresse || null,
+          besoin: values.besoin
+        }]);
+
+      if (error) throw error;
+
       toast.success("Votre demande de devis a été envoyée avec succès!");
       
-      // Reset form
       form.reset();
       setFiles([]);
       setHasVoiceMessage(false);
       setVoiceMessageBlob(null);
-      setIsSubmitting(false);
       onOpenChange(false);
+    } catch (error) {
+      console.error('Error:', error);
+      toast.error("Une erreur est survenue. Veuillez réessayer.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
     }, 1500);
   };
   
