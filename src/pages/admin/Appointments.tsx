@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
-import { ArrowLeft, Calendar, Phone, Mail, MessageSquare, Check, X } from 'lucide-react';
+import { Calendar, Phone, Mail, MessageSquare, Check, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import AdminLayout from '@/components/admin/AdminLayout';
+import StatusBadge from '@/components/admin/StatusBadge';
 import {
   Table,
   TableBody,
@@ -14,7 +15,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Badge } from '@/components/ui/badge';
 
 interface Appointment {
   id: string;
