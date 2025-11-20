@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
-import { ArrowLeft, GraduationCap, Phone, Mail, Calendar, Eye, Loader2 } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
+import { GraduationCap, Eye } from 'lucide-react';
+import AdminLayout from '@/components/admin/AdminLayout';
+import StatusBadge from '@/components/admin/StatusBadge';
 
 interface TrainingRegistration {
   id: string;
@@ -25,7 +24,6 @@ interface TrainingRegistration {
 }
 
 const TrainingRegistrations = () => {
-  const { signOut, user } = useAuth();
   const [registrations, setRegistrations] = useState<TrainingRegistration[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
