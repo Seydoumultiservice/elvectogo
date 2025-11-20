@@ -53,6 +53,42 @@ export type Database = {
         }
         Relationships: []
       }
+      contact_messages: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: string
+          message: string | null
+          nom: string
+          notes_admin: string | null
+          status: string
+          telephone: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          message?: string | null
+          nom: string
+          notes_admin?: string | null
+          status?: string
+          telephone: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: string
+          message?: string | null
+          nom?: string
+          notes_admin?: string | null
+          status?: string
+          telephone?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       gallery_items: {
         Row: {
           category: string | null

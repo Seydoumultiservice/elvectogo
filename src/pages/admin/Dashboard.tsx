@@ -1,242 +1,249 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Car,
-  Image,
-  Briefcase,
-  Calendar,
-  FileText,
-  Users,
-  BarChart3,
-  LogOut,
-  GraduationCap,
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/hooks/useAuth';
+import { toast } from 'sonner';
+import AdminLayout from '@/components/admin/AdminLayout';
+import StatCard from '@/components/admin/StatCard';
+import RecentActivity from '@/components/admin/RecentActivity';
+import { 
+  Car, 
+  Image as ImageIcon, 
+  Calendar, 
+  FileText, 
+  GraduationCap, 
+  MessageSquare,
+  Plus,
+  TrendingUp
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/hooks/useAuth';
-import { supabase } from '@/integrations/supabase/client';
-import { toast } from 'sonner';
+import { Card } from '@/components/ui/card';
 
 const Dashboard = () => {
-  const { signOut, user } = useAuth();
+  const { user } = useAuth();
   const [stats, setStats] = useState({
     vehicles: 0,
     gallery: 0,
     appointments: 0,
-    services: 0,
     quotes: 0,
-    trainings: 0,
+    training: 0,
+    messages: 0,
+    services: 0,
   });
+  const [recentActivities, setRecentActivities] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const loadStats = async () => {
+    try {
+      const [
+        vehiclesResult,
+        galleryResult,
+        appointmentsResult,
+        quotesResult,
+        trainingResult,
+        messagesResult,
+        servicesResult
+      ] = await Promise.all([
+        supabase.from('vehicles').select('id', { count: 'exact', head: true }),
+        supabase.from('gallery_items').select('id', { count: 'exact', head: true }),
+        supabase.from('appointments').select('id', { count: 'exact', head: true }),
+        supabase.from('quotes').select('id', { count: 'exact', head: true }),
+        supabase.from('training_registrations').select('id', { count: 'exact', head: true }),
+        supabase.from('contact_messages').select('id', { count: 'exact', head: true }),
+        supabase.from('services').select('id', { count: 'exact', head: true })
+      ]);
+
+      setStats({
+        vehicles: vehiclesResult.count || 0,
+        gallery: galleryResult.count || 0,
+        appointments: appointmentsResult.count || 0,
+        quotes: quotesResult.count || 0,
+        training: trainingResult.count || 0,
+        messages: messagesResult.count || 0,
+        services: servicesResult.count || 0,
+      });
+
+      // Load recent activities
+      const activities = [];
+      
+      const { data: recentMessages } = await supabase
+        .from('contact_messages')
+        .select('id, nom, created_at')
+        .order('created_at', { ascending: false })
+        .limit(3);
+      
+      const { data: recentAppointments } = await supabase
+        .from('appointments')
+        .select('id, full_name, created_at')
+        .order('created_at', { ascending: false })
+        .limit(3);
+
+      const { data: recentQuotes } = await supabase
+        .from('quotes')
+        .select('id, nom, created_at')
+        .order('created_at', { ascending: false })
+        .limit(3);
+
+      if (recentMessages) {
+        activities.push(...recentMessages.map(m => ({
+          id: m.id,
+          type: 'message' as const,
+          title: `Nouveau message`,
+          description: `De ${m.nom}`,
+          timestamp: new Date(m.created_at)
+        })));
+      }
+
+      if (recentAppointments) {
+        activities.push(...recentAppointments.map(a => ({
+          id: a.id,
+          type: 'appointment' as const,
+          title: `Nouveau rendez-vous`,
+          description: `Avec ${a.full_name}`,
+          timestamp: new Date(a.created_at)
+        })));
+      }
+
+      if (recentQuotes) {
+        activities.push(...recentQuotes.map(q => ({
+          id: q.id,
+          type: 'quote' as const,
+          title: `Nouvelle demande de devis`,
+          description: `Par ${q.nom}`,
+          timestamp: new Date(q.created_at)
+        })));
+      }
+
+      activities.sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime());
+      setRecentActivities(activities.slice(0, 8));
+
+    } catch (error) {
+      console.error('Error loading stats:', error);
+      toast.error('Erreur lors du chargement des statistiques');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     loadStats();
   }, []);
 
-  const loadStats = async () => {
-    const [vehiclesResult, galleryResult, appointmentsResult, servicesResult, quotesResult, trainingsResult] =
-      await Promise.all([
-        supabase.from('vehicles').select('id', { count: 'exact', head: true }),
-        supabase.from('gallery_items').select('id', { count: 'exact', head: true }),
-        supabase.from('appointments').select('id', { count: 'exact', head: true }),
-        supabase.from('services').select('id', { count: 'exact', head: true }),
-        supabase.from('quotes').select('id', { count: 'exact', head: true }),
-        supabase.from('training_registrations').select('id', { count: 'exact', head: true }),
-      ]);
-
-    setStats({
-      vehicles: vehiclesResult.count || 0,
-      gallery: galleryResult.count || 0,
-      appointments: appointmentsResult.count || 0,
-      services: servicesResult.count || 0,
-      quotes: quotesResult.count || 0,
-      trainings: trainingsResult.count || 0,
-    });
-  };
-
-  const handleSignOut = async () => {
-    const { error } = await signOut();
-    if (error) {
-      toast.error('Erreur lors de la déconnexion');
-    } else {
-      toast.success('Déconnexion réussie');
-    }
-  };
-
-  const menuItems = [
-    {
-      title: 'Véhicules',
-      description: 'Gérer les véhicules et leurs photos',
-      icon: Car,
-      link: '/admin/vehicules',
-      count: stats.vehicles,
-      color: 'bg-blue-500',
-    },
-    {
-      title: 'Galerie',
-      description: 'Gérer les images de la galerie',
-      icon: Image,
-      link: '/admin/galerie',
-      count: stats.gallery,
-      color: 'bg-purple-500',
-    },
-    {
-      title: 'Services',
-      description: 'Gérer les services proposés',
-      icon: Briefcase,
-      link: '/admin/services',
-      count: stats.services,
-      color: 'bg-green-500',
-    },
-    {
-      title: 'Rendez-vous',
-      description: 'Gérer les demandes de rendez-vous',
-      icon: Calendar,
-      link: '/admin/rdv',
-      count: stats.appointments,
-      color: 'bg-orange-500',
-    },
-    {
-      title: 'Demandes de Devis',
-      description: 'Gérer les demandes de devis',
-      icon: FileText,
-      link: '/admin/devis',
-      count: stats.quotes,
-      color: 'bg-yellow-500',
-    },
-    {
-      title: 'Inscriptions Formations',
-      description: 'Gérer les inscriptions aux formations',
-      icon: GraduationCap,
-      link: '/admin/formations',
-      count: stats.trainings,
-      color: 'bg-teal-500',
-    },
-  ];
+  if (loading) {
+    return (
+      <AdminLayout>
+        <div className="flex items-center justify-center h-64">
+          <p className="text-gray-500">Chargement...</p>
+        </div>
+      </AdminLayout>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <img
-                src="/lovable-uploads/2b8380f1-7282-4343-a0a8-40704b599087.png"
-                alt="ELVEC-TOGO"
-                className="h-12"
-              />
-              <div>
-                <h1 className="text-2xl font-bold text-elvec-900">Administration</h1>
-                <p className="text-sm text-gray-600">Bienvenue, {user?.email}</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <Link to="/">
-                <Button variant="outline">Voir le site</Button>
-              </Link>
-              <Button
-                variant="destructive"
-                onClick={handleSignOut}
-                className="flex items-center gap-2"
-              >
-                <LogOut className="h-4 w-4" />
-                Déconnexion
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">
-            Tableau de bord
-          </h2>
-          <p className="text-gray-600">
-            Gérez tous les aspects de votre site web ELVEC-TOGO
-          </p>
+    <AdminLayout>
+      <div className="space-y-6">
+        {/* Header */}
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">Tableau de bord</h1>
+          <p className="text-gray-600 mt-1">Bienvenue, {user?.email}</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {menuItems.map((item) => (
-            <Link
-              key={item.link}
-              to={item.link}
-              className="group bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden"
-            >
-              <div className="p-6">
-                <div className="flex items-start justify-between mb-4">
-                  <div
-                    className={`${item.color} text-white p-3 rounded-lg group-hover:scale-110 transition-transform`}
-                  >
-                    <item.icon className="h-6 w-6" />
-                  </div>
-                  {item.count !== null && (
-                    <div className="bg-gray-100 px-3 py-1 rounded-full">
-                      <span className="text-sm font-semibold text-gray-700">
-                        {item.count}
-                      </span>
-                    </div>
-                  )}
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-elvec-600 transition-colors">
-                  {item.title}
-                </h3>
-                <p className="text-gray-600 text-sm">{item.description}</p>
-              </div>
-              <div className="bg-gray-50 px-6 py-3 border-t group-hover:bg-elvec-50 transition-colors">
-                <span className="text-sm font-medium text-elvec-600 group-hover:text-elvec-700">
-                  Gérer →
-                </span>
-              </div>
-            </Link>
-          ))}
+        {/* Stats Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <StatCard
+            title="Messages"
+            value={stats.messages}
+            icon={MessageSquare}
+            color="text-green-600"
+            trend={{ value: 12, isPositive: true }}
+          />
+          <StatCard
+            title="Rendez-vous"
+            value={stats.appointments}
+            icon={Calendar}
+            color="text-purple-600"
+            trend={{ value: 8, isPositive: true }}
+          />
+          <StatCard
+            title="Demandes de devis"
+            value={stats.quotes}
+            icon={FileText}
+            color="text-orange-600"
+            trend={{ value: 5, isPositive: true }}
+          />
+          <StatCard
+            title="Formations"
+            value={stats.training}
+            icon={GraduationCap}
+            color="text-red-600"
+            trend={{ value: 15, isPositive: true }}
+          />
         </div>
 
         {/* Quick Stats */}
-        <div className="mt-8 grid grid-cols-1 md:grid-cols-4 gap-4">
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Total véhicules</p>
-                <p className="text-3xl font-bold text-gray-900">{stats.vehicles}</p>
-              </div>
-              <Car className="h-12 w-12 text-blue-500 opacity-20" />
+        <Card className="p-6 bg-gradient-to-r from-elvec-600 to-elvec-800 text-white">
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-lg font-semibold mb-1">Statistiques Rapides</h3>
+              <p className="text-elvec-100">Aperçu de votre plateforme</p>
             </div>
+            <TrendingUp className="h-12 w-12 text-elvec-200" />
+          </div>
+          <div className="grid grid-cols-3 gap-6 mt-6">
+            <div>
+              <p className="text-elvec-200 text-sm">Véhicules</p>
+              <p className="text-3xl font-bold">{stats.vehicles}</p>
+            </div>
+            <div>
+              <p className="text-elvec-200 text-sm">Photos Galerie</p>
+              <p className="text-3xl font-bold">{stats.gallery}</p>
+            </div>
+            <div>
+              <p className="text-elvec-200 text-sm">Services Actifs</p>
+              <p className="text-3xl font-bold">{stats.services}</p>
+            </div>
+          </div>
+        </Card>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Recent Activity */}
+          <div className="lg:col-span-2">
+            <RecentActivity activities={recentActivities} />
           </div>
 
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Photos galerie</p>
-                <p className="text-3xl font-bold text-gray-900">{stats.gallery}</p>
-              </div>
-              <Image className="h-12 w-12 text-purple-500 opacity-20" />
+          {/* Quick Actions */}
+          <Card className="p-6">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">Actions Rapides</h3>
+            <div className="space-y-3">
+              <Link to="/admin/messages">
+                <Button variant="outline" className="w-full justify-start">
+                  <MessageSquare className="h-4 w-4 mr-2" />
+                  Voir les messages
+                </Button>
+              </Link>
+              <Link to="/admin/galerie">
+                <Button variant="outline" className="w-full justify-start">
+                  <Plus className="h-4 w-4 mr-2" />
+                  Ajouter à la galerie
+                </Button>
+              </Link>
+              <Link to="/admin/rdv">
+                <Button variant="outline" className="w-full justify-start">
+                  <Calendar className="h-4 w-4 mr-2" />
+                  Gérer rendez-vous
+                </Button>
+              </Link>
+              <Link to="/admin/devis">
+                <Button variant="outline" className="w-full justify-start">
+                  <FileText className="h-4 w-4 mr-2" />
+                  Voir les devis
+                </Button>
+              </Link>
             </div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Rendez-vous</p>
-                <p className="text-3xl font-bold text-gray-900">{stats.appointments}</p>
-              </div>
-              <Calendar className="h-12 w-12 text-orange-500 opacity-20" />
-            </div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm text-gray-600">Services actifs</p>
-                <p className="text-3xl font-bold text-gray-900">{stats.services}</p>
-              </div>
-              <Briefcase className="h-12 w-12 text-green-500 opacity-20" />
-            </div>
-          </div>
+          </Card>
         </div>
-      </main>
-    </div>
+      </div>
+    </AdminLayout>
   );
 };
 

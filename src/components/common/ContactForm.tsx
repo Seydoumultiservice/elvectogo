@@ -4,6 +4,15 @@ import { Mail, Phone, User, MessageSquare } from 'lucide-react';
 import Button from './Button';
 import { toast } from "sonner";
 import VoiceRecorder from './VoiceRecorder';
+import { supabase } from '@/integrations/supabase/client';
+import { z } from 'zod';
+
+const contactSchema = z.object({
+  nom: z.string().trim().min(1, { message: "Le nom est requis" }).max(100, { message: "Le nom est trop long" }),
+  telephone: z.string().trim().min(8, { message: "Numéro de téléphone invalide" }).max(20, { message: "Numéro de téléphone trop long" }),
+  email: z.string().trim().email({ message: "Email invalide" }).max(255, { message: "Email trop long" }).optional().or(z.literal('')),
+  message: z.string().trim().max(1000, { message: "Message trop long" }).optional().or(z.literal('')),
+});
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -27,30 +36,42 @@ const ContactForm = () => {
     setHasVoiceMessage(true);
   };
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate required fields (name and phone number only)
-    if (!formData.nom.trim()) {
-      toast.error("Veuillez fournir votre nom");
-      return;
-    }
-    
-    if (!formData.telephone.trim()) {
-      toast.error("Veuillez fournir votre numéro de téléphone");
-      return;
+    // Validate form data
+    try {
+      contactSchema.parse(formData);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        toast.error(error.errors[0].message);
+        return;
+      }
     }
     
     setIsSubmitting(true);
     
-    // Simulate form submission with voice message if provided
-    setTimeout(() => {
+    try {
+      // Insert message into database
+      const { error } = await supabase
+        .from('contact_messages')
+        .insert([{
+          nom: formData.nom.trim(),
+          email: formData.email.trim() || null,
+          telephone: formData.telephone.trim(),
+          message: formData.message.trim() || null,
+          status: 'nouveau'
+        }]);
+
+      if (error) throw error;
+
+      // TODO: Handle voice message upload if provided
       if (hasVoiceMessage && voiceMessageBlob) {
-        console.log("Message vocal à envoyer:", voiceMessageBlob);
-        // Here you would normally upload the audio blob to a server
+        console.log("Message vocal à traiter:", voiceMessageBlob);
+        // Future: upload to storage bucket
       }
       
-      toast.success("Votre message a été envoyé avec succès!");
+      toast.success("Votre message a été envoyé avec succès! Nous vous contacterons bientôt.");
       setFormData({
         nom: '',
         email: '',
@@ -59,8 +80,12 @@ const ContactForm = () => {
       });
       setHasVoiceMessage(false);
       setVoiceMessageBlob(null);
+    } catch (error) {
+      console.error('Error submitting contact form:', error);
+      toast.error("Une erreur est survenue. Veuillez réessayer.");
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
   
   return (

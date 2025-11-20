@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -7,8 +6,17 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
-import { ArrowLeft, FileText, Phone, Mail, MapPin, Calendar, Eye, Loader2 } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
+import { FileText, Eye, Phone, Mail, MapPin, Calendar } from 'lucide-react';
+import AdminLayout from '@/components/admin/AdminLayout';
+import StatusBadge from '@/components/admin/StatusBadge';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 
 interface Quote {
   id: string;
@@ -23,7 +31,6 @@ interface Quote {
 }
 
 const Quotes = () => {
-  const { signOut, user } = useAuth();
   const [quotes, setQuotes] = useState<Quote[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
@@ -116,51 +123,36 @@ const Quotes = () => {
     filter === 'all' || quote.status === filter
   );
 
-  const handleSignOut = async () => {
-    const { error } = await signOut();
-    if (error) {
-      toast.error('Erreur lors de la déconnexion');
-    } else {
-      toast.success('Déconnexion réussie');
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow-sm border-b border-gray-200">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <img src="/lovable-uploads/2b8380f1-7282-4343-a0a8-40704b599087.png" alt="ELVEC TOGO" className="h-12" />
-              <div>
-                <h1 className="text-2xl font-bold text-gray-900">Administration ELVEC</h1>
-                <p className="text-sm text-gray-600">{user?.email}</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-3">
-              <Link to="/">
-                <Button variant="outline">Voir le site</Button>
-              </Link>
-              <Button variant="destructive" onClick={handleSignOut}>
-                Déconnexion
-              </Button>
-            </div>
-          </div>
+    <AdminLayout>
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-3xl font-bold text-gray-900">Demandes de Devis</h1>
+          <p className="text-gray-600 mt-1">Gérez toutes les demandes de devis</p>
         </div>
-      </header>
 
-      <main className="container mx-auto px-4 py-8">
-        <div className="mb-6 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <Link to="/admin/dashboard">
-              <Button variant="outline" size="sm">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Retour
-              </Button>
-            </Link>
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 flex items-center gap-2">
-                <FileText className="h-8 w-8 text-elvec-600" />
+        {/* Filters */}
+        <div className="flex gap-4">
+          <Select value={filter} onValueChange={setFilter}>
+            <SelectTrigger className="w-48">
+              <SelectValue placeholder="Filtrer par statut" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Tous</SelectItem>
+              <SelectItem value="pending">En attente</SelectItem>
+              <SelectItem value="completed">Traité</SelectItem>
+              <SelectItem value="cancelled">Annulé</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+
+        {loading ? (
+          <div className="flex items-center justify-center h-64">
+            <p className="text-gray-500">Chargement...</p>
+          </div>
+        ) : (
+          <div className="bg-white rounded-lg shadow overflow-hidden">
+            <Table>
                 Demandes de Devis
               </h2>
               <p className="text-gray-600 mt-1">{filteredQuotes.length} demande(s)</p>
