@@ -68,6 +68,14 @@ const AboutUs = () => {
                   />
                   <p className="text-center mt-2 font-semibold text-elvec-600">Assistante de Direction</p>
                 </div>
+                <div className="group cursor-pointer" onClick={() => setZoomImage("/lovable-uploads/bureau-elvec.jpg")}>
+                  <img 
+                    src="/lovable-uploads/bureau-elvec.jpg" 
+                    alt="Bureau ELVEC TOGO" 
+                    className="rounded-lg shadow-lg w-full h-64 object-cover hover:shadow-2xl transition-all duration-300 transform group-hover:scale-105" 
+                  />
+                  <p className="text-center mt-2 font-semibold text-elvec-600">Bureau ELVEC</p>
+                </div>
                 <div className="group cursor-pointer" onClick={() => setZoomImage("/lovable-uploads/equipe-bureau-nouveau.jpg")}>
                   <img 
                     src="/lovable-uploads/equipe-bureau-nouveau.jpg" 
@@ -75,6 +83,14 @@ const AboutUs = () => {
                     className="rounded-lg shadow-lg w-full h-64 object-cover hover:shadow-2xl transition-all duration-300 transform group-hover:scale-105" 
                   />
                   <p className="text-center mt-2 font-semibold text-elvec-600">Équipe Bureau</p>
+                </div>
+                <div className="group cursor-pointer" onClick={() => setZoomImage("/lovable-uploads/equipe-directeur.jpg")}>
+                  <img 
+                    src="/lovable-uploads/equipe-directeur.jpg" 
+                    alt="Équipe Direction ELVEC TOGO" 
+                    className="rounded-lg shadow-lg w-full h-64 object-cover hover:shadow-2xl transition-all duration-300 transform group-hover:scale-105" 
+                  />
+                  <p className="text-center mt-2 font-semibold text-elvec-600">Équipe Direction</p>
                 </div>
               </div>
             </AnimatedSection>
