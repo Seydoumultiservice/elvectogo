@@ -157,8 +157,18 @@ const AboutUs = () => {
           </AnimatedSection>
         </div>
       </section>
+      
+      {zoomImage && (
+        <ImageZoomModal
+          isOpen={!!zoomImage}
+          onClose={() => setZoomImage(null)}
+          imageSrc={zoomImage.src}
+          imageAlt={zoomImage.alt}
+        />
+      )}
     </Layout>
   );
 };
 
 export default AboutUs;
+
