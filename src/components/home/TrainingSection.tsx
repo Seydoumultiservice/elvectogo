@@ -21,24 +21,31 @@ const TrainingSection = () => {
           </div>
         </AnimatedSection>
 
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Image */}
+        <div className="grid md:grid-cols-5 gap-8 lg:gap-12 items-center">
+          {/* Video */}
           <AnimatedSection animationType="slide-right" delay={200}>
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              <img 
-                src="/lovable-uploads/formation-engins-lourds.jpg" 
-                alt="Formation conduite engins lourds ELVEC TOGO"
-                className="w-full h-[500px] object-cover"
-              />
-              <div className="absolute top-4 right-4 bg-elvec-500 text-white px-4 py-2 rounded-full font-bold animate-pulse">
-                PLACES LIMITÉES
+            <div className="md:col-span-3">
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                <video 
+                  controls
+                  poster="/lovable-uploads/formation-engins-lourds.jpg"
+                  className="w-full h-[500px] object-cover"
+                  preload="metadata"
+                >
+                  <source src="/lovable-uploads/WhatsApp_Video_2025-11-17_at_10.55.16.mp4" type="video/mp4" />
+                  Votre navigateur ne supporte pas la lecture de vidéos HTML5.
+                </video>
+                <div className="absolute top-4 right-4 bg-elvec-500 text-white px-4 py-2 rounded-full font-bold animate-pulse">
+                  PLACES LIMITÉES
+                </div>
               </div>
             </div>
           </AnimatedSection>
 
           {/* Contenu */}
           <AnimatedSection animationType="slide-up" delay={400}>
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-2xl">
+            <div className="md:col-span-2">
+              <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-2xl">
               {/* Détails de la formation */}
               <div className="mb-8">
                 <h3 className="text-2xl font-bold mb-6 flex items-center">

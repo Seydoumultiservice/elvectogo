@@ -2,6 +2,7 @@ import { X, Check } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../ui/dialog';
 import { Button } from '../ui/button';
 import { Link } from 'react-router-dom';
+import YouTubeEmbed from '../home/YouTubeEmbed';
 
 interface ServiceModalProps {
   isOpen: boolean;
@@ -12,6 +13,7 @@ interface ServiceModalProps {
     longDescription: string;
     images: string[];
     features: string[];
+    youtubeVideoId?: string;
   };
 }
 
@@ -26,21 +28,34 @@ const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) => {
         </DialogHeader>
 
         <div className="space-y-6">
+          {/* YouTube Video if available */}
+          {service.youtubeVideoId && (
+            <div className="mb-6">
+              <h3 className="text-xl font-semibold mb-3 text-gray-900">
+                Vidéo de présentation
+              </h3>
+              <YouTubeEmbed videoId={service.youtubeVideoId} title={service.title} />
+            </div>
+          )}
+
           {/* Images Gallery */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {service.images.map((image, index) => (
-              <div
-                key={index}
-                className="aspect-video rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow"
-              >
-                <img
-                  src={image}
-                  alt={`${service.title} ${index + 1}`}
-                  className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
-                />
-              </div>
-            ))}
-          </div>
+          {service.images.length > 0 && (
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {service.images.map((image, index) => (
+                <div
+                  key={index}
+                  className="aspect-video rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow"
+                >
+                  <img
+                    src={image}
+                    alt={`${service.title} ${index + 1}`}
+                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
 
           {/* Description */}
           <div>
