@@ -1,4 +1,4 @@
-import { Tractor, Hammer, Wrench, Truck, Building, HardHat } from 'lucide-react';
+import { Tractor, Hammer, Wrench, Truck, Building, HardHat, Construction } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import SectionTitle from '../common/SectionTitle';
@@ -6,6 +6,7 @@ import ServiceCard from '../common/ServiceCard';
 import Button from '../common/Button';
 import AnimatedSection from '../animations/AnimatedSection';
 import ServiceModal from '../services/ServiceModal';
+import YouTubeEmbed from './YouTubeEmbed';
 
 const Services = () => {
   const [selectedService, setSelectedService] = useState<any>(null);
@@ -23,9 +24,16 @@ const Services = () => {
       title: 'Démolition',
       description: 'Nos équipes spécialisées assurent la démolition sécurisée de structures existantes.',
       longDescription: 'La démolition nécessite expertise et équipement spécialisé. ELVEC TOGO assure la démolition sécurisée de bâtiments, structures et ouvrages de toutes tailles. Nous utilisons des techniques modernes pour minimiser les nuisances sonores et les poussières, tout en garantissant la sécurité du site et des environs. Nos équipes sont formées aux normes de sécurité les plus strictes et disposent de tous les équipements de protection nécessaires. Nous gérons également l\'évacuation et le recyclage des déchets de démolition de manière responsable.',
-      youtubeUrl: 'https://youtube.com/shorts/ln7E4ujuDbU?feature=share',
-      images: ['/lovable-uploads/DEMOLITION1.jpg', '/lovable-uploads/DEMOLITION12.jpg'],
+      youtubeVideoId: 'ln7E4ujuDbU',
+      images: ['/lovable-uploads/chantier-demolition.webp', '/lovable-uploads/equipements-securite-demolition.jpg'],
       features: ['Sécurité maximale garantie', 'Gestion complète des déchets', 'Permis et autorisations gérés', 'Rapidité d\'exécution'],
+    },
+    pavage: {
+      title: 'Pavage et Aménagement Routier',
+      description: 'Réalisation de travaux de pavage et d\'aménagement routier avec finition impeccable.',
+      longDescription: 'ELVEC TOGO est votre partenaire privilégié pour tous vos projets de pavage et d\'aménagement routier. Nous intervenons sur la pose de pavés autobloquants, l\'aménagement de parkings, voies piétonnes, places publiques et routes urbaines. Notre équipe qualifiée utilise des compacteurs et équipements de dernière génération pour garantir une finition parfaite et une durabilité exceptionnelle. Nous respectons scrupuleusement les normes techniques et assurons un rendu esthétique de haute qualité. De la préparation du sol à la pose finale, chaque étape est réalisée avec précision pour vous offrir un ouvrage solide et durable.',
+      images: ['/lovable-uploads/pavage-compacteur.jpg', '/lovable-uploads/pavage-pose.jpg', '/lovable-uploads/pavage-finition.jpg'],
+      features: ['Pose de pavés autobloquants professionnelle', 'Équipements de compactage modernes', 'Finition esthétique soignée', 'Respect des normes techniques', 'Garantie de durabilité'],
     },
     pisteRurale: {
       title: 'Piste Rurale',
