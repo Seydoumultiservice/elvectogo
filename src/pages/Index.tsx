@@ -1,13 +1,15 @@
 import { useEffect } from 'react';
 import Hero from '../components/home/Hero';
 import Services from '../components/home/Services';
+import VideoPresentation from '../components/home/VideoPresentation';
+import TrainingSection from '../components/home/TrainingSection';
+import AgriculturalServices from '../components/home/AgriculturalServices';
 import EquipmentRental from '../components/home/EquipmentRental';
 import Gallery from '../components/home/Gallery';
 import CarRentalSection from '../components/home/CarRentalSection';
-import CtaSection from '../components/home/CtaSection';
 import Partners from '../components/home/Partners';
-import VideoPresentation from '../components/home/VideoPresentation';
-import TrainingSection from '../components/home/TrainingSection';
+import CtaSection from '../components/home/CtaSection';
+import AppointmentCTA from '../components/common/AppointmentCTA';
 import Layout from '../components/layout/Layout';
 
 const Index = () => {
@@ -18,14 +20,16 @@ const Index = () => {
   return (
     <Layout>
       <Hero />
-      <Partners />
-      <Services />
       <VideoPresentation />
+      <Services />
       <TrainingSection />
+      <AgriculturalServices />
       <EquipmentRental />
       <Gallery />
       <CarRentalSection />
+      <Partners />
       <CtaSection />
+      <AppointmentCTA />
     </Layout>
   );
 };
