@@ -8,6 +8,7 @@ import CtaSection from '../components/home/CtaSection';
 import Partners from '../components/home/Partners';
 import VideoPresentation from '../components/home/VideoPresentation';
 import TrainingSection from '../components/home/TrainingSection';
+import AppointmentCTA from '../components/common/AppointmentCTA';
 import Layout from '../components/layout/Layout';
 
 const Index = () => {
@@ -22,6 +23,7 @@ const Index = () => {
       <Services />
       <VideoPresentation />
       <TrainingSection />
+      <AppointmentCTA />
       <EquipmentRental />
       <Gallery />
       <CarRentalSection />

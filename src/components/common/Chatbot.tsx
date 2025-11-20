@@ -97,8 +97,10 @@ const Chatbot = () => {
     { icon: '📋', text: 'Demander un devis' },
     { icon: '🚜', text: 'Louer un engin' },
     { icon: '🚗', text: 'Louer une voiture' },
+    { icon: '🎓', text: 'Formation engins' },
     { icon: '📞', text: 'Vos coordonnées' },
     { icon: '⏰', text: 'Vos horaires' },
+    { icon: '👤', text: 'Parler à un conseiller' },
   ];
 
   return (
