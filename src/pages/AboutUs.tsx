@@ -87,10 +87,10 @@ const AboutUs = () => {
                 <div className="group cursor-pointer" onClick={() => setZoomImage("/lovable-uploads/equipe-directeur.jpg")}>
                   <img 
                     src="/lovable-uploads/equipe-elvec-2025.jpg" 
-                    alt="Équipe Direction ELVEC TOGO" 
+                    alt="Équipe ELVEC TOGO" 
                     className="rounded-lg shadow-lg w-full h-64 object-cover hover:shadow-2xl transition-all duration-300 transform group-hover:scale-105" 
                   />
-                  <p className="text-center mt-2 font-semibold text-elvec-600">Équipe Direction</p>
+                  <p className="text-center mt-2 font-semibold text-elvec-600">Équipe ELVEC TOGO</p>
                 </div>
               </div>
             </AnimatedSection>
