@@ -12,6 +12,8 @@ interface ServiceModalProps {
     longDescription: string;
     images: string[];
     features: string[];
+    youtubeVideoId?: string;
+    videoUrl?: string;
   };
 }
 
@@ -26,6 +28,20 @@ const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) => {
         </DialogHeader>
 
         <div className="space-y-6">
+          {/* Video (if available) */}
+          {service.videoUrl && (
+            <div className="mb-6">
+              <video
+                controls
+                className="w-full rounded-lg shadow-lg"
+                poster={service.images[0]}
+              >
+                <source src={service.videoUrl} type="video/mp4" />
+                Votre navigateur ne supporte pas la lecture de vidéos.
+              </video>
+            </div>
+          )}
+
           {/* Images Gallery */}
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {service.images.map((image, index) => (

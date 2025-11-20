@@ -38,15 +38,16 @@ const VideoPresentation = () => {
             className="md:col-span-3"
             delay={100}
           >
-            <div className="relative rounded-lg overflow-hidden shadow-2xl group">
+            <div className="relative rounded-lg overflow-hidden shadow-2xl group bg-black">
               <video
                 ref={videoRef}
-                className="w-full aspect-video object-cover"
-                poster="/lovable-uploads/formation-elvec-affiche.jpg"
+                className="w-full aspect-video object-contain"
+                poster="/lovable-uploads/banniere-hero.jpg"
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
                 controls
                 preload="metadata"
+                playsInline
               >
                 <source src="/lovable-uploads/video-presentation-principale.mp4" type="video/mp4" />
                 Votre navigateur ne supporte pas la lecture de vidéos.
