@@ -38,15 +38,6 @@ const Login = () => {
     },
   });
 
-  const signupForm = useForm<SignupFormData>({
-    resolver: zodResolver(signupSchema),
-    defaultValues: {
-      email: '',
-      password: '',
-      fullName: '',
-    },
-  });
-
   useEffect(() => {
     if (user) {
       navigate('/admin/dashboard');
