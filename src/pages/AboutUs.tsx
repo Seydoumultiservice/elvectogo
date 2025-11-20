@@ -6,8 +6,11 @@ import Layout from '../components/layout/Layout';
 import SectionTitle from '../components/common/SectionTitle';
 import Button from '../components/common/Button';
 import AnimatedSection from '../components/animations/AnimatedSection';
+import ImageZoomModal from '../components/common/ImageZoomModal';
 
 const AboutUs = () => {
+  const [zoomImage, setZoomImage] = useState<{ src: string; alt: string } | null>(null);
+  
   const currentProjects = [
     { title: 'Construction ligne transport énergie 161 KV Kara - Mango - Dapaong', partner: 'KEC International Limited', icon: Building2 },
     { title: 'Extension du port Lomé Container Terminal', partner: 'Eiffage Génie Civil', icon: Building2 },
@@ -41,9 +44,34 @@ const AboutUs = () => {
           <div className="flex flex-col lg:flex-row gap-12 items-center">
             <AnimatedSection className="w-full lg:w-1/2">
               <div className="grid grid-cols-2 gap-4">
-                <img src="/lovable-uploads/directeur-materiel.jpg" alt="Directeur Matériel ELVEC TOGO" className="rounded-lg shadow-lg w-full h-auto object-cover" />
-                <img src="/lovable-uploads/assistante-direction.jpg" alt="Assistante de Direction ELVEC TOGO" className="rounded-lg shadow-lg w-full h-auto object-cover" />
-                <img src="/lovable-uploads/equipe-bureau-nouveau.jpg" alt="Équipe Bureau ELVEC TOGO" className="rounded-lg shadow-lg w-full h-auto object-cover col-span-2" />
+                <img 
+                  src="/lovable-uploads/directeur-materiel.jpg" 
+                  alt="Directeur Matériel ELVEC TOGO" 
+                  className="rounded-lg shadow-lg w-full h-auto object-cover cursor-pointer hover:shadow-xl transition-shadow"
+                  onClick={() => setZoomImage({ src: '/lovable-uploads/directeur-materiel.jpg', alt: 'Directeur Matériel ELVEC TOGO' })}
+                  loading="lazy"
+                />
+                <img 
+                  src="/lovable-uploads/assistante-direction.jpg" 
+                  alt="Assistante de Direction ELVEC TOGO" 
+                  className="rounded-lg shadow-lg w-full h-auto object-cover cursor-pointer hover:shadow-xl transition-shadow"
+                  onClick={() => setZoomImage({ src: '/lovable-uploads/assistante-direction.jpg', alt: 'Assistante de Direction ELVEC TOGO' })}
+                  loading="lazy"
+                />
+                <img 
+                  src="/lovable-uploads/equipe-directeur.jpg" 
+                  alt="Directeur Général ELVEC TOGO" 
+                  className="rounded-lg shadow-lg w-full h-auto object-cover cursor-pointer hover:shadow-xl transition-shadow"
+                  onClick={() => setZoomImage({ src: '/lovable-uploads/equipe-directeur.jpg', alt: 'Directeur Général ELVEC TOGO' })}
+                  loading="lazy"
+                />
+                <img 
+                  src="/lovable-uploads/equipe-bureau-nouveau.jpg" 
+                  alt="Équipe Bureau ELVEC TOGO" 
+                  className="rounded-lg shadow-lg w-full h-auto object-cover cursor-pointer hover:shadow-xl transition-shadow"
+                  onClick={() => setZoomImage({ src: '/lovable-uploads/equipe-bureau-nouveau.jpg', alt: 'Équipe Bureau ELVEC TOGO' })}
+                  loading="lazy"
+                />
               </div>
             </AnimatedSection>
             <AnimatedSection animationType="slide-right" className="w-full lg:w-1/2">

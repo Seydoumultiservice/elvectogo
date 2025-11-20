@@ -84,16 +84,16 @@ const Services = () => {
       key: 'ponceaux',
     },
     {
-      title: 'Pose de Pavé',
-      description: 'Notre équipe est experte dans la pose de pavés pour vos allées, cours et espaces extérieurs.',
-      icon: HardHat,
-      key: 'posePave',
+      title: 'Pavage et Aménagement Routier',
+      description: 'Réalisation de travaux de pavage et d\'aménagement routier avec finition impeccable.',
+      icon: Construction,
+      key: 'pavage',
     },
     {
-      title: 'Pavage',
-      description: 'Nous proposons des services de pavage pour créer des surfaces durables et esthétiques.',
-      icon: Truck,
-      key: 'pavage',
+      title: 'Labour des Champs',
+      description: 'Services de labour professionnel pour vos terres agricoles avec équipements modernes.',
+      icon: Tractor,
+      key: 'labourChamps',
     },
   ];
 
