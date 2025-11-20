@@ -11,7 +11,7 @@ const Gallery = () => {
   const galleryItems = [
     { type: 'image', src: '/lovable-uploads/excavation-chantier.jpg', title: 'Excavation de chantier' },
     { type: 'image', src: '/lovable-uploads/equipe-elvec-2025.jpg', title: 'Équipe ELVEC 2025' },
-    { type: 'image', src: '/lovable-uploads/engin-bank-of-africa.jpg', title: 'Projet daménagement de la route du ront-point port' },
+    { type: 'image', src: '/lovable-uploads/engin-bank-of-africa.jpg', title: 'Projet d\'aménagement de la route du rond-point port' },
     { type: 'image', src: '/lovable-uploads/bulldozer-action.jpg', title: 'Bulldozer en action' },
     { type: 'image', src: '/lovable-uploads/agent-elvec-chantier.jpg', title: 'Agent ELVEC sur chantier' },
     { type: 'image', src: '/lovable-uploads/excavatrice-port-lome.jpg', title: 'Excavatrice Port de Lomé' },

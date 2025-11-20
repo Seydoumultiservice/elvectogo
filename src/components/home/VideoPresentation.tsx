@@ -42,14 +42,16 @@ const VideoPresentation = () => {
               <video
                 ref={videoRef}
                 className="w-full aspect-video object-cover"
-                poster="/lovable-uploads/formation-elvec-affiche.jpg"
+                poster="/lovable-uploads/banniere-hero.jpg"
                 onPlay={() => setIsPlaying(true)}
                 onPause={() => setIsPlaying(false)}
+                onError={(e) => console.error('Erreur vidéo:', e)}
                 controls
-                preload="metadata"
+                preload="auto"
+                playsInline
               >
                 <source src="/lovable-uploads/video-presentation-principale.mp4" type="video/mp4" />
-                Votre navigateur ne supporte pas la lecture de vidéos.
+                <p className="text-white p-4">Votre navigateur ne supporte pas la lecture de vidéos HTML5.</p>
               </video>
               
               {!isPlaying && (
