@@ -79,10 +79,15 @@ const Gallery = () => {
             <SectionTitle title="Galerie De Nos Réalisations" subtitle="Photos et vidéos de nos projets" centered />
             <div className="flex flex-wrap justify-center gap-2 mb-12">
               {categories.map((category) => (
-                <button key={category.id} onClick={() => setSelectedCategory(category.id)}
+                <button 
+                  key={category.id} 
+                  onClick={() => setSelectedCategory(category.id)}
                   className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                    selectedCategory === category.id ? 'bg-elvec-600 text-white shadow-lg' : 'bg-white text-gray-700 hover:bg-elvec-50 shadow-md'
-                  }`}>
+                    selectedCategory === category.id 
+                      ? 'bg-elvec-600 text-white shadow-lg' 
+                      : 'bg-white text-gray-700 hover:bg-elvec-50 shadow-md'
+                  }`}
+                >
                   {category.name}
                 </button>
               ))}
@@ -91,57 +96,51 @@ const Gallery = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredItems.map((item, index) => (
-              <AnimatedSection key={item.id} delay={index * 100}>
-                <div className="group relative overflow-hidden rounded-lg shadow-lg bg-white">
+              <AnimatedSection key={item.id} delay={index * 50}>
+                <div className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300">
                   {item.type === 'image' ? (
-                    <div className="overflow-hidden">
-                      <img src={item.image} alt={item.title} className="object-cover w-full h-64 transform transition-transform duration-500 group-hover:scale-110" />
-                    </div>
+                    <img
+                      src={item.image_url}
+                      alt={item.title}
+                      className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                  ) : item.type === 'video' ? (
+                    <video
+                      src={item.image_url}
+                      className="w-full h-64 object-cover"
+                      controls
+                    />
                   ) : item.type === 'youtube' ? (
-                    <div className="relative" aria-hidden={false}>
-                      {loadedYouTube[item.id] ? (
-                        <div className="relative pb-[56.25%] h-0">
-                          {getYouTubeEmbedUrl((item as any).youtubeUrl) ? (
-                            <iframe
-                              className="absolute top-0 left-0 w-full h-full"
-                              src={getYouTubeEmbedUrl((item as any).youtubeUrl) || undefined}
-                              title={item.title}
-                              frameBorder="0"
-                              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                              allowFullScreen
-                            />
-                          ) : (
-                            <div className="absolute inset-0 flex items-center justify-center bg-gray-100 text-gray-700">Lien YouTube invalide</div>
-                          )}
-                        </div>
-                      ) : (
-                        <button
-                          type="button"
-                          onClick={() => setLoadedYouTube(prev => ({ ...prev, [item.id]: true }))}
-                          className="w-full h-64 p-0 block relative overflow-hidden focus:outline-none"
-                          aria-label={`Lire ${item.title}`}
-                        >
-                          <img src={(item as any).thumbnail || (item as any).image} alt={item.title} className="w-full h-64 object-cover" />
-                          <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-                            <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center shadow-lg">
-                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-7 h-7 text-elvec-600 ml-0">
-                                <path d="M8 5v14l11-7z" />
-                              </svg>
-                            </div>
-                          </div>
-                        </button>
-                      )}
-                      <div className="absolute top-2 right-2 bg-elvec-600 text-white text-xs px-2 py-1 rounded-full">YouTube</div>
-                    </div>
+                    <iframe
+                      src={`https://www.youtube.com/embed/${extractYouTubeId(item.image_url)}`}
+                      className="w-full h-64"
+                      allowFullScreen
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    />
+                  ) : item.type === 'facebook' ? (
+                    <iframe
+                      src={`https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(item.image_url)}`}
+                      className="w-full h-64"
+                      allowFullScreen
+                      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                    />
                   ) : null}
-                  <div className="absolute inset-0 bg-gradient-to-t from-elvec-900/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                    <h3 className="text-lg font-semibold">{item.title}</h3>
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+                    <h3 className="text-white font-semibold text-lg">{item.title}</h3>
+                    {item.description && (
+                      <p className="text-white/80 text-sm mt-1 line-clamp-2">{item.description}</p>
+                    )}
                   </div>
                 </div>
               </AnimatedSection>
             ))}
           </div>
+
+          {filteredItems.length === 0 && (
+            <div className="text-center py-12 text-muted-foreground">
+              Aucun média trouvé pour cette catégorie
+            </div>
+          )}
         </div>
       </section>
     </Layout>
