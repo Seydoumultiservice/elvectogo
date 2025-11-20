@@ -106,6 +106,38 @@ const AboutUs = () => {
         </div>
       </section>
 
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <AnimatedSection>
+            <SectionTitle title="Notre Équipe en Action" subtitle="Nos agents et nos engins sur le terrain" centered />
+          </AnimatedSection>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12 max-w-5xl mx-auto">
+            <AnimatedSection animationType="slide-up">
+              <div className="group cursor-pointer" onClick={() => setZoomImage("/lovable-uploads/equipe-action-1.jpg")}>
+                <img 
+                  src="/lovable-uploads/equipe-action-1.jpg" 
+                  alt="Agent ELVEC avec engin sur chantier" 
+                  className="rounded-lg shadow-lg w-full h-80 object-cover hover:shadow-2xl transition-all duration-300 transform group-hover:scale-105" 
+                />
+                <p className="text-center mt-3 font-semibold text-elvec-600">Nos Agents au Travail</p>
+              </div>
+            </AnimatedSection>
+            
+            <AnimatedSection animationType="slide-up">
+              <div className="group cursor-pointer" onClick={() => setZoomImage("/lovable-uploads/equipe-action-2.jpg")}>
+                <img 
+                  src="/lovable-uploads/equipe-action-2.jpg" 
+                  alt="Équipe ELVEC avec équipements de chantier" 
+                  className="rounded-lg shadow-lg w-full h-80 object-cover hover:shadow-2xl transition-all duration-300 transform group-hover:scale-105" 
+                />
+                <p className="text-center mt-3 font-semibold text-elvec-600">Professionnalisme & Expertise</p>
+              </div>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+
       <section className="py-16 bg-elvec-50">
         <div className="container mx-auto px-4">
           <AnimatedSection><SectionTitle title="🛠️ NOS OFFRES DE SERVICES" subtitle="Deux secteurs d'activité pour répondre à tous vos besoins" centered /></AnimatedSection>

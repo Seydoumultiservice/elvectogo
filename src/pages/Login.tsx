@@ -1,243 +1,146 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { LogIn, UserPlus } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { useAuth } from '@/hooks/useAuth';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { toast } from 'sonner';
+import { Loader2, Lock } from 'lucide-react';
 
 const loginSchema = z.object({
-  email: z.string().email('Email invalide'),
-  password: z.string().min(6, 'Mot de passe trop court (min. 6 caractères)'),
-});
-
-const signupSchema = loginSchema.extend({
-  fullName: z.string().min(2, 'Le nom doit contenir au moins 2 caractères'),
-  confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
-  message: 'Les mots de passe ne correspondent pas',
-  path: ['confirmPassword'],
+  email: z.string().email("Email invalide"),
+  password: z.string().min(6, "Le mot de passe doit contenir au moins 6 caractères"),
 });
 
 type LoginFormData = z.infer<typeof loginSchema>;
-type SignupFormData = z.infer<typeof signupSchema>;
 
 const Login = () => {
   const navigate = useNavigate();
-  const { user, isAdmin, signIn, signUp } = useAuth();
+  const { user, signIn } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
 
-  const loginForm = useForm<LoginFormData>({
+  const form = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
-    defaultValues: { email: '', password: '' },
-  });
-
-  const signupForm = useForm<SignupFormData>({
-    resolver: zodResolver(signupSchema),
-    defaultValues: { email: '', password: '', confirmPassword: '', fullName: '' },
+    defaultValues: {
+      email: '',
+      password: '',
+    },
   });
 
   useEffect(() => {
-    if (user && isAdmin) {
-      navigate('/admin');
-    } else if (user) {
-      navigate('/');
+    if (user) {
+      navigate('/admin/dashboard');
     }
-  }, [user, isAdmin, navigate]);
+  }, [user, navigate]);
 
-  const onLogin = async (data: LoginFormData) => {
+  const onLogin = async (values: LoginFormData) => {
     setIsLoading(true);
-    const { error } = await signIn(data.email, data.password);
-    
-    if (error) {
-      toast.error('Erreur de connexion', {
-        description: error.message === 'Invalid login credentials'
-          ? 'Email ou mot de passe incorrect'
-          : error.message,
-      });
-    } else {
-      toast.success('Connexion réussie!');
+    try {
+      const { error } = await signIn(values.email, values.password);
+      
+      if (error) {
+        if (error.message.includes('Invalid login credentials')) {
+          toast.error("Identifiants incorrects. Veuillez réessayer.");
+        } else {
+          toast.error("Erreur de connexion. Veuillez réessayer.");
+        }
+      } else {
+        toast.success("Connexion réussie !");
+        navigate('/admin/dashboard');
+      }
+    } catch (error) {
+      toast.error("Une erreur est survenue. Veuillez réessayer.");
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
-  };
-
-  const onSignup = async (data: SignupFormData) => {
-    setIsLoading(true);
-    const { error } = await signUp(data.email, data.password, data.fullName);
-    
-    if (error) {
-      toast.error('Erreur d\'inscription', {
-        description: error.message,
-      });
-    } else {
-      toast.success('Inscription réussie!', {
-        description: 'Vous pouvez maintenant vous connecter.',
-      });
-      signupForm.reset();
-    }
-    setIsLoading(false);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-elvec-50 to-white flex items-center justify-center px-4">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <img
-            src="/lovable-uploads/2b8380f1-7282-4343-a0a8-40704b599087.png"
-            alt="ELVEC-TOGO"
-            className="h-20 mx-auto mb-4"
-          />
-          <h1 className="text-3xl font-bold text-elvec-900">Administration</h1>
-          <p className="text-gray-600 mt-2">Connectez-vous pour gérer le site</p>
-        </div>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-elvec-50 to-elvec-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full">
+        <div className="bg-white rounded-2xl shadow-xl p-8 space-y-8">
+          <div className="text-center">
+            <div className="flex justify-center mb-4">
+              <div className="bg-elvec-600 p-3 rounded-full">
+                <Lock className="h-8 w-8 text-white" />
+              </div>
+            </div>
+            <h2 className="text-3xl font-bold text-gray-900">Administration</h2>
+            <p className="mt-2 text-sm text-gray-600">
+              Connectez-vous pour accéder au panneau d'administration
+            </p>
+          </div>
 
-        <div className="bg-white rounded-lg shadow-xl p-8">
-          <Tabs defaultValue="login" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-6">
-              <TabsTrigger value="login" className="flex items-center gap-2">
-                <LogIn className="h-4 w-4" />
-                Connexion
-              </TabsTrigger>
-              <TabsTrigger value="signup" className="flex items-center gap-2">
-                <UserPlus className="h-4 w-4" />
-                Inscription
-              </TabsTrigger>
-            </TabsList>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onLogin)} className="space-y-6">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Nom d'utilisateur</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="email"
+                        placeholder="AdminElvec@elvectogo.com"
+                        className="h-12"
+                        disabled={isLoading}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <TabsContent value="login">
-              <Form {...loginForm}>
-                <form onSubmit={loginForm.handleSubmit(onLogin)} className="space-y-4">
-                  <FormField
-                    control={loginForm.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <Input type="email" placeholder="votre@email.com" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Mot de passe</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        type="password"
+                        placeholder="••••••••"
+                        className="h-12"
+                        disabled={isLoading}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-                  <FormField
-                    control={loginForm.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Mot de passe</FormLabel>
-                        <FormControl>
-                          <Input type="password" placeholder="••••••••" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+              <Button
+                type="submit"
+                className="w-full h-12 text-lg bg-elvec-600 hover:bg-elvec-700"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    Connexion en cours...
+                  </>
+                ) : (
+                  'Se connecter'
+                )}
+              </Button>
+            </form>
+          </Form>
 
-                  <Button
-                    type="submit"
-                    disabled={isLoading}
-                    className="w-full bg-elvec-600 hover:bg-elvec-700"
-                  >
-                    {isLoading ? 'Connexion...' : 'Se connecter'}
-                  </Button>
-                </form>
-              </Form>
-            </TabsContent>
-
-            <TabsContent value="signup">
-              <Form {...signupForm}>
-                <form onSubmit={signupForm.handleSubmit(onSignup)} className="space-y-4">
-                  <FormField
-                    control={signupForm.control}
-                    name="fullName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Nom complet</FormLabel>
-                        <FormControl>
-                          <Input placeholder="Votre nom" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={signupForm.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <Input type="email" placeholder="votre@email.com" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={signupForm.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Mot de passe</FormLabel>
-                        <FormControl>
-                          <Input type="password" placeholder="••••••••" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={signupForm.control}
-                    name="confirmPassword"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Confirmer le mot de passe</FormLabel>
-                        <FormControl>
-                          <Input type="password" placeholder="••••••••" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <Button
-                    type="submit"
-                    disabled={isLoading}
-                    className="w-full bg-elvec-600 hover:bg-elvec-700"
-                  >
-                    {isLoading ? 'Inscription...' : 'S\'inscrire'}
-                  </Button>
-                </form>
-              </Form>
-            </TabsContent>
-          </Tabs>
-        </div>
-
-        <div className="text-center mt-6">
-          <Button
-            variant="link"
-            onClick={() => navigate('/')}
-            className="text-gray-600 hover:text-elvec-600"
-          >
-            ← Retour au site
-          </Button>
+          <div className="text-center pt-4 border-t border-gray-200">
+            <Link
+              to="/"
+              className="text-sm text-elvec-600 hover:text-elvec-700 transition-colors"
+            >
+              ← Retour au site
+            </Link>
+          </div>
         </div>
       </div>
     </div>

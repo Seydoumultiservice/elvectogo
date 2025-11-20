@@ -131,6 +131,8 @@ const TrainingSection = () => {
           </AnimatedSection>
         </div>
       </div>
+      
+      <TrainingRegistrationDialog open={registrationOpen} onOpenChange={setRegistrationOpen} />
     </section>
   );
 };

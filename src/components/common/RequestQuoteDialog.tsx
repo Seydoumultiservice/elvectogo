@@ -138,8 +138,6 @@ const RequestQuoteDialog = ({ open, onOpenChange }: RequestQuoteDialogProps) => 
       setIsSubmitting(false);
     }
   };
-    }, 1500);
-  };
   
   const formatFileSize = (size: number) => {
     if (size < 1024) {
