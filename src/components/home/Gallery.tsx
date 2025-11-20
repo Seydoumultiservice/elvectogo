@@ -1,30 +1,50 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import SectionTitle from '../common/SectionTitle';
 import Button from '../common/Button';
 import AnimatedSection from '../animations/AnimatedSection';
+import { supabase } from '@/integrations/supabase/client';
 
 const Gallery = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [galleryItems, setGalleryItems] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const galleryItems = [
-    { type: 'image', src: '/lovable-uploads/excavation-chantier.jpg', title: 'Excavation de chantier' },
-    { type: 'image', src: '/lovable-uploads/equipe-elvec-2025.jpg', title: 'Équipe ELVEC 2025' },
-    { type: 'image', src: '/lovable-uploads/engin-bank-of-africa.jpg', title: 'Projet daménagement de la route du ront-point port' },
-    { type: 'image', src: '/lovable-uploads/bulldozer-action.jpg', title: 'Bulldozer en action' },
-    { type: 'image', src: '/lovable-uploads/agent-elvec-chantier.jpg', title: 'Agent ELVEC sur chantier' },
-    { type: 'image', src: '/lovable-uploads/excavatrice-port-lome.jpg', title: 'Excavatrice Port de Lomé' },
-    { type: 'image', src: '/lovable-uploads/projet-excavation-1.jpg', title: 'Projet d\'excavation' },
-    { type: 'image', src: '/lovable-uploads/projet-formation-1.jpg', title: 'Formation conduite d\'engins' },
-    { type: 'image', src: '/lovable-uploads/projet-terrassement-1.jpg', title: 'Terrassement' },
-    { type: 'image', src: '/lovable-uploads/equipe-bureau-1.jpg', title: 'Bureau ELVEC' },
-    { type: 'image', src: '/lovable-uploads/equipe-directeur.jpg', title: 'Direction ELVEC' },
-    { type: 'image', src: '/lovable-uploads/projet-electrique-1.jpg', title: 'Projet électrique' },
-    { type: 'image', src: '/lovable-uploads/projet-electrique-2.jpg', title: 'Ligne haute tension' },
-    { type: 'image', src: '/lovable-uploads/engin-komatsu.jpg', title: 'Engin Komatsu' },
-    { type: 'video', src: '/lovable-uploads/video-projet-1.mp4', title: 'Vidéo projet' },
-  ];
+  useEffect(() => {
+    loadGalleryItems();
+  }, []);
+
+  const loadGalleryItems = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("gallery_items")
+        .select("*")
+        .eq("visible", true)
+        .order("order_index", { ascending: true })
+        .limit(6);
+
+      if (error) throw error;
+      
+      const formattedItems = (data || []).map((item) => ({
+        type: item.type,
+        src: item.image_url,
+        title: item.title,
+      }));
+      
+      setGalleryItems(formattedItems);
+    } catch (error) {
+      console.error("Error loading gallery:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const extractYouTubeId = (url: string): string | null => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return match && match[2].length === 11 ? match[2] : null;
+  };
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % galleryItems.length);
@@ -43,6 +63,10 @@ const Gallery = () => {
     const startIndex = Math.max(0, Math.min(currentIndex - 2, galleryItems.length - thumbnailCount));
     return galleryItems.slice(startIndex, startIndex + thumbnailCount);
   };
+
+  if (loading || galleryItems.length === 0) {
+    return null;
+  }
 
   return (
     <section className="py-20 bg-white">
@@ -65,16 +89,26 @@ const Gallery = () => {
                   alt={galleryItems[currentIndex].title}
                   className="w-full h-full object-cover"
                 />
-              ) : (
+              ) : galleryItems[currentIndex].type === 'video' ? (
                 <video
                   controls
                   className="w-full h-full object-cover"
-                  poster="/lovable-uploads/excavation-chantier.jpg"
                 >
                   <source src={galleryItems[currentIndex].src} type="video/mp4" />
-                  Votre navigateur ne supporte pas la lecture de vidéos.
                 </video>
-              )}
+              ) : galleryItems[currentIndex].type === 'youtube' ? (
+                <iframe
+                  src={`https://www.youtube.com/embed/${extractYouTubeId(galleryItems[currentIndex].src)}`}
+                  className="w-full h-full"
+                  allowFullScreen
+                />
+              ) : galleryItems[currentIndex].type === 'facebook' ? (
+                <iframe
+                  src={`https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(galleryItems[currentIndex].src)}`}
+                  className="w-full h-full"
+                  allowFullScreen
+                />
+              ) : null}
 
               {/* Navigation Buttons */}
               <button
