@@ -1,5 +1,5 @@
 
-import { Tractor, Hammer, Wrench, Truck, Building, HardHat, Car, Clock, CheckCircle2 } from 'lucide-react';
+import { Tractor, Hammer, Wrench, Truck, Building, HardHat, Car, Clock, CheckCircle2, Sprout, Droplets, Shovel, TreePine, Wheat } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import SectionTitle from '../components/common/SectionTitle';
@@ -39,6 +39,40 @@ const Services = () => {
       title: 'Pavage',
       description: 'Nous proposons des services de pavage pour créer des surfaces durables et esthétiques.',
       icon: Truck
+    }
+  ];
+  
+  // Services Agricoles
+  const agriculturalServices = [
+    {
+      title: 'Location de Tracteurs',
+      description: 'Tracteurs performants avec opérateurs expérimentés pour tous vos travaux agricoles. Sécurité, efficacité et respect des délais garantis.',
+      icon: Tractor
+    },
+    {
+      title: 'Labour & Mise en Culture',
+      description: 'Préparation professionnelle de vos terres pour optimiser vos rendements. Service complet de labourage et préparation du sol.',
+      icon: Sprout
+    },
+    {
+      title: 'Bassin de Rétention d\'Eau',
+      description: 'Construction de bassins pour l\'irrigation et la gestion de l\'eau. Solutions durables pour l\'agriculture moderne.',
+      icon: Droplets
+    },
+    {
+      title: 'Dessouchage',
+      description: 'Élimination des souches et préparation des terrains agricoles. Travail rapide et efficace avec engins spécialisés.',
+      icon: Shovel
+    },
+    {
+      title: 'Nivellement de Terrain',
+      description: 'Aplanissement et nivellement pour une exploitation optimale. Précision et qualité du travail garanties.',
+      icon: TreePine
+    },
+    {
+      title: 'Transport Agricole',
+      description: 'Transport de récoltes, matériaux et équipements agricoles. Flotte de camions-bennes disponibles.',
+      icon: Wheat
     }
   ];
   
@@ -93,6 +127,122 @@ const Services = () => {
               />
             ))}
           </div>
+        </div>
+      </section>
+      
+      {/* Services Agricoles Section */}
+      <section className="py-16 bg-gradient-to-br from-green-50 via-white to-elvec-50">
+        <div className="container mx-auto px-4">
+          <AnimatedSection>
+            <SectionTitle 
+              title="Services Agricoles Professionnels" 
+              subtitle="Transformez vos terres et boostez vos rendements avec nos solutions de mécanisation agricole"
+              centered
+            />
+            <div className="max-w-4xl mx-auto text-center mb-12">
+              <div className="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-green-600">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  ELVEC TOGO, Votre Partenaire Agricole
+                </h3>
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  Nous accompagnons les exploitations agricoles dans la mécanisation de leurs cultures. 
+                  L'entreprise propose des services de <strong className="text-green-600">dessouchage, nivellement, labour, transport, mise en culture</strong> et bien plus.
+                </p>
+              </div>
+            </div>
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+            {agriculturalServices.map((service, index) => (
+              <AnimatedSection key={service.title} delay={index * 100}>
+                <div className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 p-6 border-t-4 border-green-600 h-full">
+                  <div className="flex items-center mb-4">
+                    <div className="bg-gradient-to-br from-green-500 to-green-700 p-3 rounded-lg mr-4">
+                      <service.icon className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900">{service.title}</h3>
+                  </div>
+                  <p className="text-gray-700 leading-relaxed">{service.description}</p>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+
+          {/* Images des services agricoles */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+            <AnimatedSection delay={200}>
+              <div className="relative group overflow-hidden rounded-xl shadow-xl">
+                <img 
+                  src="/lovable-uploads/services-agricoles-elvec.jpg" 
+                  alt="Services Agricoles ELVEC" 
+                  className="w-full h-[300px] object-cover transform group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
+                  <div>
+                    <h4 className="text-xl font-bold text-white mb-1">Location de Tracteurs</h4>
+                    <p className="text-white/90 text-sm">Engins modernes + Opérateurs</p>
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection delay={300}>
+              <div className="relative group overflow-hidden rounded-xl shadow-xl">
+                <img 
+                  src="/lovable-uploads/intervention-chantiers-agricoles.jpg" 
+                  alt="Intervention Chantiers Agricoles" 
+                  className="w-full h-[300px] object-cover transform group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
+                  <div>
+                    <h4 className="text-xl font-bold text-white mb-1">Intervention Rapide</h4>
+                    <p className="text-white/90 text-sm">Sur tous vos chantiers agricoles</p>
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection delay={400}>
+              <div className="relative group overflow-hidden rounded-xl shadow-xl">
+                <img 
+                  src="/lovable-uploads/travaux-agricoles-action.jpg" 
+                  alt="Travaux Agricoles en Action" 
+                  className="w-full h-[300px] object-cover transform group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
+                  <div>
+                    <h4 className="text-xl font-bold text-white mb-1">Travaux Agricoles</h4>
+                    <p className="text-white/90 text-sm">Labour, dessouchage, nivellement</p>
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
+          </div>
+
+          {/* CTA Agricole */}
+          <AnimatedSection delay={500}>
+            <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-2xl shadow-2xl p-8 md:p-12 text-center text-white mt-12 relative overflow-hidden">
+              <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-20" />
+              <div className="relative z-10">
+                <Tractor className="w-16 h-16 mx-auto mb-4 animate-bounce" />
+                <h3 className="text-3xl md:text-4xl font-bold mb-4">Prêt à Mécaniser Votre Exploitation ?</h3>
+                <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
+                  Contactez-nous pour un devis personnalisé et découvrez comment nous pouvons transformer vos terres
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link to="/contact">
+                    <Button size="lg" className="bg-white text-green-700 hover:bg-gray-100">
+                      Demander un Devis Agricole
+                    </Button>
+                  </Link>
+                  <a href="tel:+22892748270" className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-green-800 text-white rounded-lg font-semibold hover:bg-green-900 transition-colors">
+                    <Clock className="w-5 h-5" />
+                    <span>+228 92 74 82 70</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
       
