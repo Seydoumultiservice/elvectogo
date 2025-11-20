@@ -45,14 +45,14 @@ const Services = () => {
       title: 'Pose de Pavé',
       description: 'Notre équipe est experte dans la pose de pavés pour vos allées, cours et espaces extérieurs.',
       longDescription: 'La pose de pavés embellit vos espaces extérieurs tout en créant des surfaces durables et esthétiques. ELVEC TOGO pose des pavés autobloquants, pavés en béton ou en pierre naturelle selon vos préférences. Nos artisans qualifiés réalisent des motifs variés et assurent une finition impeccable. Idéal pour allées, cours, parkings, trottoirs et espaces publics. Le drainage naturel des pavés les rend particulièrement adaptés au climat tropical.',
-      images: ['/lovable-uploads/engin-komatsu.jpg', '/lovable-uploads/equipe-elvec-2025.jpg'],
+      images: ['/lovable-uploads/pavage.jpg', '/lovable-uploads/pavage1.jpg'],
       features: ['Finitions soignées et esthétiques', 'Large choix de motifs', 'Drainage naturel intégré', 'Résistance exceptionnelle au temps'],
     },
     pavage: {
       title: 'Pavage',
       description: 'Nous proposons des services de pavage pour créer des surfaces durables et esthétiques.',
       longDescription: 'Le pavage de routes et parkings nécessite savoir-faire technique et équipements performants. ELVEC TOGO réalise vos travaux de pavage en asphalte ou béton bitumineux selon les normes internationales. Nous préparons minutieusement la surface, appliquons les couches de base et de finition dans le respect des spécifications techniques. Résultat: des surfaces lisses, durables, esthétiques et conformes aux normes de circulation. Garantie de qualité sur tous nos travaux.',
-      images: ['/lovable-uploads/projet-electrique-2.jpg', '/lovable-uploads/equipe-directeur.jpg'],
+      images: ['/lovable-uploads/pavage2.jpg', '/lovable-uploads/pavage1.jpg'],
       features: ['Conformité aux normes techniques', 'Matériaux certifiés', 'Équipe expérimentée', 'Finition professionnelle impeccable'],
     },
   };
