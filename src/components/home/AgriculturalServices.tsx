@@ -1,13 +1,47 @@
 import { Link } from 'react-router-dom';
-import { Tractor, Sprout, Droplets, Phone } from 'lucide-react';
+import { Tractor, Sprout, Droplets, Phone, Shovel, TreePine, Wheat, Waves } from 'lucide-react';
 import AnimatedSection from '../animations/AnimatedSection';
+import SectionTitle from '../common/SectionTitle';
 import Button from '../common/Button';
 
 const AgriculturalServices = () => {
   const services = [
-    { icon: Tractor, title: 'Location de Tracteurs', description: 'Tracteurs performants avec opérateurs qualifiés' },
-    { icon: Sprout, title: 'Labour & Mise en Culture', description: 'Préparation complète de vos terres agricoles' },
-    { icon: Droplets, title: 'Bassin de Rétention', description: 'Construction de bassins d\'eau pour irrigation' }
+    { 
+      icon: Tractor, 
+      title: 'Location de Tracteurs Performants', 
+      description: 'Tracteurs modernes avec opérateurs expérimentés pour tous vos travaux agricoles',
+      details: 'Sécurité, efficacité et respect des délais garantis'
+    },
+    { 
+      icon: Sprout, 
+      title: 'Labour & Mise en Culture', 
+      description: 'Préparation professionnelle de vos terres pour optimiser vos rendements',
+      details: 'Service complet de labourage et préparation du sol'
+    },
+    { 
+      icon: Droplets, 
+      title: 'Bassin de Rétention d\'Eau', 
+      description: 'Construction de bassins pour l\'irrigation et la gestion de l\'eau',
+      details: 'Solutions durables pour l\'agriculture moderne'
+    },
+    { 
+      icon: Shovel, 
+      title: 'Dessouchage', 
+      description: 'Élimination des souches et préparation des terrains agricoles',
+      details: 'Travail rapide et efficace avec engins spécialisés'
+    },
+    { 
+      icon: TreePine, 
+      title: 'Nivellement de Terrain', 
+      description: 'Aplanissement et nivellement pour une exploitation optimale',
+      details: 'Précision et qualité du travail garanties'
+    },
+    { 
+      icon: Wheat, 
+      title: 'Transport Agricole', 
+      description: 'Transport de récoltes, matériaux et équipements agricoles',
+      details: 'Flotte de camions-bennes disponibles'
+    }
   ];
 
   return (
@@ -18,13 +52,35 @@ const AgriculturalServices = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         <AnimatedSection>
-          <div className="text-center mb-12">
-            <h2 className="text-4xl md:text-5xl font-display font-bold text-gray-900 mb-4">
-              Services <span className="text-elvec-600">Agricoles</span>
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Transformez vos terres et boostez vos rendements avec nos solutions professionnelles
-            </p>
+          <SectionTitle 
+            title="Services d'Accompagnement Agricole" 
+            subtitle="ELVEC TOGO, votre partenaire pour la mécanisation agricole et l'amélioration de vos rendements"
+            centered 
+          />
+          <div className="max-w-4xl mx-auto text-center mb-12">
+            <div className="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-green-600">
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                Des Services d'Accompagnement Professionnel dans le Domaine Agricole
+              </h3>
+              <p className="text-lg text-gray-700 leading-relaxed mb-4">
+                Chez <strong className="text-elvec-600">ELVEC TOGO</strong>, nous transformons vos terres pour booster vos rendements. 
+                Nous proposons des services complets de mécanisation agricole avec des équipements modernes et des opérateurs qualifiés.
+              </p>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                <div className="bg-green-50 p-4 rounded-lg">
+                  <Tractor className="w-8 h-8 text-green-600 mx-auto mb-2" />
+                  <p className="font-semibold text-gray-900">Engins Modernes</p>
+                </div>
+                <div className="bg-green-50 p-4 rounded-lg">
+                  <Waves className="w-8 h-8 text-green-600 mx-auto mb-2" />
+                  <p className="font-semibold text-gray-900">Solutions Durables</p>
+                </div>
+                <div className="bg-green-50 p-4 rounded-lg">
+                  <Wheat className="w-8 h-8 text-green-600 mx-auto mb-2" />
+                  <p className="font-semibold text-gray-900">Rendements Optimisés</p>
+                </div>
+              </div>
+            </div>
           </div>
         </AnimatedSection>
 
@@ -41,22 +97,41 @@ const AgriculturalServices = () => {
           </AnimatedSection>
 
           <AnimatedSection animationType="slide-right" delay={200}>
-            <div className="space-y-6">
-              {services.map((service, index) => (
-                <div 
-                  key={service.title}
-                  className="flex items-start gap-4 bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <div className="bg-gradient-to-br from-elvec-500 to-elvec-700 p-3 rounded-lg flex-shrink-0">
-                    <service.icon className="w-6 h-6 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-gray-900 mb-2">{service.title}</h3>
-                    <p className="text-gray-600">{service.description}</p>
-                  </div>
+            <div className="space-y-4">
+              <div className="bg-white rounded-xl shadow-xl p-6 border-l-4 border-green-600">
+                <h3 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                  <Tractor className="w-8 h-8 text-green-600" />
+                  Nos Services Agricoles Professionnels
+                </h3>
+                <div className="grid grid-cols-1 gap-4">
+                  {services.map((service, index) => (
+                    <div 
+                      key={service.title}
+                      className="flex items-start gap-4 bg-gradient-to-r from-green-50 to-white p-5 rounded-lg border border-green-100 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
+                      style={{ animationDelay: `${index * 100}ms` }}
+                    >
+                      <div className="bg-gradient-to-br from-green-500 to-green-700 p-3 rounded-lg flex-shrink-0">
+                        <service.icon className="w-5 h-5 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-lg font-bold text-gray-900 mb-1">{service.title}</h4>
+                        <p className="text-gray-700 mb-1">{service.description}</p>
+                        <p className="text-sm text-green-600 font-medium">{service.details}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+              
+              <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-xl shadow-xl p-6 text-white">
+                <h4 className="text-xl font-bold mb-3 flex items-center gap-2">
+                  <Wheat className="w-6 h-6" />
+                  Conducteurs Expérimentés
+                </h4>
+                <p className="text-white/90 mb-2">✓ Sécurité et efficacité garanties</p>
+                <p className="text-white/90 mb-2">✓ Respect des délais d'intervention</p>
+                <p className="text-white/90">✓ Équipements modernes et bien entretenus</p>
+              </div>
             </div>
           </AnimatedSection>
         </div>
