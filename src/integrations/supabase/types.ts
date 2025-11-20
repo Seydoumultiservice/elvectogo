@@ -119,6 +119,45 @@ export type Database = {
         }
         Relationships: []
       }
+      quotes: {
+        Row: {
+          adresse: string | null
+          besoin: string
+          created_at: string | null
+          email: string | null
+          id: string
+          nom: string
+          notes: string | null
+          status: string | null
+          telephone: string
+          updated_at: string | null
+        }
+        Insert: {
+          adresse?: string | null
+          besoin: string
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          nom: string
+          notes?: string | null
+          status?: string | null
+          telephone: string
+          updated_at?: string | null
+        }
+        Update: {
+          adresse?: string | null
+          besoin?: string
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          nom?: string
+          notes?: string | null
+          status?: string | null
+          telephone?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       services: {
         Row: {
           created_at: string
@@ -192,6 +231,51 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      training_registrations: {
+        Row: {
+          created_at: string | null
+          date_souhaitee: string | null
+          email: string | null
+          formation_type: string
+          id: string
+          message: string | null
+          niveau_experience: string | null
+          nom_complet: string
+          notes: string | null
+          status: string | null
+          telephone: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          date_souhaitee?: string | null
+          email?: string | null
+          formation_type: string
+          id?: string
+          message?: string | null
+          niveau_experience?: string | null
+          nom_complet: string
+          notes?: string | null
+          status?: string | null
+          telephone: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          date_souhaitee?: string | null
+          email?: string | null
+          formation_type?: string
+          id?: string
+          message?: string | null
+          niveau_experience?: string | null
+          nom_complet?: string
+          notes?: string | null
+          status?: string | null
+          telephone?: string
+          updated_at?: string | null
+        }
+        Relationships: []
       }
       user_roles: {
         Row: {

@@ -1,10 +1,14 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Award, Clock, Users, CheckCircle2, Calendar, DollarSign, MapPin } from 'lucide-react';
 import AnimatedSection from '../animations/AnimatedSection';
 import SectionTitle from '../common/SectionTitle';
 import Button from '../common/Button';
+import TrainingRegistrationDialog from '../common/TrainingRegistrationDialog';
 
 const TrainingSection = () => {
+  const [registrationOpen, setRegistrationOpen] = useState(false);
+  
   const features = [
     { icon: Clock, title: 'Formation de 3 mois', description: 'Programme intensif et complet' },
     { icon: Users, title: 'Opérateurs Qualifiés', description: 'Devenez un professionnel certifié' },
