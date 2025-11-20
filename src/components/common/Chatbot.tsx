@@ -58,21 +58,25 @@ const Chatbot = () => {
       const lowerQuestion = question.toLowerCase();
 
       if (lowerQuestion.includes('devis') || lowerQuestion.includes('prix') || lowerQuestion.includes('tarif')) {
-        response = "Pour obtenir un devis personnalisé adapté à vos besoins, je vous invite à cliquer sur le bouton 'Demander un devis' sur notre site ou à nous contacter directement au +228 70 60 03 06. Notre équipe se fera un plaisir de vous établir un devis gratuit.";
+        response = "💰 Pour obtenir un devis personnalisé adapté à vos besoins, je vous invite à cliquer sur le bouton 'Demander un devis' sur notre site ou à nous contacter directement.\n\n📞 Commercial: +228 70 60 03 06\n🏢 Direction: +228 92 74 82 70\n\nNotre équipe se fera un plaisir de vous établir un devis gratuit ! 😊";
       } else if (lowerQuestion.includes('engin') || lowerQuestion.includes('louer un engin')) {
-        response = "Nous disposons d'une flotte complète d'engins lourds : bulldozers, pelles mécaniques, niveleuses, compacteurs, grues, et bien plus. Appelez-nous au +228 70 60 03 06 pour connaître les disponibilités et tarifs.";
+        response = "🚜 Nous disposons d'une flotte complète d'engins lourds :\n\n• Bulldozers 🏗️\n• Pelles mécaniques ⛏️\n• Niveleuses 📏\n• Compacteurs 🔨\n• Grues 🏗️\n• Et bien plus !\n\nAppelez-nous au +228 70 60 03 06 pour connaître les disponibilités et tarifs. 📱";
       } else if (lowerQuestion.includes('voiture') || lowerQuestion.includes('véhicule')) {
-        response = "Nous proposons un service de location de voitures avec chauffeur professionnel. Nos véhicules sont récents, bien entretenus et nos chauffeurs sont ponctuels et qualifiés. Contactez-nous au +228 70 60 03 06 pour réserver.";
+        response = "🚗 Nous proposons un service de location de voitures avec chauffeur professionnel !\n\n✅ Véhicules récents et bien entretenus\n✅ Chauffeurs ponctuels et qualifiés\n✅ Service disponible 24/7\n\nContactez-nous au +228 70 60 03 06 pour réserver. 📞";
       } else if (lowerQuestion.includes('coordonnées') || lowerQuestion.includes('contact')) {
-        response = "📞 Téléphone: +228 70 60 03 06\n📱 WhatsApp: +228 90 94 06 95\n📧 Email: contact@elvectogo.com\n📍 Adresse: Lomé, Togo\n\nN'hésitez pas à nous contacter, nous sommes à votre écoute !";
+        response = "📞 *Téléphones:*\n• Commercial: +228 70 60 03 06\n• Direction: +228 92 74 82 70\n\n📱 *WhatsApp:*\n• Commercial: +228 90 94 06 95\n• Direction: +228 92 74 82 70\n\n📧 *Email:* contact@elvectogo.com\n📍 *Adresse:* Adidogomé Sagbado, Lomé, Togo\n\nN'hésitez pas à nous contacter, nous sommes à votre écoute ! 😊";
       } else if (lowerQuestion.includes('horaire') || lowerQuestion.includes('ouvert')) {
-        response = "Nos horaires d'ouverture:\n\n🕐 Lundi - Vendredi: 07h00 - 12h00 | 14h00 - 18h00\n🕐 Samedi: 07h00 - 12h00\n🔴 Dimanche: Fermé\n\nNous sommes également joignables par téléphone pendant ces horaires.";
+        response = "🕐 *Nos horaires d'ouverture:*\n\n📅 Lundi - Vendredi:\n   07h00 - 12h00 | 14h00 - 18h00\n\n📅 Samedi:\n   07h00 - 12h00\n\n🔴 Dimanche: Fermé\n\nNous sommes également joignables par téléphone pendant ces horaires. 📞";
+      } else if (lowerQuestion.includes('formation') || lowerQuestion.includes('apprendre')) {
+        response = "🎓 Nous proposons une formation professionnelle de conduite d'engins lourds !\n\n📅 Durée: 3 mois\n💰 Coût: 300 000 Fcfa\n📝 Inscription: 10 000 Fcfa\n\n🎯 Ce que vous apprendrez:\n• Tractopelle (BTP et agriculture)\n• Excavatrice 🏗️\n• Chargeur sur pneu 🚜\n• Niveleuse 📏\n• Compacteur 🔨\n\nContactez-nous pour plus d'informations ! 📱";
+      } else if (lowerQuestion.includes('humain') || lowerQuestion.includes('conseiller')) {
+        response = "👤 Pour parler directement avec un conseiller ELVEC, vous pouvez:\n\n📱 WhatsApp Commercial: +228 90 94 06 95\n🏢 WhatsApp Direction: +228 92 74 82 70\n📞 Appeler: +228 70 60 03 06\n\nNos conseillers sont disponibles du lundi au samedi ! 😊";
       } else {
-        response = "Merci pour votre message. Pour une réponse personnalisée, je vous invite à nous contacter directement au +228 70 60 03 06 ou par email à contact@elvectogo.com. Notre équipe se fera un plaisir de vous répondre !";
+        response = "Merci pour votre message ! 😊\n\nPour une réponse personnalisée, je vous invite à nous contacter directement:\n\n📞 +228 70 60 03 06\n📧 contact@elvectogo.com\n\nOu cliquez sur le bouton ci-dessous pour parler à un conseiller ! 👇";
       }
 
       addBotMessage(response);
-    }, 500);
+    }, 800);
   };
 
   const handleSendMessage = () => {
