@@ -17,6 +17,8 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/admin/Dashboard";
 import Appointments from "./pages/admin/Appointments";
 import GalleryManagement from "./pages/admin/GalleryManagement";
+import Quotes from "./pages/admin/Quotes";
+import TrainingRegistrations from "./pages/admin/TrainingRegistrations";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -55,14 +57,21 @@ const App = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/vehicules" element={<Vehicles />} />
             <Route path="/login" element={<Login />} />
-            <Route
-              path="/admin"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/admin/devis" element={
+              <ProtectedRoute>
+                <Quotes />
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/formations" element={
+              <ProtectedRoute>
+                <TrainingRegistrations />
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/dashboard" element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } />
           <Route
             path="/admin/rdv"
             element={

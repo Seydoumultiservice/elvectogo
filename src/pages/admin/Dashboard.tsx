@@ -9,6 +9,7 @@ import {
   Users,
   BarChart3,
   LogOut,
+  GraduationCap,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
@@ -22,6 +23,8 @@ const Dashboard = () => {
     gallery: 0,
     appointments: 0,
     services: 0,
+    quotes: 0,
+    trainings: 0,
   });
 
   useEffect(() => {
@@ -29,12 +32,14 @@ const Dashboard = () => {
   }, []);
 
   const loadStats = async () => {
-    const [vehiclesResult, galleryResult, appointmentsResult, servicesResult] =
+    const [vehiclesResult, galleryResult, appointmentsResult, servicesResult, quotesResult, trainingsResult] =
       await Promise.all([
         supabase.from('vehicles').select('id', { count: 'exact', head: true }),
         supabase.from('gallery_items').select('id', { count: 'exact', head: true }),
         supabase.from('appointments').select('id', { count: 'exact', head: true }),
         supabase.from('services').select('id', { count: 'exact', head: true }),
+        supabase.from('quotes').select('id', { count: 'exact', head: true }),
+        supabase.from('training_registrations').select('id', { count: 'exact', head: true }),
       ]);
 
     setStats({
@@ -42,6 +47,8 @@ const Dashboard = () => {
       gallery: galleryResult.count || 0,
       appointments: appointmentsResult.count || 0,
       services: servicesResult.count || 0,
+      quotes: quotesResult.count || 0,
+      trainings: trainingsResult.count || 0,
     });
   };
 
@@ -88,20 +95,20 @@ const Dashboard = () => {
       color: 'bg-orange-500',
     },
     {
-      title: 'Contenu',
-      description: 'Gérer le contenu du site',
+      title: 'Demandes de Devis',
+      description: 'Gérer les demandes de devis',
       icon: FileText,
-      link: '/admin/contenu',
-      count: null,
-      color: 'bg-indigo-500',
+      link: '/admin/devis',
+      count: stats.quotes,
+      color: 'bg-yellow-500',
     },
     {
-      title: 'Utilisateurs',
-      description: 'Gérer les utilisateurs et rôles',
-      icon: Users,
-      link: '/admin/utilisateurs',
-      count: null,
-      color: 'bg-pink-500',
+      title: 'Inscriptions Formations',
+      description: 'Gérer les inscriptions aux formations',
+      icon: GraduationCap,
+      link: '/admin/formations',
+      count: stats.trainings,
+      color: 'bg-teal-500',
     },
   ];
 
