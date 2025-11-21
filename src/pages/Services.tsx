@@ -31,8 +31,13 @@ const Services = () => {
       icon: Building
     },
     {
-      title: 'Pose de Pavé',
-      description: 'Notre équipe est experte dans la pose de pavés pour vos allées, cours et espaces extérieurs.',
+        title: 'Manutention',
+      description: 'Service professionnel de manutention pour le chargement, le d\'echargement et l\'organisation logistique sur site. Nos équipes maîtrisent la manipulation d\'équipements lourds en toute sécurité et garantissent un travail rapide et soigné.',
+      icon: Truck
+    },
+    {
+      title: 'Formation',
+      description: 'Formations pratiques et certifiantes pour opérateurs d\'engins et personnel de chantier. Programmes adaptés (sécurité, conduite d\'engins, maintenance préventive) pour améliorer compétences et conformité.',
       icon: HardHat
     },
     {
