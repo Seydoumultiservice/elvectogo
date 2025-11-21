@@ -53,7 +53,7 @@ const Services = () => {
       title: 'Formation',
       description: 'Formations pratiques pour opérateurs d\'engins et personnel de chantier.',
       longDescription: 'ELVEC TOGO propose des sessions de formation axées sur la sécurité, la conduite d\'engins lourds et la maintenance de premier niveau. Nos formations allient théorie et pratique sur matériel réel, avec évaluation finale et attestations. Programmes personnalisables selon le niveau et les besoins de votre personnel.',
-      images: ['/lovable-uploads/formation-engins-lourds.jpg', '/lovable-uploads/formation-hero.jpg'],
+      images: ['/lovable-uploads/formation en lourd 1.jpg', '/lovable-uploads/formation engin lourd.jpg'],
       features: ['Formateurs certifiés', 'Sessions pratiques sur engins', 'Programmes modulaires', 'Attestation de formation'],
     },
     pavage: {
