@@ -1,159 +1,428 @@
-import { Tractor, Hammer, Wrench, Truck, Building, HardHat } from 'lucide-react';
+
+import { Tractor, Hammer, Wrench, Truck, Building, HardHat, Car, Clock, CheckCircle2, Sprout, Droplets, Shovel, TreePine, Wheat } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import SectionTitle from '../common/SectionTitle';
-import ServiceCard from '../common/ServiceCard';
-import Button from '../common/Button';
-import AnimatedSection from '../animations/AnimatedSection';
-import ServiceModal from '../services/ServiceModal';
+import Layout from '../components/layout/Layout';
+import SectionTitle from '../components/common/SectionTitle';
+import ServiceCard from '../components/common/ServiceCard';
+import Button from '../components/common/Button';
+import AnimatedSection from '../components/animations/AnimatedSection';
 
 const Services = () => {
-  const [selectedService, setSelectedService] = useState<any>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const servicesData = {
-    terrassement: {
-      title: 'Terrassement',
-      description: 'Nous offrons des services de terrassement pour préparer votre terrain pour la construction.',
-      longDescription: 'Le terrassement est une étape cruciale dans tout projet de construction. Chez ELVEC TOGO, nous disposons d\'une flotte moderne de bulldozers et de pelles mécaniques pour préparer votre terrain avec précision. Nos équipes qualifiées réalisent des travaux de déblaiement, remblaiement, nivellement et compactage. Nous intervenons sur tous types de terrains, des sols argileux aux terrains rocheux. Notre expertise garantit une base solide pour vos constructions, dans le respect des normes et des délais convenus.',
-      images: ['/lovable-uploads/projet-terrassement-1.jpg', '/lovable-uploads/excavation-chantier.jpg', '/lovable-uploads/bulldozer-action.jpg'],
-      features: ['Équipements modernes et performants', 'Équipe qualifiée et expérimentée', 'Respect strict des délais', 'Conformité aux normes de sécurité'],
-    },
-    demolition: {
-      title: 'Démolition',
-      description: 'Nos équipes spécialisées assurent la démolition sécurisée de structures existantes.',
-      longDescription: 'La démolition nécessite expertise et équipement spécialisé. ELVEC TOGO assure la démolition sécurisée de bâtiments, structures et ouvrages de toutes tailles. Nous utilisons des techniques modernes pour minimiser les nuisances sonores et les poussières, tout en garantissant la sécurité du site et des environs. Nos équipes sont formées aux normes de sécurité les plus strictes et disposent de tous les équipements de protection nécessaires. Nous gérons également l\'évacuation et le recyclage des déchets de démolition de manière responsable.',
-      youtubeVideoId: 'ln7E4ujuDbU',
-      videoUrl: '/lovable-uploads/DEMOLITION2.mp4',
-      images: ['/lovable-uploads/chantier-demolition.webp', '/lovable-uploads/equipements-securite-demolition.jpg'],
-      features: ['Sécurité maximale garantie', 'Gestion complète des déchets', 'Permis et autorisations gérés', 'Rapidité d\'exécution'],
-    },
-    pisteRurale: {
-      title: 'Piste Rurale',
-      description: 'Nous réalisons la construction et l\'entretien de pistes rurales pour améliorer l\'accès aux zones reculées.',
-      longDescription: 'L\'aménagement de pistes rurales est essentiel pour désenclaver les zones reculées et faciliter le développement économique local. ELVEC TOGO construit et entretient des pistes rurales durables qui facilitent l\'accès aux villages et exploitations agricoles. Nous utilisons des niveleuses et compacteurs de dernière génération pour garantir des routes praticables en toute saison. Nos techniques éprouvées assurent une excellente drainage et une résistance optimale aux intempéries.',
-      images: ['/lovable-uploads/PISTE1.jpg', '/lovable-uploads/PISTE RURAL.jpg'],
-      features: ['Techniques éprouvées', 'Matériaux de qualité sélectionnés', 'Entretien durable garanti', 'Impact social positif'],
-    },
-    ponceaux: {
-      title: 'Ponceaux',
-      description: 'Nous installons des ponceaux pour assurer un drainage efficace sur vos chantiers.',
-      longDescription: 'Les ponceaux assurent le drainage et l\'évacuation des eaux sur vos chantiers et routes, prévenant ainsi l\'érosion et les dégâts liés aux eaux pluviales. ELVEC TOGO maîtrise l\'installation de ponceaux de tous types : béton armé, métal, PVC, selon vos besoins spécifiques. Nos équipes réalisent une étude hydraulique préalable du terrain pour dimensionner correctement les ouvrages et garantir leur efficacité à long terme. Installation professionnelle avec garantie de conformité.',
-      images: ['/lovable-uploads/PONCEAU &.jpg', '/lovable-uploads/PONCEAU é.jpg'],
-      features: ['Étude hydraulique complète', 'Installation professionnelle certifiée', 'Matériaux résistants aux intempéries', 'Garantie longue durée'],
-    },
-    manutention: {
-      title: 'Manutention',
-      description: 'Organisation et exécution des opérations de manutention sur sites industriels et chantiers.',
-      longDescription: 'Notre service de manutention couvre le chargement, le d\'échargement, la consolidation des charges et la logistique interne sur chantier. Nous déployons des équipes formées et du matériel adapté (transpalettes, chariots élévateurs, palonniers) pour garantir une manutention sûre et efficace. Respect des règles HSE et optimisation des flux pour limiter les temps d\'immobilisation.',
-      images: ['/lovable-uploads/manutention-a-Lome-Ouest-Afrique.jpg', '/lovable-uploads/manutention-port-lome.jpg'],
-      features: ['Équipes HSE formées', 'Matériel adapté', 'Gestion optimisée des flux', 'Interventions rapides'],
-    },
-    formation: {
-      title: 'Formation',
-      description: 'Formations pratiques pour opérateurs d\'engins et personnel de chantier.',
-      longDescription: 'ELVEC TOGO propose des sessions de formation axées sur la sécurité, la conduite d\'engins lourds et la maintenance de premier niveau. Nos formations allient théorie et pratique sur matériel réel, avec évaluation finale et attestations. Programmes personnalisables selon le niveau et les besoins de votre personnel.',
-      images: ['/lovable-uploads/formation en lourd 1.jpg', '/lovable-uploads/formation engin lourd.jpg'],
-      features: ['Formateurs certifiés', 'Sessions pratiques sur engins', 'Programmes modulaires', 'Attestation de formation'],
-    },
-    pavage: {
-      title: 'Pavage',
-      description: 'Nous proposons des services de pavage pour créer des surfaces durables et esthétiques.',
-      longDescription: 'Le pavage de routes et parkings nécessite savoir-faire technique et équipements performants. ELVEC TOGO réalise vos travaux de pavage en asphalte ou béton bitumineux selon les normes internationales. Nous préparons minutieusement la surface, appliquons les couches de base et de finition dans le respect des spécifications techniques. Résultat: des surfaces lisses, durables, esthétiques et conformes aux normes de circulation. Garantie de qualité sur tous nos travaux.',
-      images: ['/lovable-uploads/pavage2.jpg', '/lovable-uploads/pavage1.jpg'],
-      features: ['Conformité aux normes techniques', 'Matériaux certifiés', 'Équipe expérimentée', 'Finition professionnelle impeccable'],
-    },
-  };
-
-  const services = [
+  // Services BTP
+  const constructionServices = [
     {
       title: 'Terrassement',
       description: 'Nous offrons des services de terrassement pour préparer votre terrain pour la construction.',
-      icon: Tractor,
-      key: 'terrassement',
+      icon: Tractor
     },
     {
       title: 'Démolition',
       description: 'Nos équipes spécialisées assurent la démolition sécurisée de structures existantes.',
-      icon: Hammer,
-      key: 'demolition',
+      icon: Hammer
     },
     {
       title: 'Piste Rurale',
       description: 'Nous réalisons la construction et l\'entretien de pistes rurales pour améliorer l\'accès aux zones reculées.',
-      icon: Wrench,
-      key: 'pisteRurale',
+      icon: Wrench
     },
     {
       title: 'Ponceaux',
       description: 'Nous installons des ponceaux pour assurer un drainage efficace sur vos chantiers.',
-      icon: Building,
-      key: 'ponceaux',
+      icon: Building
     },
     {
       title: 'Pose de Pavé',
       description: 'Notre équipe est experte dans la pose de pavés pour vos allées, cours et espaces extérieurs.',
-      icon: HardHat,
-      key: 'posePave',
+      icon: HardHat
     },
     {
       title: 'Pavage',
       description: 'Nous proposons des services de pavage pour créer des surfaces durables et esthétiques.',
-      icon: Truck,
-      key: 'pavage',
-    },
+      icon: Truck
+    }
   ];
-
-  const handleServiceClick = (serviceKey: string) => {
-    setSelectedService(servicesData[serviceKey as keyof typeof servicesData]);
-    setIsModalOpen(true);
-  };
-
+  
+  // Services Agricoles
+  const agriculturalServices = [
+    {
+      title: 'Location de Tracteurs',
+      description: 'Tracteurs performants avec opérateurs expérimentés pour tous vos travaux agricoles. Sécurité, efficacité et respect des délais garantis.',
+      icon: Tractor
+    },
+    {
+      title: 'Labour & Mise en Culture',
+      description: 'Préparation professionnelle de vos terres pour optimiser vos rendements. Service complet de labourage et préparation du sol.',
+      icon: Sprout
+    },
+    {
+      title: 'Bassin de Rétention d\'Eau',
+      description: 'Construction de bassins pour l\'irrigation et la gestion de l\'eau. Solutions durables pour l\'agriculture moderne.',
+      icon: Droplets
+    },
+    {
+      title: 'Dessouchage',
+      description: 'Élimination des souches et préparation des terrains agricoles. Travail rapide et efficace avec engins spécialisés.',
+      icon: Shovel
+    },
+    {
+      title: 'Nivellement de Terrain',
+      description: 'Aplanissement et nivellement pour une exploitation optimale. Précision et qualité du travail garanties.',
+      icon: TreePine
+    },
+    {
+      title: 'Transport Agricole',
+      description: 'Transport de récoltes, matériaux et équipements agricoles. Flotte de camions-bennes disponibles.',
+      icon: Wheat
+    }
+  ];
+  
+  // Types d'engins lourds disponibles
+  const equipmentList = [
+    'Bulldozers',
+    'Excavateurs',
+    'Chargeuses',
+    'Niveleuses',
+    'Rouleaux compresseurs',
+    'Camions bennes',
+    'Camions citernes',
+    'Tractopelles',
+    'Compacteurs',
+    'Grues mobiles'
+  ];
+  
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="container mx-auto px-4">
-        <AnimatedSection>
-          <SectionTitle 
-            title="Services BTP" 
-            subtitle="Nous proposons une gamme complète de services pour répondre à tous vos besoins en construction et aménagement."
-            centered
-          />
-        </AnimatedSection>
+    <Layout>
+      <div className="bg-elvec-900 text-white py-16">
+        <div className="container mx-auto px-4">
+          <AnimatedSection>
+            <div className="max-w-2xl mx-auto text-center">
+              <h1 className="text-4xl md:text-5xl font-display font-bold mb-6">Nos Services</h1>
+              <p className="text-xl text-gray-300">
+                Des solutions complètes pour vos projets de construction et de transport.
+              </p>
+            </div>
+          </AnimatedSection>
+        </div>
+      </div>
+      
+      {/* Services BTP Section */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <AnimatedSection>
+            <SectionTitle 
+              title="Services BTP" 
+              subtitle="Nous proposons également divers services pour répondre à tous vos besoins en construction."
+              centered
+            />
+          </AnimatedSection>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {services.map((service, index) => (
-            <div 
-              key={service.title}
-              onClick={() => handleServiceClick(service.key)}
-              className="cursor-pointer"
-            >
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+            {constructionServices.map((service, index) => (
               <ServiceCard
+                key={service.title}
                 title={service.title}
                 description={service.description}
                 icon={service.icon}
                 delay={index * 100}
               />
+            ))}
+          </div>
+
+          {/* Images BTP: Manutention & Formation */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+            <AnimatedSection>
+              <div className="relative group overflow-hidden rounded-xl shadow-xl">
+                <img
+                  src="/lovable-uploads/manutention-a-Lome-Ouest-Afrique.jpg"
+                  alt="Manutention"
+                  className="w-full h-[300px] object-cover transform group-hover:scale-105 transition-transform duration-500 rounded-lg"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                  <div>
+                    <h4 className="text-xl font-bold text-white mb-1">Service de Manutention</h4>
+                    <p className="text-white/90 text-sm">Chargement, d\'echargement et logistique sur chantier</p>
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection delay={200}>
+              <div className="relative group overflow-hidden rounded-xl shadow-xl">
+                <img
+                  src="/lovable-uploads/formation-engins-lourds.jpg"
+                  alt="Formation engins lourds"
+                  className="w-full h-[300px] object-cover transform group-hover:scale-105 transition-transform duration-500 rounded-lg"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-6">
+                  <div>
+                    <h4 className="text-xl font-bold text-white mb-1">Formation Professionnelle</h4>
+                    <p className="text-white/90 text-sm">Sessions pratiques pour opérateurs et sécurité chantier</p>
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+      
+      {/* Services Agricoles Section */}
+      <section className="py-16 bg-gradient-to-br from-green-50 via-white to-elvec-50">
+        <div className="container mx-auto px-4">
+          <AnimatedSection>
+            <SectionTitle 
+              title="Services Agricoles Professionnels" 
+              subtitle="Transformez vos terres et boostez vos rendements avec nos solutions de mécanisation agricole"
+              centered
+            />
+            <div className="max-w-4xl mx-auto text-center mb-12">
+              <div className="bg-white rounded-2xl shadow-xl p-8 border-t-4 border-green-600">
+                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                  ELVEC TOGO, Votre Partenaire Agricole
+                </h3>
+                <p className="text-lg text-gray-700 leading-relaxed">
+                  Nous accompagnons les exploitations agricoles dans la mécanisation de leurs cultures. 
+                  L'entreprise propose des services de <strong className="text-green-600">dessouchage, nivellement, labour, transport, mise en culture</strong> et bien plus.
+                </p>
+              </div>
             </div>
-          ))}
-        </div>
+          </AnimatedSection>
 
-        <div className="mt-12 text-center">
-          <Link to="/services">
-            <Button variant="outline">
-              Voir tous nos services
-            </Button>
-          </Link>
-        </div>
-      </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+            {agriculturalServices.map((service, index) => (
+              <AnimatedSection key={service.title} delay={index * 100}>
+                <div className="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 p-6 border-t-4 border-green-600 h-full">
+                  <div className="flex items-center mb-4">
+                    <div className="bg-gradient-to-br from-green-500 to-green-700 p-3 rounded-lg mr-4">
+                      <service.icon className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900">{service.title}</h3>
+                  </div>
+                  <p className="text-gray-700 leading-relaxed">{service.description}</p>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
 
-      {selectedService && (
-        <ServiceModal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          service={selectedService}
-        />
-      )}
-    </section>
+          {/* Images des services agricoles */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+            <AnimatedSection delay={200}>
+              <div className="relative group overflow-hidden rounded-xl shadow-xl">
+                <img 
+                  src="/lovable-uploads/services-agricoles-elvec.jpg" 
+                  alt="Services Agricoles ELVEC" 
+                  className="w-full h-[300px] object-cover transform group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
+                  <div>
+                    <h4 className="text-xl font-bold text-white mb-1">Location de Tracteurs</h4>
+                    <p className="text-white/90 text-sm">Engins modernes + Opérateurs</p>
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection delay={300}>
+              <div className="relative group overflow-hidden rounded-xl shadow-xl">
+                <img 
+                  src="/lovable-uploads/intervention-chantiers-agricoles.jpg" 
+                  alt="Intervention Chantiers Agricoles" 
+                  className="w-full h-[300px] object-cover transform group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
+                  <div>
+                    <h4 className="text-xl font-bold text-white mb-1">Intervention Rapide</h4>
+                    <p className="text-white/90 text-sm">Sur tous vos chantiers agricoles</p>
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
+
+            <AnimatedSection delay={400}>
+              <div className="relative group overflow-hidden rounded-xl shadow-xl">
+                <img 
+                  src="/lovable-uploads/travaux-agricoles-action.jpg" 
+                  alt="Travaux Agricoles en Action" 
+                  className="w-full h-[300px] object-cover transform group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-6">
+                  <div>
+                    <h4 className="text-xl font-bold text-white mb-1">Travaux Agricoles</h4>
+                    <p className="text-white/90 text-sm">Labour, dessouchage, nivellement</p>
+                  </div>
+                </div>
+              </div>
+            </AnimatedSection>
+          </div>
+
+          {/* CTA Agricole */}
+          <AnimatedSection delay={500}>
+            <div className="bg-gradient-to-r from-green-600 to-green-700 rounded-2xl shadow-2xl p-8 md:p-12 text-center text-white mt-12 relative overflow-hidden">
+              <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjEiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-20" />
+              <div className="relative z-10">
+                <Tractor className="w-16 h-16 mx-auto mb-4 animate-bounce" />
+                <h3 className="text-3xl md:text-4xl font-bold mb-4">Prêt à Mécaniser Votre Exploitation ?</h3>
+                <p className="text-xl mb-8 text-white/90 max-w-2xl mx-auto">
+                  Contactez-nous pour un devis personnalisé et découvrez comment nous pouvons transformer vos terres
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link to="/contact">
+                    <Button size="lg" className="bg-white text-green-700 hover:bg-gray-100">
+                      Demander un Devis Agricole
+                    </Button>
+                  </Link>
+                  <a href="tel:+22892748270" className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-green-800 text-white rounded-lg font-semibold hover:bg-green-900 transition-colors">
+                    <Clock className="w-5 h-5" />
+                    <span>+228 92 74 82 70</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+      
+      {/* Location d'Engins Lourds Section */}
+      <section className="py-16 bg-elvec-50">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <AnimatedSection>
+              <div className="relative">
+                <img 
+                  src="/lovable-uploads/d821c0ba-bf70-4f75-8546-dbc64980905b.png" 
+                  alt="Engin de chantier" 
+                  className="rounded-lg shadow-lg w-full object-cover"
+                />
+                <div className="absolute -bottom-5 -right-5 bg-elvec-600 text-white p-4 rounded-lg shadow-lg">
+                  <p className="text-xl font-bold">Équipements professionnels</p>
+                  <p className="text-sm">Pour tous vos projets</p>
+                </div>
+              </div>
+            </AnimatedSection>
+            
+            <AnimatedSection animationType="slide-right">
+              <SectionTitle 
+                title="Service de Location d'Engins Lourds" 
+                subtitle="Découvrez nos différents engins pour vos travaux."
+                className="lg:text-left"
+              />
+              
+              <p className="text-gray-600 mb-6">
+                Notre service de location d'engins lourds propose une solution fiable et efficace pour tous vos besoins en chantier. Nous mettons à votre disposition une flotte d'engins modernes et puissants pour garantir la réussite de vos projets.
+              </p>
+              
+              <p className="text-gray-600 mb-6">
+                Que ce soit pour des travaux de terrassement, de démolition, ou de construction, nos engins lourds sont équipés pour réaliser toutes vos tâches avec précision et efficacité.
+              </p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+                {equipmentList.map((equipment, index) => (
+                  <div key={index} className="flex items-center">
+                    <CheckCircle2 className="h-5 w-5 text-elvec-600 mr-2 flex-shrink-0" />
+                    <span className="text-gray-700">{equipment}</span>
+                  </div>
+                ))}
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link to="/contact">
+                  <Button variant="primary" className="w-full sm:w-auto">
+                    Demander un devis
+                  </Button>
+                </Link>
+                <Link to="/contact">
+                  <Button variant="outline" className="w-full sm:w-auto">
+                    Contactez-nous
+                  </Button>
+                </Link>
+              </div>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+      
+      {/* Location de Voitures Section */}
+      <section className="py-16">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <AnimatedSection className="order-2 lg:order-1">
+              <SectionTitle 
+                title="Location de Voitures avec Chauffeur" 
+                subtitle="Un service personnalisé pour vos déplacements professionnels et personnels."
+                className="lg:text-left"
+              />
+              
+              <p className="text-gray-600 mb-6">
+                Découvrez les avantages de la location de voitures avec chauffeur et profitez d'un service pratique et fiable. Que vous ayez besoin d'un véhicule pour vos déplacements professionnels ou personnels, notre entreprise vous offre une solution adaptée à vos besoins.
+              </p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+                <div className="flex items-start">
+                  <div className="mt-1">
+                    <Car className="h-6 w-6 text-elvec-600" />
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-semibold text-elvec-900">Confort</h3>
+                    <p className="text-gray-600">Profitez d'un confort optimal et laissez-vous conduire par nos chauffeurs professionnels.</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start">
+                  <div className="mt-1">
+                    <Clock className="h-6 w-6 text-elvec-600" />
+                  </div>
+                  <div className="ml-4">
+                    <h3 className="text-lg font-semibold text-elvec-900">Flexibilité</h3>
+                    <p className="text-gray-600">Bénéficiez d'une grande flexibilité dans vos déplacements grâce à nos services disponibles 7j/7.</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link to="/contact">
+                  <Button variant="primary" className="w-full sm:w-auto">
+                    Réserver une voiture
+                  </Button>
+                </Link>
+                <Link to="/contact">
+                  <Button variant="outline" className="w-full sm:w-auto">
+                    En savoir plus
+                  </Button>
+                </Link>
+              </div>
+            </AnimatedSection>
+            
+            <AnimatedSection className="order-1 lg:order-2" animationType="slide-right">
+              <img 
+                src="/lovable-uploads/cc256fb8-05f3-4982-bdb2-6413414b3db1.png" 
+                alt="Location de voitures avec chauffeur" 
+                className="rounded-lg shadow-lg w-full object-cover"
+              />
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+      
+      {/* CTA Section */}
+      <section className="py-16 bg-elvec-900 text-white">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <AnimatedSection>
+              <h2 className="text-3xl md:text-4xl font-display font-bold mb-6">
+                Besoin d'un service sur mesure?
+              </h2>
+              <p className="text-xl text-gray-300 mb-10">
+                Contactez-nous pour discuter de vos besoins spécifiques. Notre équipe est prête à vous proposer une solution adaptée.
+              </p>
+              <Link to="/contact">
+                <Button className="bg-white text-elvec-800 hover:bg-gray-100">
+                  Demander un devis gratuit
+                </Button>
+              </Link>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+    </Layout>
   );
 };
 
