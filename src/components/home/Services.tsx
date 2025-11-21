@@ -42,12 +42,19 @@ const Services = () => {
       images: ['/lovable-uploads/PONCEAU &.jpg', '/lovable-uploads/PONCEAU é.jpg'],
       features: ['Étude hydraulique complète', 'Installation professionnelle certifiée', 'Matériaux résistants aux intempéries', 'Garantie longue durée'],
     },
-    posePave: {
-      title: 'Pose de Pavé',
-      description: 'Notre équipe est experte dans la pose de pavés pour vos allées, cours et espaces extérieurs.',
-      longDescription: 'La pose de pavés embellit vos espaces extérieurs tout en créant des surfaces durables et esthétiques. ELVEC TOGO pose des pavés autobloquants, pavés en béton ou en pierre naturelle selon vos préférences. Nos artisans qualifiés réalisent des motifs variés et assurent une finition impeccable. Idéal pour allées, cours, parkings, trottoirs et espaces publics. Le drainage naturel des pavés les rend particulièrement adaptés au climat tropical.',
-      images: ['/lovable-uploads/pavage.jpg', '/lovable-uploads/pavage1.jpg'],
-      features: ['Finitions soignées et esthétiques', 'Large choix de motifs', 'Drainage naturel intégré', 'Résistance exceptionnelle au temps'],
+    manutention: {
+      title: 'Manutention',
+      description: 'Organisation et exécution des opérations de manutention sur sites industriels et chantiers.',
+      longDescription: 'Notre service de manutention couvre le chargement, le d\'échargement, la consolidation des charges et la logistique interne sur chantier. Nous déployons des équipes formées et du matériel adapté (transpalettes, chariots élévateurs, palonniers) pour garantir une manutention sûre et efficace. Respect des règles HSE et optimisation des flux pour limiter les temps d\'immobilisation.',
+      images: ['/lovable-uploads/manutention-a-Lome-Ouest-Afrique.jpg', '/lovable-uploads/manutention-port-lome.jpg'],
+      features: ['Équipes HSE formées', 'Matériel adapté', 'Gestion optimisée des flux', 'Interventions rapides'],
+    },
+    formation: {
+      title: 'Formation',
+      description: 'Formations pratiques pour opérateurs d\'engins et personnel de chantier.',
+      longDescription: 'ELVEC TOGO propose des sessions de formation axées sur la sécurité, la conduite d\'engins lourds et la maintenance de premier niveau. Nos formations allient théorie et pratique sur matériel réel, avec évaluation finale et attestations. Programmes personnalisables selon le niveau et les besoins de votre personnel.',
+      images: ['/lovable-uploads/formation-engins-lourds.jpg', '/lovable-uploads/formation-hero.jpg'],
+      features: ['Formateurs certifiés', 'Sessions pratiques sur engins', 'Programmes modulaires', 'Attestation de formation'],
     },
     pavage: {
       title: 'Pavage',
