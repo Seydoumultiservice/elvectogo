@@ -155,6 +155,45 @@ export type Database = {
         }
         Relationships: []
       }
+      project_transformations: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          id: string
+          image_after: string
+          image_before: string
+          order_index: number | null
+          title: string
+          updated_at: string
+          visible: boolean | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_after: string
+          image_before: string
+          order_index?: number | null
+          title: string
+          updated_at?: string
+          visible?: boolean | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_after?: string
+          image_before?: string
+          order_index?: number | null
+          title?: string
+          updated_at?: string
+          visible?: boolean | null
+        }
+        Relationships: []
+      }
       quotes: {
         Row: {
           adresse: string | null

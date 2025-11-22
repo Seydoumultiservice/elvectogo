@@ -11,10 +11,12 @@ import {
   LogOut,
   Menu,
   X,
-  ChevronRight
+  ChevronRight,
+  ArrowLeftRight
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
+import RealtimeNotifications from './RealtimeNotifications';
 
 interface AdminLayoutProps {
   children: ReactNode;
@@ -73,12 +75,21 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
       icon: Image,
       color: 'text-pink-600'
     },
+    { 
+      title: 'Avant/Après', 
+      path: '/admin/avant-apres', 
+      icon: ArrowLeftRight,
+      color: 'text-indigo-600'
+    },
   ];
 
   const isActive = (path: string) => location.pathname === path;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+      {/* Notifications en temps réel */}
+      <RealtimeNotifications />
+      
       {/* Header */}
       <header className="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
         <div className="flex items-center justify-between px-4 py-3 lg:px-6">

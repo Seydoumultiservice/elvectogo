@@ -18,6 +18,7 @@ import InitAdmin from "./pages/InitAdmin";
 import Dashboard from "./pages/admin/Dashboard";
 import Appointments from "./pages/admin/Appointments";
 import GalleryManagement from "./pages/admin/GalleryManagement";
+import BeforeAfterManagement from "./pages/admin/BeforeAfterManagement";
 import Quotes from "./pages/admin/Quotes";
 import TrainingRegistrations from "./pages/admin/TrainingRegistrations";
 import ContactMessages from "./pages/admin/ContactMessages";
@@ -93,6 +94,14 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <GalleryManagement />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/avant-apres"
+            element={
+              <ProtectedRoute>
+                <BeforeAfterManagement />
               </ProtectedRoute>
             }
           />

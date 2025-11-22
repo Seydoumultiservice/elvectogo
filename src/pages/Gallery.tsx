@@ -3,13 +3,17 @@ import { useState, useEffect } from 'react';
 import Layout from '../components/layout/Layout';
 import SectionTitle from '../components/common/SectionTitle';
 import AnimatedSection from '../components/animations/AnimatedSection';
+import BeforeAfterGallery from '../components/gallery/BeforeAfterGallery';
+import ImageZoomModal from '../components/common/ImageZoomModal';
 import { supabase } from '@/integrations/supabase/client';
-import { Loader2 } from 'lucide-react';
+import { Loader2, ZoomIn } from 'lucide-react';
 
 const Gallery = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [galleryItems, setGalleryItems] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [displayedCount, setDisplayedCount] = useState(12);
 
   useEffect(() => {
     loadGalleryItems();
@@ -49,6 +53,9 @@ const Gallery = () => {
   const filteredItems = selectedCategory === 'all' 
     ? galleryItems 
     : galleryItems.filter(item => item.category === selectedCategory);
+
+  const displayedItems = filteredItems.slice(0, displayedCount);
+  const hasMore = displayedCount < filteredItems.length;
   
   if (loading) {
     return (
@@ -94,21 +101,31 @@ const Gallery = () => {
             </div>
           </AnimatedSection>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredItems.map((item, index) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+            {displayedItems.map((item, index) => (
               <AnimatedSection key={item.id} delay={index * 50}>
-                <div className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300">
+                <div className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 bg-white">
                   {item.type === 'image' ? (
-                    <img
-                      src={item.image_url}
-                      alt={item.title}
-                      className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
-                    />
+                    <div className="relative">
+                      <img
+                        src={item.image_url}
+                        alt={item.title}
+                        loading="lazy"
+                        className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
+                      />
+                      <button
+                        onClick={() => setSelectedImage(item.image_url)}
+                        className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100"
+                      >
+                        <ZoomIn className="h-8 w-8 text-white" />
+                      </button>
+                    </div>
                   ) : item.type === 'video' ? (
                     <video
                       src={item.image_url}
                       className="w-full h-64 object-cover"
                       controls
+                      preload="metadata"
                     />
                   ) : item.type === 'youtube' ? (
                     <iframe
@@ -116,6 +133,7 @@ const Gallery = () => {
                       className="w-full h-64"
                       allowFullScreen
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      loading="lazy"
                     />
                   ) : item.type === 'facebook' ? (
                     <iframe
@@ -123,18 +141,30 @@ const Gallery = () => {
                       className="w-full h-64"
                       allowFullScreen
                       allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+                      loading="lazy"
                     />
                   ) : null}
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                    <h3 className="text-white font-semibold text-lg">{item.title}</h3>
+                    <h3 className="text-white font-semibold text-base lg:text-lg">{item.title}</h3>
                     {item.description && (
-                      <p className="text-white/80 text-sm mt-1 line-clamp-2">{item.description}</p>
+                      <p className="text-white/80 text-xs lg:text-sm mt-1 line-clamp-2">{item.description}</p>
                     )}
                   </div>
                 </div>
               </AnimatedSection>
             ))}
           </div>
+
+          {hasMore && (
+            <div className="text-center mt-8">
+              <button
+                onClick={() => setDisplayedCount(prev => prev + 12)}
+                className="px-6 py-3 bg-elvec-600 text-white rounded-lg hover:bg-elvec-700 transition-colors shadow-lg"
+              >
+                Charger plus
+              </button>
+            </div>
+          )}
 
           {filteredItems.length === 0 && (
             <div className="text-center py-12 text-muted-foreground">
@@ -143,6 +173,16 @@ const Gallery = () => {
           )}
         </div>
       </section>
+
+      {/* Section Avant/Après */}
+      <BeforeAfterGallery />
+
+      {/* Modal de zoom d'image */}
+      <ImageZoomModal 
+        isOpen={!!selectedImage}
+        imageUrl={selectedImage || ''} 
+        onClose={() => setSelectedImage(null)} 
+      />
     </Layout>
   );
 };
