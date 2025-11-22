@@ -1,5 +1,6 @@
 
-import { Tractor, Hammer, Wrench, Truck, Building, HardHat, Car, Clock, CheckCircle2, Sprout, Droplets, Shovel, TreePine, Wheat } from 'lucide-react';
+import { Tractor, Hammer, Wrench, Truck, Building, HardHat, Car, Clock, CheckCircle2, Sprout, Droplets, Shovel, TreePine, Wheat, Phone, GraduationCap } from 'lucide-react';
+import TrainingRegistrationDialog from '@/components/common/TrainingRegistrationDialog';
 import { Link } from 'react-router-dom';
 import Layout from '../components/layout/Layout';
 import SectionTitle from '../components/common/SectionTitle';
@@ -39,11 +40,6 @@ const Services = () => {
       title: 'Formation',
       description: 'Formations pratiques et certifiantes pour opérateurs d\'engins et personnel de chantier. Programmes adaptés (sécurité, conduite d\'engins, maintenance préventive) pour améliorer compétences et conformité.',
       icon: HardHat
-    },
-    {
-      title: 'Pavage',
-      description: 'Nous proposons des services de pavage pour créer des surfaces durables et esthétiques.',
-      icon: Truck
     }
   ];
   
@@ -131,6 +127,173 @@ const Services = () => {
                 delay={index * 100}
               />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Section Manutention Détaillée */}
+      <section className="py-16 bg-gradient-to-br from-blue-50 to-white">
+        <div className="container mx-auto px-4">
+          <AnimatedSection>
+            <SectionTitle 
+              title="Service de Manutention Professionnelle" 
+              subtitle="Chargement, déchargement et logistique sur chantier"
+              centered
+            />
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mt-12">
+            {/* Colonne Images */}
+            <div className="grid grid-cols-2 gap-4">
+              <img 
+                src="/lovable-uploads/manutention-a-Lome-Ouest-Afrique.jpg" 
+                alt="Manutention" 
+                loading="lazy"
+                className="rounded-lg shadow-xl h-64 w-full object-cover" 
+              />
+              <img 
+                src="/lovable-uploads/manutention-port-lome.jpg" 
+                alt="Port de Lomé" 
+                loading="lazy"
+                className="rounded-lg shadow-xl h-64 w-full object-cover" 
+              />
+            </div>
+
+            {/* Colonne Description */}
+            <div>
+              <h3 className="text-3xl font-bold mb-6 text-gray-900">Nos Services de Manutention</h3>
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="h-6 w-6 text-elvec-600 flex-shrink-0 mt-1" />
+                  <div>
+                    <h4 className="font-semibold text-lg text-gray-900">Chargement & Déchargement</h4>
+                    <p className="text-gray-600">Manipulation sécurisée de tous types de matériaux et équipements lourds</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="h-6 w-6 text-elvec-600 flex-shrink-0 mt-1" />
+                  <div>
+                    <h4 className="font-semibold text-lg text-gray-900">Organisation Logistique</h4>
+                    <p className="text-gray-600">Planification et coordination des opérations de manutention sur site</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="h-6 w-6 text-elvec-600 flex-shrink-0 mt-1" />
+                  <div>
+                    <h4 className="font-semibold text-lg text-gray-900">Sécurité Maximale</h4>
+                    <p className="text-gray-600">Équipes formées aux normes de sécurité, travail rapide et soigné</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="mt-8 flex flex-col sm:flex-row gap-4">
+                <Link to="/contact">
+                  <Button size="lg" className="w-full sm:w-auto">Demander un Devis</Button>
+                </Link>
+                <a 
+                  href="tel:+22892748270" 
+                  className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-elvec-600 text-elvec-600 rounded-lg font-semibold hover:bg-elvec-50 transition-colors w-full sm:w-auto"
+                >
+                  <Phone className="h-5 w-5" />
+                  Nous Appeler
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Section Formation Professionnelle Détaillée */}
+      <section className="py-16 bg-gradient-to-br from-orange-50 to-white">
+        <div className="container mx-auto px-4">
+          <AnimatedSection>
+            <SectionTitle 
+              title="Formations Professionnelles Certifiantes" 
+              subtitle="Devenez opérateur d'engins lourds qualifié"
+              centered
+            />
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mt-12">
+            {/* Colonne Description */}
+            <div className="order-2 lg:order-1">
+              <h3 className="text-3xl font-bold mb-6 text-gray-900">Programmes de Formation Disponibles</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-orange-500">
+                  <h4 className="font-semibold text-lg mb-2">🚜 Tractopelle</h4>
+                  <p className="text-sm text-gray-600">Formation complète opérateur tractopelle</p>
+                </div>
+                <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-orange-500">
+                  <h4 className="font-semibold text-lg mb-2">🏗️ Bulldozer</h4>
+                  <p className="text-sm text-gray-600">Maîtrise du bulldozer et techniques de terrassement</p>
+                </div>
+                <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-orange-500">
+                  <h4 className="font-semibold text-lg mb-2">⚙️ Excavatrice</h4>
+                  <p className="text-sm text-gray-600">Opération sécurisée d'excavatrice</p>
+                </div>
+                <div className="bg-white p-4 rounded-lg shadow-md border-l-4 border-orange-500">
+                  <h4 className="font-semibold text-lg mb-2">🔧 Autres Engins</h4>
+                  <p className="text-sm text-gray-600">Niveleuse, Compacteur, Chargeuse...</p>
+                </div>
+              </div>
+
+              <div className="bg-orange-100 border-l-4 border-orange-500 p-6 rounded-lg mb-8">
+                <h4 className="font-semibold text-lg mb-3 text-gray-900">📋 Ce que vous obtiendrez :</h4>
+                <ul className="space-y-2">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-orange-600 flex-shrink-0" />
+                    <span className="text-gray-700">Certification professionnelle reconnue</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-orange-600 flex-shrink-0" />
+                    <span className="text-gray-700">Formation pratique avec engins réels</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-orange-600 flex-shrink-0" />
+                    <span className="text-gray-700">Formateurs expérimentés</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-orange-600 flex-shrink-0" />
+                    <span className="text-gray-700">Sécurité et maintenance préventive</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* BOUTON D'INSCRIPTION - CLIQUABLE */}
+              <TrainingRegistrationDialog>
+                <Button size="lg" className="w-full md:w-auto bg-orange-600 hover:bg-orange-700 text-white">
+                  <GraduationCap className="mr-2 h-5 w-5" />
+                  S'inscrire à une Formation
+                </Button>
+              </TrainingRegistrationDialog>
+
+              <p className="text-sm text-gray-500 mt-4">
+                💡 Cliquez pour remplir le formulaire d'inscription. Nos équipes vous contacteront rapidement.
+              </p>
+            </div>
+
+            {/* Colonne Images */}
+            <div className="order-1 lg:order-2 grid grid-cols-2 gap-4">
+              <img 
+                src="/lovable-uploads/formation-engins-lourds.jpg" 
+                alt="Formation Engins" 
+                loading="lazy"
+                className="rounded-lg shadow-xl h-64 w-full object-cover" 
+              />
+              <img 
+                src="/lovable-uploads/formation-elvec-poster.jpg" 
+                alt="Formation ELVEC" 
+                loading="lazy"
+                className="rounded-lg shadow-xl h-64 w-full object-cover" 
+              />
+              <img 
+                src="/lovable-uploads/formation en lourd 1.jpg" 
+                alt="Formation pratique" 
+                loading="lazy"
+                className="rounded-lg shadow-xl h-64 w-full object-cover col-span-2" 
+              />
+            </div>
           </div>
         </div>
       </section>

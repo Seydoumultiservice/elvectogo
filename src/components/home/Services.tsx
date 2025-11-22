@@ -1,11 +1,11 @@
 
 import { Tractor, Hammer, Wrench, Truck, Building, HardHat, Car, Clock, CheckCircle2, Sprout, Droplets, Shovel, TreePine, Wheat } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import Layout from '../components/layout/Layout';
-import SectionTitle from '../components/common/SectionTitle';
-import ServiceCard from '../components/common/ServiceCard';
-import Button from '../components/common/Button';
-import AnimatedSection from '../components/animations/AnimatedSection';
+import Layout from '@/components/layout/Layout';
+import SectionTitle from '@/components/common/SectionTitle';
+import ServiceCard from '@/components/common/ServiceCard';
+import Button from '@/components/common/Button';
+import AnimatedSection from '@/components/animations/AnimatedSection';
 
 const Services = () => {
   // Services BTP
