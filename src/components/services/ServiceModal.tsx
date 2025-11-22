@@ -28,7 +28,20 @@ const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) => {
         </DialogHeader>
 
         <div className="space-y-6">
-          {/* Video (if available) */}
+          {/* YouTube Video (if available) */}
+          {service.youtubeVideoId && (
+            <div className="mb-6 aspect-video">
+              <iframe
+                className="w-full h-full rounded-lg shadow-lg"
+                src={`https://www.youtube.com/embed/${service.youtubeVideoId}?autoplay=1&mute=1`}
+                title="Vidéo YouTube"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </div>
+          )}
+
+          {/* Local Video (if available) */}
           {service.videoUrl && (
             <div className="mb-6">
               <video

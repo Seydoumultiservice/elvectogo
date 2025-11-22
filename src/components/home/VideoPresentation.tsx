@@ -49,7 +49,7 @@ const VideoPresentation = () => {
                 preload="metadata"
                 playsInline
               >
-                <source src="/lovable-uploads/video-presentation-principale.mp4" type="video/mp4" />
+                <source src="/lovable-uploads/video-presentation.mp4" type="video/mp4" />
                 Votre navigateur ne supporte pas la lecture de vidéos.
               </video>
               
