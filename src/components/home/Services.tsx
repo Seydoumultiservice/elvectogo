@@ -41,11 +41,6 @@ const Services = () => {
       description: 'Formations pratiques et certifiantes pour opérateurs et personnels.',
       icon: HardHat,
       key: 'formation',
-    },
-    {
-      title: 'Pavage',
-      description: 'Nous proposons des services de pavage pour créer des surfaces durables et esthétiques.',
-      icon: Truck
     }
   ];
   
