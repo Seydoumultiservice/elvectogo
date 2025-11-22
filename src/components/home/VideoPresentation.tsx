@@ -1,21 +1,6 @@
-import { Play } from 'lucide-react';
-import { useState, useRef } from 'react';
 import AnimatedSection from '../animations/AnimatedSection';
 
 const VideoPresentation = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  const handlePlayClick = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
 
   return (
     <section className="py-16 md:py-24 bg-gradient-to-b from-elvec-50 to-white">
@@ -38,32 +23,14 @@ const VideoPresentation = () => {
             className="md:col-span-3"
             delay={100}
           >
-            <div className="relative rounded-lg overflow-hidden shadow-2xl group bg-black">
-              <video
-                ref={videoRef}
-                className="w-full aspect-video object-contain"
-                poster="/lovable-uploads/banniere-hero.jpg"
-                onPlay={() => setIsPlaying(true)}
-                onPause={() => setIsPlaying(false)}
-                controls
-                preload="metadata"
-                playsInline
-              >
-                <source src="/lovable-uploads/video-presentation.mp4" type="video/mp4" />
-                Votre navigateur ne supporte pas la lecture de vidéos.
-              </video>
-              
-              {!isPlaying && (
-                <button
-                  onClick={handlePlayClick}
-                  className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-all duration-300"
-                  aria-label="Lire la vidéo"
-                >
-                  <div className="w-20 h-20 rounded-full bg-elvec-500 flex items-center justify-center shadow-lg transform group-hover:scale-110 transition-transform duration-300">
-                    <Play className="h-10 w-10 text-white ml-1" fill="white" />
-                  </div>
-                </button>
-              )}
+            <div className="relative rounded-lg overflow-hidden shadow-2xl group">
+              <iframe
+                className="w-full aspect-video rounded-lg"
+                src="https://www.youtube.com/embed/0OEQYhkBSJg?mute=1&rel=0&modestbranding=1"
+                title="ELVEC TOGO en Action"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
             </div>
           </AnimatedSection>
 

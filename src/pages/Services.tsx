@@ -1,14 +1,40 @@
-
 import { Tractor, Hammer, Wrench, Truck, Building, HardHat, Car, Clock, CheckCircle2, Sprout, Droplets, Shovel, TreePine, Wheat, Phone, GraduationCap } from 'lucide-react';
+import { useState } from 'react';
 import TrainingRegistrationDialog from '@/components/common/TrainingRegistrationDialog';
-import { Link } from 'react-router-dom';
+import RequestQuoteDialog from '@/components/common/RequestQuoteDialog';
 import Layout from '../components/layout/Layout';
 import SectionTitle from '../components/common/SectionTitle';
 import ServiceCard from '../components/common/ServiceCard';
+import ServiceModal from '@/components/services/ServiceModal';
 import Button from '../components/common/Button';
 import AnimatedSection from '../components/animations/AnimatedSection';
+import { servicesDetails } from '@/data/servicesData';
 
 const Services = () => {
+  const [selectedService, setSelectedService] = useState<string | null>(null);
+  const [quoteDialogOpen, setQuoteDialogOpen] = useState(false);
+
+  const handleServiceClick = (serviceKey: string) => {
+    setSelectedService(serviceKey);
+  };
+
+  const handleCloseModal = () => {
+    setSelectedService(null);
+  };
+
+  const handleQuoteRequest = () => {
+    setSelectedService(null);
+    setQuoteDialogOpen(true);
+  };
+
+  const serviceKeyMap: Record<string, string> = {
+    'Terrassement': 'terrassement',
+    'Démolition': 'demolition',
+    'Piste Rurale': 'piste',
+    'Ponceaux': 'ponceaux',
+    'Manutention': 'manutention',
+    'Formation': 'formation'
+  };
   // Services BTP
   const constructionServices = [
     {
@@ -125,6 +151,7 @@ const Services = () => {
                 description={service.description}
                 icon={service.icon}
                 delay={index * 100}
+                onClick={() => handleServiceClick(serviceKeyMap[service.title])}
               />
             ))}
           </div>
@@ -187,9 +214,13 @@ const Services = () => {
               </div>
               
               <div className="mt-8 flex flex-col sm:flex-row gap-4">
-                <Link to="/contact">
-                  <Button size="lg" className="w-full sm:w-auto">Demander un Devis</Button>
-                </Link>
+                <Button 
+                  size="lg" 
+                  className="w-full sm:w-auto"
+                  onClick={() => setQuoteDialogOpen(true)}
+                >
+                  Demander un Devis
+                </Button>
                 <a 
                   href="tel:+22892748270" 
                   className="inline-flex items-center justify-center gap-2 px-6 py-3 border-2 border-elvec-600 text-elvec-600 rounded-lg font-semibold hover:bg-elvec-50 transition-colors w-full sm:w-auto"
@@ -398,11 +429,13 @@ const Services = () => {
                   Contactez-nous pour un devis personnalisé et découvrez comment nous pouvons transformer vos terres
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <Link to="/contact">
-                    <Button size="lg" className="bg-white text-green-700 hover:bg-gray-100">
-                      Demander un Devis Agricole
-                    </Button>
-                  </Link>
+                  <Button 
+                    size="lg" 
+                    className="bg-white text-green-700 hover:bg-gray-100"
+                    onClick={() => setQuoteDialogOpen(true)}
+                  >
+                    Demander un Devis Agricole
+                  </Button>
                   <a href="tel:+22892748270" className="inline-flex items-center justify-center gap-2 px-6 py-3 bg-green-800 text-white rounded-lg font-semibold hover:bg-green-900 transition-colors">
                     <Clock className="w-5 h-5" />
                     <span>+228 92 74 82 70</span>
@@ -457,16 +490,20 @@ const Services = () => {
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/contact">
-                  <Button variant="primary" className="w-full sm:w-auto">
-                    Demander un devis
-                  </Button>
-                </Link>
-                <Link to="/contact">
-                  <Button variant="outline" className="w-full sm:w-auto">
-                    Contactez-nous
-                  </Button>
-                </Link>
+                <Button 
+                  variant="primary" 
+                  className="w-full sm:w-auto"
+                  onClick={() => setQuoteDialogOpen(true)}
+                >
+                  Demander un devis
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="w-full sm:w-auto"
+                  onClick={() => setQuoteDialogOpen(true)}
+                >
+                  Contactez-nous
+                </Button>
               </div>
             </AnimatedSection>
           </div>
@@ -511,16 +548,20 @@ const Services = () => {
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/contact">
-                  <Button variant="primary" className="w-full sm:w-auto">
-                    Réserver une voiture
-                  </Button>
-                </Link>
-                <Link to="/contact">
-                  <Button variant="outline" className="w-full sm:w-auto">
-                    En savoir plus
-                  </Button>
-                </Link>
+                <Button 
+                  variant="primary" 
+                  className="w-full sm:w-auto"
+                  onClick={() => setQuoteDialogOpen(true)}
+                >
+                  Réserver une voiture
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="w-full sm:w-auto"
+                  onClick={() => setQuoteDialogOpen(true)}
+                >
+                  En savoir plus
+                </Button>
               </div>
             </AnimatedSection>
             
@@ -546,15 +587,30 @@ const Services = () => {
               <p className="text-xl text-gray-300 mb-10">
                 Contactez-nous pour discuter de vos besoins spécifiques. Notre équipe est prête à vous proposer une solution adaptée.
               </p>
-              <Link to="/contact">
-                <Button className="bg-white text-elvec-800 hover:bg-gray-100">
-                  Demander un devis gratuit
-                </Button>
-              </Link>
+              <Button 
+                className="bg-white text-elvec-800 hover:bg-gray-100"
+                onClick={() => setQuoteDialogOpen(true)}
+              >
+                Demander un devis gratuit
+              </Button>
             </AnimatedSection>
           </div>
         </div>
       </section>
+
+      {selectedService && servicesDetails[selectedService] && (
+        <ServiceModal
+          isOpen={!!selectedService}
+          onClose={handleCloseModal}
+          service={servicesDetails[selectedService]}
+          onQuoteRequest={handleQuoteRequest}
+        />
+      )}
+
+      <RequestQuoteDialog 
+        open={quoteDialogOpen} 
+        onOpenChange={setQuoteDialogOpen} 
+      />
     </Layout>
   );
 };

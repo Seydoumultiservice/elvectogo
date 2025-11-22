@@ -15,9 +15,10 @@ interface ServiceModalProps {
     youtubeVideoId?: string;
     videoUrl?: string;
   };
+  onQuoteRequest?: () => void;
 }
 
-const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) => {
+const ServiceModal = ({ isOpen, onClose, service, onQuoteRequest }: ServiceModalProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
@@ -99,11 +100,12 @@ const ServiceModal = ({ isOpen, onClose, service }: ServiceModalProps) => {
 
           {/* CTA */}
           <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t">
-            <Link to="/contact" className="flex-1">
-              <Button className="w-full bg-elvec-500 hover:bg-elvec-600 text-white">
-                Demander un devis
-              </Button>
-            </Link>
+            <Button 
+              className="flex-1 bg-elvec-500 hover:bg-elvec-600 text-white"
+              onClick={onQuoteRequest}
+            >
+              Demander un devis
+            </Button>
             <a href="tel:+22870600306" className="flex-1">
               <Button variant="outline" className="w-full border-elvec-500 text-elvec-600 hover:bg-elvec-50">
                 Appeler maintenant
