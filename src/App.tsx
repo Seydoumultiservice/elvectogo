@@ -22,6 +22,7 @@ import BeforeAfterManagement from "./pages/admin/BeforeAfterManagement";
 import Quotes from "./pages/admin/Quotes";
 import TrainingRegistrations from "./pages/admin/TrainingRegistrations";
 import ContactMessages from "./pages/admin/ContactMessages";
+import ChatConversations from "./pages/admin/ChatConversations";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -79,6 +80,11 @@ const App = () => {
             <Route path="/admin/messages" element={
               <ProtectedRoute>
                 <ContactMessages />
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/conversations" element={
+              <ProtectedRoute>
+                <ChatConversations />
               </ProtectedRoute>
             } />
           <Route

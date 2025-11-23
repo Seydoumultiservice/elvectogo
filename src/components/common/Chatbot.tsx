@@ -1,18 +1,30 @@
-import { MessageCircle, X, Send, Phone, Mail, Clock } from 'lucide-react';
+import { MessageCircle, X, Send } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { Button } from '../ui/button';
+import { supabase } from '@/integrations/supabase/client';
 
 interface Message {
   id: number;
   text: string;
   isBot: boolean;
   timestamp: Date;
+  isStreaming?: boolean;
 }
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [sessionId] = useState(() => {
+    let id = localStorage.getItem('elvec_chat_session');
+    if (!id) {
+      id = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      localStorage.setItem('elvec_chat_session', id);
+    }
+    return id;
+  });
+  const [conversationId, setConversationId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -50,35 +62,105 @@ const Chatbot = () => {
     setMessages((prev) => [...prev, newMessage]);
   };
 
-  const handleQuickReply = (question: string) => {
-    addUserMessage(question);
+  const streamChatResponse = async (userMessage: string) => {
+    setIsLoading(true);
     
-    setTimeout(() => {
-      let response = '';
-      const lowerQuestion = question.toLowerCase();
+    // Créer un message vide pour le bot
+    const botMessageId = Date.now();
+    const botMessage: Message = {
+      id: botMessageId,
+      text: '',
+      isBot: true,
+      timestamp: new Date(),
+      isStreaming: true,
+    };
+    setMessages((prev) => [...prev, botMessage]);
 
-      if (lowerQuestion.includes('devis') || lowerQuestion.includes('prix') || lowerQuestion.includes('tarif')) {
-        response = "Pour obtenir un devis personnalisé adapté à vos besoins, je vous invite à cliquer sur le bouton 'Demander un devis' sur notre site ou à nous contacter directement au +228 70 60 03 06. Notre équipe se fera un plaisir de vous établir un devis gratuit.";
-      } else if (lowerQuestion.includes('engin') || lowerQuestion.includes('louer un engin')) {
-        response = "Nous disposons d'une flotte complète d'engins lourds : bulldozers, pelles mécaniques, niveleuses, compacteurs, grues, et bien plus. Appelez-nous au +228 70 60 03 06 pour connaître les disponibilités et tarifs.";
-      } else if (lowerQuestion.includes('voiture') || lowerQuestion.includes('véhicule')) {
-        response = "Nous proposons un service de location de voitures avec chauffeur professionnel. Nos véhicules sont récents, bien entretenus et nos chauffeurs sont ponctuels et qualifiés. Contactez-nous au +228 70 60 03 06 pour réserver.";
-      } else if (lowerQuestion.includes('coordonnées') || lowerQuestion.includes('contact')) {
-        response = "📞 Téléphone: +228 70 60 03 06\n📱 WhatsApp: +228 90 94 06 95\n📧 Email: contact@elvectogo.com\n📍 Adresse: Lomé, Togo\n\nN'hésitez pas à nous contacter, nous sommes à votre écoute !";
-      } else if (lowerQuestion.includes('horaire') || lowerQuestion.includes('ouvert')) {
-        response = "Nos horaires d'ouverture:\n\n🕐 Lundi - Vendredi: 07h00 - 12h00 | 14h00 - 18h00\n🕐 Samedi: 07h00 - 12h00\n🔴 Dimanche: Fermé\n\nNous sommes également joignables par téléphone pendant ces horaires.";
-      } else {
-        response = "Merci pour votre message. Pour une réponse personnalisée, je vous invite à nous contacter directement au +228 70 60 03 06 ou par email à contact@elvectogo.com. Notre équipe se fera un plaisir de vous répondre !";
+    try {
+      const { data, error } = await supabase.functions.invoke('chat-with-openrouter', {
+        body: {
+          messages: [
+            ...messages.map(m => ({
+              role: m.isBot ? 'assistant' : 'user',
+              content: m.text
+            })),
+            { role: 'user', content: userMessage }
+          ],
+          sessionId,
+          conversationId
+        }
+      });
+
+      if (error) throw error;
+
+      // Lire le stream SSE
+      const response = data;
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let accumulatedText = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+
+        const chunk = decoder.decode(value, { stream: true });
+        const lines = chunk.split('\n');
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const data = line.slice(6);
+            if (data === '[DONE]') continue;
+
+            try {
+              const parsed = JSON.parse(data);
+              const content = parsed.choices?.[0]?.delta?.content;
+              if (content) {
+                accumulatedText += content;
+                
+                // Mettre à jour le message du bot en temps réel
+                setMessages((prev) =>
+                  prev.map((msg) =>
+                    msg.id === botMessageId
+                      ? { ...msg, text: accumulatedText, isStreaming: false }
+                      : msg
+                  )
+                );
+              }
+            } catch (e) {
+              // Ignorer les erreurs de parsing
+            }
+          }
+        }
       }
-
-      addBotMessage(response);
-    }, 500);
+    } catch (error) {
+      console.error('Error streaming chat:', error);
+      setMessages((prev) =>
+        prev.map((msg) =>
+          msg.id === botMessageId
+            ? {
+                ...msg,
+                text: "Désolé, une erreur s'est produite. Veuillez contacter notre équipe au +228 70 60 03 06.",
+                isStreaming: false,
+              }
+            : msg
+        )
+      );
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  const handleSendMessage = () => {
-    if (inputValue.trim()) {
-      handleQuickReply(inputValue);
+  const handleQuickReply = async (question: string) => {
+    addUserMessage(question);
+    await streamChatResponse(question);
+  };
+
+  const handleSendMessage = async () => {
+    if (inputValue.trim() && !isLoading) {
+      const message = inputValue;
       setInputValue('');
+      addUserMessage(message);
+      await streamChatResponse(message);
     }
   };
 
@@ -199,7 +281,7 @@ const Chatbot = () => {
               />
               <Button
                 onClick={handleSendMessage}
-                disabled={!inputValue.trim()}
+                disabled={!inputValue.trim() || isLoading}
                 className="bg-elvec-500 hover:bg-elvec-600 text-white px-4"
               >
                 <Send className="h-4 w-4" />
