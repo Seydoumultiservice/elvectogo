@@ -2,3 +2,9 @@ project_id = "flmgcbuyukekgeugyimc"
 
 [functions.assign-admin]
 verify_jwt = false
+
+[functions.chat-with-openrouter]
+verify_jwt = false
+
+[functions.sitemap]
+verify_jwt = false

@@ -52,26 +52,32 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
       color: 'text-green-600'
     },
     { 
+      title: 'Conversations Chat', 
+      path: '/admin/conversations', 
+      icon: MessageSquare,
+      color: 'text-teal-600'
+    },
+    { 
       title: 'Rendez-vous', 
-      path: '/admin/appointments', 
+      path: '/admin/rdv', 
       icon: Calendar,
       color: 'text-purple-600'
     },
     { 
       title: 'Demandes de devis', 
-      path: '/admin/quotes', 
+      path: '/admin/devis', 
       icon: FileText,
       color: 'text-orange-600'
     },
     { 
       title: 'Inscriptions formation', 
-      path: '/admin/training', 
+      path: '/admin/formations', 
       icon: GraduationCap,
       color: 'text-red-600'
     },
     { 
       title: 'Galerie', 
-      path: '/admin/gallery', 
+      path: '/admin/galerie', 
       icon: Image,
       color: 'text-pink-600'
     },
