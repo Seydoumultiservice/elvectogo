@@ -163,6 +163,7 @@ export type Database = {
       formations: {
         Row: {
           created_at: string | null
+          date_limite: string | null
           description: string | null
           duree: string | null
           id: string
@@ -175,10 +176,12 @@ export type Database = {
           slug: string
           titre: string
           updated_at: string | null
+          video_url: string | null
           visible: boolean | null
         }
         Insert: {
           created_at?: string | null
+          date_limite?: string | null
           description?: string | null
           duree?: string | null
           id?: string
@@ -191,10 +194,12 @@ export type Database = {
           slug: string
           titre: string
           updated_at?: string | null
+          video_url?: string | null
           visible?: boolean | null
         }
         Update: {
           created_at?: string | null
+          date_limite?: string | null
           description?: string | null
           duree?: string | null
           id?: string
@@ -207,6 +212,7 @@ export type Database = {
           slug?: string
           titre?: string
           updated_at?: string | null
+          video_url?: string | null
           visible?: boolean | null
         }
         Relationships: []
@@ -528,6 +534,56 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "vehicle_images_vehicle_id_fkey"
+            columns: ["vehicle_id"]
+            isOneToOne: false
+            referencedRelation: "vehicles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      vehicle_reservations: {
+        Row: {
+          created_at: string | null
+          date_debut: string
+          date_fin: string
+          email: string | null
+          id: string
+          message: string | null
+          nom_complet: string
+          status: string | null
+          telephone: string
+          updated_at: string | null
+          vehicle_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          date_debut: string
+          date_fin: string
+          email?: string | null
+          id?: string
+          message?: string | null
+          nom_complet: string
+          status?: string | null
+          telephone: string
+          updated_at?: string | null
+          vehicle_id: string
+        }
+        Update: {
+          created_at?: string | null
+          date_debut?: string
+          date_fin?: string
+          email?: string | null
+          id?: string
+          message?: string | null
+          nom_complet?: string
+          status?: string | null
+          telephone?: string
+          updated_at?: string | null
+          vehicle_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vehicle_reservations_vehicle_id_fkey"
             columns: ["vehicle_id"]
             isOneToOne: false
             referencedRelation: "vehicles"
