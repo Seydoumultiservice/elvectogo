@@ -26,6 +26,7 @@ import ChatConversations from "./pages/admin/ChatConversations";
 import Formations from "./pages/Formations";
 import FormationManagement from "./pages/admin/FormationManagement";
 import VehicleManagement from "./pages/admin/VehicleManagement";
+import VehicleReservations from "./pages/admin/VehicleReservations";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -84,6 +85,11 @@ const App = () => {
             <Route path="/admin/vehicles" element={
               <ProtectedRoute>
                 <VehicleManagement />
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/vehicle-reservations" element={
+              <ProtectedRoute>
+                <VehicleReservations />
               </ProtectedRoute>
             } />
             <Route path="/admin/dashboard" element={

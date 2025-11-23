@@ -89,6 +89,12 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
       color: 'text-blue-500'
     },
     { 
+      title: 'Réservations Véhicules', 
+      path: '/admin/vehicle-reservations', 
+      icon: Calendar,
+      color: 'text-cyan-500'
+    },
+    { 
       title: 'Galerie', 
       path: '/admin/galerie', 
       icon: Image,
