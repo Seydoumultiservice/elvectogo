@@ -23,6 +23,9 @@ import Quotes from "./pages/admin/Quotes";
 import TrainingRegistrations from "./pages/admin/TrainingRegistrations";
 import ContactMessages from "./pages/admin/ContactMessages";
 import ChatConversations from "./pages/admin/ChatConversations";
+import Formations from "./pages/Formations";
+import FormationManagement from "./pages/admin/FormationManagement";
+import VehicleManagement from "./pages/admin/VehicleManagement";
 import ProtectedRoute from "./components/admin/ProtectedRoute";
 
 const queryClient = new QueryClient();
@@ -60,6 +63,7 @@ const App = () => {
             <Route path="/galerie" element={<Gallery />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/vehicules" element={<Vehicles />} />
+            <Route path="/formations" element={<Formations />} />
             <Route path="/login" element={<Login />} />
             <Route path="/init-admin" element={<InitAdmin />} />
             <Route path="/admin/devis" element={
@@ -67,9 +71,19 @@ const App = () => {
                 <Quotes />
               </ProtectedRoute>
             } />
-            <Route path="/admin/formations" element={
+            <Route path="/admin/inscriptions-formations" element={
               <ProtectedRoute>
                 <TrainingRegistrations />
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/formations" element={
+              <ProtectedRoute>
+                <FormationManagement />
+              </ProtectedRoute>
+            } />
+            <Route path="/admin/vehicles" element={
+              <ProtectedRoute>
+                <VehicleManagement />
               </ProtectedRoute>
             } />
             <Route path="/admin/dashboard" element={

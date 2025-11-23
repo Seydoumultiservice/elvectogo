@@ -160,6 +160,57 @@ export type Database = {
         }
         Relationships: []
       }
+      formations: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          duree: string | null
+          id: string
+          image_url: string | null
+          niveau: string | null
+          ordre: number | null
+          prerequis: string | null
+          prix: number | null
+          programme: Json | null
+          slug: string
+          titre: string
+          updated_at: string | null
+          visible: boolean | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          duree?: string | null
+          id?: string
+          image_url?: string | null
+          niveau?: string | null
+          ordre?: number | null
+          prerequis?: string | null
+          prix?: number | null
+          programme?: Json | null
+          slug: string
+          titre: string
+          updated_at?: string | null
+          visible?: boolean | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          duree?: string | null
+          id?: string
+          image_url?: string | null
+          niveau?: string | null
+          ordre?: number | null
+          prerequis?: string | null
+          prix?: number | null
+          programme?: Json | null
+          slug?: string
+          titre?: string
+          updated_at?: string | null
+          visible?: boolean | null
+        }
+        Relationships: []
+      }
       gallery_items: {
         Row: {
           category: string | null

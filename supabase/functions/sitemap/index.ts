@@ -17,6 +17,7 @@ serve(async (req) => {
       { path: '/a-propos', priority: '0.8', changefreq: 'monthly' },
       { path: '/contact', priority: '0.9', changefreq: 'monthly' },
       { path: '/vehicules', priority: '0.8', changefreq: 'weekly' },
+      { path: '/formations', priority: '0.9', changefreq: 'weekly' },
     ];
 
     // Récupérer les services dynamiques

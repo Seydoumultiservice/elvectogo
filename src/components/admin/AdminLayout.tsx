@@ -12,7 +12,8 @@ import {
   Menu,
   X,
   ChevronRight,
-  ArrowLeftRight
+  ArrowLeftRight,
+  Car
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
@@ -70,10 +71,22 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
       color: 'text-orange-600'
     },
     { 
-      title: 'Inscriptions formation', 
-      path: '/admin/formations', 
+      title: 'Inscriptions Formation', 
+      path: '/admin/inscriptions-formations', 
       icon: GraduationCap,
       color: 'text-red-600'
+    },
+    { 
+      title: 'Gestion Formations', 
+      path: '/admin/formations', 
+      icon: GraduationCap,
+      color: 'text-emerald-600'
+    },
+    { 
+      title: 'Gestion Véhicules', 
+      path: '/admin/vehicles', 
+      icon: Car,
+      color: 'text-blue-500'
     },
     { 
       title: 'Galerie', 
