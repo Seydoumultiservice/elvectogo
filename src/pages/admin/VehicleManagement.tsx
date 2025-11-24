@@ -12,7 +12,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import { Plus, Edit, Trash2, Eye, EyeOff } from 'lucide-react';
+import { Plus, Edit, Trash2, Eye, EyeOff, X } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface Vehicle {
@@ -35,9 +35,10 @@ const VehicleManagement = () => {
     description: '',
     price_per_day: '',
     image_url: '',
-    features: '[]',
     available: true,
   });
+  const [features, setFeatures] = useState<string[]>([]);
+  const [newFeature, setNewFeature] = useState('');
 
   const queryClient = useQueryClient();
 
@@ -119,9 +120,10 @@ const VehicleManagement = () => {
       description: '',
       price_per_day: '',
       image_url: '',
-      features: '[]',
       available: true,
     });
+    setFeatures([]);
+    setNewFeature('');
     setEditingVehicle(null);
     setDialogOpen(false);
   };
@@ -134,9 +136,9 @@ const VehicleManagement = () => {
       description: vehicle.description || '',
       price_per_day: vehicle.price_per_day?.toString() || '',
       image_url: vehicle.image_url || '',
-      features: JSON.stringify(vehicle.features || []),
       available: vehicle.available,
     });
+    setFeatures(Array.isArray(vehicle.features) ? vehicle.features : []);
     setDialogOpen(true);
   };
 
@@ -152,7 +154,7 @@ const VehicleManagement = () => {
     const submitData = {
       ...formData,
       price_per_day: parseFloat(formData.price_per_day) || null,
-      features: JSON.parse(formData.features || '[]'),
+      features: features,
     };
 
     if (editingVehicle) {
@@ -242,24 +244,69 @@ const VehicleManagement = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label>URL de l'image</Label>
+                  <Label>Lien Drive (Photo du véhicule)</Label>
                   <Input
                     value={formData.image_url}
                     onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                    placeholder="/lovable-uploads/..."
+                    placeholder="https://drive.google.com/uc?id=..."
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Caractéristiques (JSON)</Label>
-                  <Textarea
-                    value={formData.features}
-                    onChange={(e) => setFormData({ ...formData, features: e.target.value })}
-                    rows={4}
-                    placeholder='["5 places", "Climatisation", "GPS", "Bluetooth"]'
-                  />
+                  <Label>Caractéristiques du véhicule</Label>
+                  
+                  {/* Liste des caractéristiques existantes */}
+                  <div className="flex flex-wrap gap-2">
+                    {features.map((feature, index) => (
+                      <Badge key={index} variant="secondary" className="flex items-center gap-1">
+                        {feature}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const newFeatures = features.filter((_, i) => i !== index);
+                            setFeatures(newFeatures);
+                          }}
+                          className="ml-1 hover:text-destructive"
+                        >
+                          <X className="h-3 w-3" />
+                        </button>
+                      </Badge>
+                    ))}
+                  </div>
+                  
+                  {/* Ajouter une nouvelle caractéristique */}
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder="Ex: 5 places, Climatisation, GPS..."
+                      value={newFeature}
+                      onChange={(e) => setNewFeature(e.target.value)}
+                      onKeyPress={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                          if (newFeature.trim()) {
+                            setFeatures([...features, newFeature.trim()]);
+                            setNewFeature('');
+                          }
+                        }
+                      }}
+                    />
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        if (newFeature.trim()) {
+                          setFeatures([...features, newFeature.trim()]);
+                          setNewFeature('');
+                        }
+                      }}
+                    >
+                      <Plus className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  
                   <p className="text-xs text-muted-foreground">
-                    Format: ["caractéristique 1", "caractéristique 2"]
+                    Appuyez sur Entrée ou cliquez sur + pour ajouter
                   </p>
                 </div>
 
