@@ -12,7 +12,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
-import { Plus, Edit, Trash2, Eye, EyeOff, GripVertical } from 'lucide-react';
+import { Plus, Edit, Trash2, Eye, EyeOff, GripVertical, X } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface Formation {
@@ -24,6 +24,8 @@ interface Formation {
   prix: number;
   niveau: string;
   image_url: string;
+  video_url: string | null;
+  date_limite: string | null;
   programme: { titre: string; contenu: string }[];
   prerequis: string;
   visible: boolean;
@@ -41,11 +43,13 @@ const FormationManagement = () => {
     prix: '',
     niveau: 'debutant',
     image_url: '',
-    programme: '[]',
+    video_url: '',
+    date_limite: '',
     prerequis: '',
     visible: true,
     ordre: 0,
   });
+  const [programmeModules, setProgrammeModules] = useState<{titre: string, contenu: string}[]>([]);
 
   const queryClient = useQueryClient();
 
@@ -129,11 +133,13 @@ const FormationManagement = () => {
       prix: '',
       niveau: 'debutant',
       image_url: '',
-      programme: '[]',
+      video_url: '',
+      date_limite: '',
       prerequis: '',
       visible: true,
       ordre: 0,
     });
+    setProgrammeModules([]);
     setEditingFormation(null);
     setDialogOpen(false);
   };
@@ -148,11 +154,13 @@ const FormationManagement = () => {
       prix: formation.prix?.toString() || '',
       niveau: formation.niveau || 'debutant',
       image_url: formation.image_url || '',
-      programme: JSON.stringify(formation.programme || []),
+      video_url: formation.video_url || '',
+      date_limite: formation.date_limite ? formation.date_limite.slice(0, 16) : '',
       prerequis: formation.prerequis || '',
       visible: formation.visible,
       ordre: formation.ordre,
     });
+    setProgrammeModules(Array.isArray(formation.programme) ? formation.programme : []);
     setDialogOpen(true);
   };
 
@@ -168,7 +176,9 @@ const FormationManagement = () => {
     const submitData = {
       ...formData,
       prix: parseFloat(formData.prix) || null,
-      programme: JSON.parse(formData.programme || '[]'),
+      video_url: formData.video_url || null,
+      date_limite: formData.date_limite || null,
+      programme: programmeModules,
     };
 
     if (editingFormation) {
@@ -233,6 +243,7 @@ const FormationManagement = () => {
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     rows={3}
+                    placeholder="Décrivez la formation en quelques lignes..."
                   />
                 </div>
 
@@ -275,11 +286,29 @@ const FormationManagement = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label>URL de l'image</Label>
+                  <Label>Lien Drive (Image de couverture)</Label>
                   <Input
                     value={formData.image_url}
                     onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                    placeholder="/lovable-uploads/..."
+                    placeholder="https://drive.google.com/uc?id=..."
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Lien vidéo YouTube (optionnel)</Label>
+                  <Input
+                    value={formData.video_url}
+                    onChange={(e) => setFormData({ ...formData, video_url: e.target.value })}
+                    placeholder="https://www.youtube.com/watch?v=..."
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label>Date limite d'inscription (optionnel)</Label>
+                  <Input
+                    type="datetime-local"
+                    value={formData.date_limite}
+                    onChange={(e) => setFormData({ ...formData, date_limite: e.target.value })}
                   />
                 </div>
 
@@ -289,17 +318,62 @@ const FormationManagement = () => {
                     value={formData.prerequis}
                     onChange={(e) => setFormData({ ...formData, prerequis: e.target.value })}
                     rows={2}
+                    placeholder="Aucun prérequis particulier..."
                   />
                 </div>
 
                 <div className="space-y-2">
-                  <Label>Programme (JSON)</Label>
-                  <Textarea
-                    value={formData.programme}
-                    onChange={(e) => setFormData({ ...formData, programme: e.target.value })}
-                    rows={5}
-                    placeholder='[{"titre": "Module 1", "contenu": "Description"}]'
-                  />
+                  <Label>Programme de formation</Label>
+                  
+                  {programmeModules.map((module, index) => (
+                    <div key={index} className="p-3 border rounded-lg space-y-2 bg-muted/30">
+                      <div className="flex justify-between items-center">
+                        <Label className="text-sm font-medium">Module {index + 1}</Label>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => {
+                            const newModules = [...programmeModules];
+                            newModules.splice(index, 1);
+                            setProgrammeModules(newModules);
+                          }}
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </div>
+                      
+                      <Input
+                        placeholder="Titre du module"
+                        value={module.titre}
+                        onChange={(e) => {
+                          const newModules = [...programmeModules];
+                          newModules[index].titre = e.target.value;
+                          setProgrammeModules(newModules);
+                        }}
+                      />
+                      
+                      <Textarea
+                        placeholder="Description du module"
+                        rows={2}
+                        value={module.contenu}
+                        onChange={(e) => {
+                          const newModules = [...programmeModules];
+                          newModules[index].contenu = e.target.value;
+                          setProgrammeModules(newModules);
+                        }}
+                      />
+                    </div>
+                  ))}
+                  
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => setProgrammeModules([...programmeModules, { titre: '', contenu: '' }])}
+                  >
+                    <Plus className="mr-2 h-4 w-4" />
+                    Ajouter un module
+                  </Button>
                 </div>
 
                 <div className="flex items-center space-x-2">
