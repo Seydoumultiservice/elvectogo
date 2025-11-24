@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AdminLayout from '@/components/admin/AdminLayout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -47,6 +47,32 @@ const VehicleReservations = () => {
       return data as VehicleReservation[];
     }
   });
+
+  // Écouter les nouvelles réservations en temps réel
+  useEffect(() => {
+    const channel = supabase
+      .channel('reservations-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'vehicle_reservations'
+        },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ['vehicle-reservations'] });
+          toast({
+            title: "Mise à jour",
+            description: "Nouvelle activité détectée sur les réservations"
+          });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [queryClient, toast]);
 
   const updateStatusMutation = useMutation({
     mutationFn: async ({ id, status }: { id: string; status: string }) => {

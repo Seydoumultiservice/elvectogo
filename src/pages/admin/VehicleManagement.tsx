@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import AdminLayout from '@/components/admin/AdminLayout';
@@ -54,6 +54,28 @@ const VehicleManagement = () => {
       return data as Vehicle[];
     },
   });
+
+  // Écouter les changements en temps réel
+  useEffect(() => {
+    const channel = supabase
+      .channel('admin-vehicles-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: '*',
+          schema: 'public',
+          table: 'vehicles'
+        },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ['admin-vehicles'] });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [queryClient]);
 
   const createMutation = useMutation({
     mutationFn: async (data: any) => {
