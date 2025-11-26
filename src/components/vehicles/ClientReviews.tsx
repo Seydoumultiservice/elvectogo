@@ -7,27 +7,27 @@ const ClientReviews = () => {
   // Données des avis clients
   const reviews = [
     {
-      name: 'Thomas K.',
-      avatar: 'T',
-      role: 'Entrepreneur',
+      name: 'Kofi M.',
+      avatar: 'K',
+      role: 'Entrepreneur BTP',
       rating: 5,
-      content: 'Service exceptionnel ! La Toyota Corolla était parfaite pour mes déplacements professionnels à Lomé. Le chauffeur était ponctuel et professionnel. Je recommande vivement ELVEC TOGO.',
+      content: 'Service exceptionnel ! L\'excavatrice CAT 320 était parfaite pour notre projet de terrassement à Lomé. L\'engin était en excellent état et la livraison ponctuelle. Je recommande vivement ELVEC TOGO.',
       date: 'Il y a 2 semaines'
     },
     {
       name: 'Aminata D.',
       avatar: 'A',
-      role: 'Touriste',
+      role: 'Chef de chantier',
       rating: 4,
-      content: 'Nous avons loué un SUV pour notre séjour au Togo. Le véhicule était propre et bien entretenu. Le processus de réservation était simple et l\'équipe très réactive. Seul petit point négatif, un léger retard à la livraison.',
+      content: 'Nous avons loué un bulldozer pour notre projet de nivellement. L\'engin était puissant et bien entretenu. Le processus de réservation était simple et l\'équipe très réactive. Excellent service !',
       date: 'Il y a 1 mois'
     },
     {
       name: 'Emmanuel K.',
       avatar: 'E',
-      role: 'Organisateur d\'événements',
+      role: 'Directeur travaux publics',
       rating: 5,
-      content: 'Pour notre conférence, nous avions besoin de plusieurs véhicules pour transporter les participants. ELVEC TOGO a fourni un service impeccable avec des chauffeurs professionnels. Tout était parfait !',
+      content: 'Pour notre projet routier, nous avions besoin de plusieurs engins de compactage. ELVEC TOGO a fourni un service impeccable avec des machines performantes. Tout était parfait !',
       date: 'Il y a 3 mois'
     }
   ];

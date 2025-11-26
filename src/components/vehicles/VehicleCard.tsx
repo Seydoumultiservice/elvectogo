@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { Star, Calendar, Users, Fuel } from 'lucide-react';
+import { Star, Calendar, Cog } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import AnimatedSection from '../animations/AnimatedSection';
 
@@ -11,8 +11,7 @@ export interface VehicleProps {
     image: string;
     year: number;
     capacity: string;
-    consumption: string;
-    pricePerDay: number;
+    power: string;
     description: string;
     category: string;
   };
@@ -20,10 +19,6 @@ export interface VehicleProps {
 
 const VehicleCard = ({ vehicle }: VehicleProps) => {
   const [isHovered, setIsHovered] = useState(false);
-  
-  const formatPrice = (price: number) => {
-    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-  };
   
   return (
     <AnimatedSection>
@@ -37,14 +32,14 @@ const VehicleCard = ({ vehicle }: VehicleProps) => {
             src={vehicle.image} 
             alt={vehicle.name} 
             className={cn(
-              "w-full h-48 object-cover transition-transform duration-500",
+              "w-full h-56 object-cover transition-transform duration-500",
               isHovered && "scale-105"
             )}
           />
-          <div className="absolute top-0 right-0 bg-elvec-600 text-white text-xs px-2 py-1 m-2 rounded">
-            {vehicle.category === 'professional' && 'Professionnel'}
-            {vehicle.category === 'personal' && 'Personnel'}
-            {vehicle.category === 'special' && 'Spécial'}
+          <div className="absolute top-0 right-0 bg-elvec-600 text-white text-xs px-3 py-1.5 m-2 rounded-md font-semibold">
+            {vehicle.category === 'terrassement' && 'Terrassement'}
+            {vehicle.category === 'manutention' && 'Manutention'}
+            {vehicle.category === 'compactage' && 'Compactage'}
           </div>
         </div>
         
@@ -64,25 +59,23 @@ const VehicleCard = ({ vehicle }: VehicleProps) => {
           
           <p className="text-gray-600 text-sm mb-4 flex-grow">{vehicle.description}</p>
           
-          <div className="grid grid-cols-2 gap-2 mb-4 text-sm">
+          <div className="grid grid-cols-2 gap-3 mb-4 text-sm">
             <div className="flex items-center text-gray-600">
-              <Calendar className="h-4 w-4 mr-1 text-elvec-500" />
-              <span>{vehicle.year}</span>
+              <Calendar className="h-4 w-4 mr-2 text-elvec-500" />
+              <span className="font-medium">{vehicle.year}</span>
             </div>
             <div className="flex items-center text-gray-600">
-              <Users className="h-4 w-4 mr-1 text-elvec-500" />
-              <span>{vehicle.capacity}</span>
+              <Cog className="h-4 w-4 mr-2 text-elvec-500" />
+              <span className="font-medium">{vehicle.power}</span>
             </div>
             <div className="flex items-center text-gray-600 col-span-2">
-              <Fuel className="h-4 w-4 mr-1 text-elvec-500" />
-              <span>{vehicle.consumption}</span>
+              <span className="text-elvec-700 font-semibold">{vehicle.capacity}</span>
             </div>
           </div>
           
-          <div className="flex justify-between items-center mt-auto pt-3 border-t border-gray-100">
-            <span className="text-elvec-900 font-bold">{formatPrice(vehicle.pricePerDay)} FCFA<span className="text-xs text-gray-500 font-normal">/jour</span></span>
-            <button className="bg-elvec-600 hover:bg-elvec-700 text-white px-3 py-1 rounded-md text-sm transition-colors duration-300">
-              Réserver
+          <div className="flex justify-center mt-auto pt-4 border-t border-gray-100">
+            <button className="w-full bg-elvec-600 hover:bg-elvec-700 text-white px-6 py-2.5 rounded-lg text-base font-semibold transition-colors duration-300 shadow-md hover:shadow-lg">
+              Réserver cet engin
             </button>
           </div>
         </div>

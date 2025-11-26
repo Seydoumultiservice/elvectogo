@@ -61,15 +61,13 @@ const PopularVehicles = () => {
   const mappedVehicles = vehicles.map((vehicle) => ({
     id: vehicle.id,
     name: vehicle.name,
-    category: vehicle.category === 'voiture' ? 'professional' : 
-              vehicle.category === 'suv' || vehicle.category === '4x4' ? 'personal' : 'special',
-    description: vehicle.description || 'Véhicule disponible pour la location',
-    pricePerDay: vehicle.price_per_day || 40000,
-    image: vehicle.image_url || 'https://images.unsplash.com/photo-1628277613967-6abca504d0ac?q=80&w=2070&auto=format&fit=crop',
+    category: vehicle.category || 'terrassement',
+    description: vehicle.description || 'Engin disponible pour la location',
+    image: vehicle.image_url || '/engins/excavator-1.jpg',
     year: 2023,
     capacity: vehicle.features && vehicle.features.length > 0 ? 
-              vehicle.features.find((f: string) => f.includes('place')) || '5 personnes' : '5 personnes',
-    consumption: '7L/100km',
+              vehicle.features[0] || 'Capacité standard' : 'Capacité standard',
+    power: '150 HP',
   }));
 
   if (isLoading) {
@@ -87,15 +85,15 @@ const PopularVehicles = () => {
       <div className="container mx-auto px-4">
         <AnimatedSection>
           <SectionTitle 
-            title="Nos Véhicules Populaires" 
-            subtitle="Découvrez notre sélection de véhicules les plus demandés à Lomé"
+            title="Nos Engins Populaires" 
+            subtitle="Découvrez notre sélection d'engins lourds les plus demandés à Lomé"
             centered
           />
         </AnimatedSection>
 
         {mappedVehicles.length === 0 ? (
           <div className="text-center text-muted-foreground py-12">
-            Aucun véhicule disponible pour le moment
+            Aucun engin disponible pour le moment
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
@@ -108,7 +106,7 @@ const PopularVehicles = () => {
         <div className="text-center mt-12">
           <Link to="/vehicules">
             <Button variant="primary" className="inline-flex items-center">
-              Voir tous nos véhicules
+              Voir tous nos engins
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>
