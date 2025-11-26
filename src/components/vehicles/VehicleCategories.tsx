@@ -4,152 +4,140 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import SectionTitle from '../common/SectionTitle';
 import AnimatedSection from '../animations/AnimatedSection';
 import VehicleCard from './VehicleCard';
-import { Briefcase, Users, Sparkles } from 'lucide-react';
+import { Hammer, Package, Construction } from 'lucide-react';
 
-// Définition des données des véhicules
-const professionalVehicles = [
+// Définition des données des engins lourds
+const terrassementEngins = [
   {
-    id: 'corolla',
-    name: 'Toyota Corolla',
-    image: 'https://images.unsplash.com/photo-1628277613967-6abca504d0ac?q=80&w=2070&auto=format&fit=crop',
+    id: 'excavator-cat320',
+    name: 'Excavatrice CAT 320',
+    image: '/engins/excavator-1.jpg',
     year: 2022,
-    capacity: '5 personnes',
-    consumption: '6,5L/100km',
-    pricePerDay: 35000,
-    description: 'Fiable et économique, idéale pour les déplacements professionnels en ville.',
-    category: 'professional'
+    capacity: 'Godet : 1,2 m³',
+    power: '121 HP',
+    description: 'Excavatrice hydraulique performante pour tous types de travaux de terrassement et fondations.',
+    category: 'terrassement'
   },
   {
-    id: 'accent',
-    name: 'Hyundai Accent',
-    image: 'https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=2064&auto=format&fit=crop',
+    id: 'bulldozer-d6',
+    name: 'Bulldozer CAT D6',
+    image: '/lovable-uploads/bulldozer-action.jpg',
     year: 2021,
-    capacity: '5 personnes',
-    consumption: '6L/100km',
-    pricePerDay: 32000,
-    description: 'Parfaite pour les trajets urbains, confortable et économique.',
-    category: 'professional'
+    capacity: 'Lame : 3,5 m³',
+    power: '215 HP',
+    description: 'Bulldozer puissant idéal pour le nivellement, défrichage et travaux de terrassement lourds.',
+    category: 'terrassement'
   },
   {
-    id: 'yaris',
-    name: 'Toyota Yaris',
-    image: 'https://images.unsplash.com/photo-1550355291-bbee04a92027?q=80&w=2036&auto=format&fit=crop',
+    id: 'grader-140',
+    name: 'Niveleuse CAT 140',
+    image: '/engins/grader-1.jpg',
     year: 2023,
-    capacity: '5 personnes',
-    consumption: '5,8L/100km',
-    pricePerDay: 30000,
-    description: 'Compacte et agile, parfaite pour la circulation en ville à Lomé.',
-    category: 'professional'
+    capacity: 'Lame : 3,7 m',
+    power: '170 HP',
+    description: 'Niveleuse de précision pour l\'entretien des routes et le nivellement des surfaces.',
+    category: 'terrassement'
   },
   {
-    id: 'santafe',
-    name: 'Hyundai Santa Fe',
-    image: 'https://images.unsplash.com/photo-1633957897986-70e83293f3ff?q=80&w=2060&auto=format&fit=crop',
+    id: 'backhoe-jcb',
+    name: 'Chargeuse-Pelleteuse JCB',
+    image: '/lovable-uploads/excavation-chantier.jpg',
     year: 2022,
-    capacity: '7 personnes',
-    consumption: '8L/100km',
-    pricePerDay: 45000,
-    description: 'SUV familial spacieux, idéal pour les déplacements professionnels en groupe.',
-    category: 'professional'
+    capacity: 'Godet : 0,9 m³',
+    power: '97 HP',
+    description: 'Engin polyvalent pour excavation, chargement et travaux de construction urbains.',
+    category: 'terrassement'
   }
 ];
 
-const personalVehicles = [
+const manutentionEngins = [
   {
-    id: 'rav4',
-    name: 'Toyota RAV4',
-    image: 'https://images.unsplash.com/photo-1581540222194-0def2dda95b8?q=80&w=2067&auto=format&fit=crop',
+    id: 'loader-cat950',
+    name: 'Chargeur CAT 950',
+    image: '/lovable-uploads/engin-komatsu.jpg',
     year: 2023,
-    capacity: '5 personnes',
-    consumption: '7,5L/100km',
-    pricePerDay: 45000,
-    description: 'SUV spacieux, idéal pour les familles et les routes difficiles.',
-    category: 'personal'
+    capacity: 'Godet : 3,5 m³',
+    power: '195 HP',
+    description: 'Chargeuse sur pneus robuste pour le chargement de matériaux et manutention intensive.',
+    category: 'manutention'
   },
   {
-    id: 'berline',
-    name: 'Mercedes Classe C',
-    image: 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?q=80&w=2070&auto=format&fit=crop',
+    id: 'dump-truck',
+    name: 'Camion-Benne 6x4',
+    image: '/engins/dump-truck-1.jpg',
     year: 2022,
-    capacity: '5 personnes',
-    consumption: '7L/100km',
-    pricePerDay: 60000,
-    description: 'Berline de luxe pour vos déplacements en toute élégance.',
-    category: 'personal'
+    capacity: 'Benne : 15 m³',
+    power: '380 HP',
+    description: 'Camion-benne haute capacité pour le transport de matériaux sur chantier et routes.',
+    category: 'manutention'
   },
   {
-    id: 'land-cruiser',
-    name: 'Toyota Land Cruiser Prado',
-    image: 'https://images.unsplash.com/photo-1625595234377-0458f8a282a3?q=80&w=2071&auto=format&fit=crop',
-    year: 2023,
-    capacity: '7 personnes',
-    consumption: '9L/100km',
-    pricePerDay: 70000,
-    description: 'SUV de luxe tout-terrain, parfait pour explorer les régions autour de Lomé.',
-    category: 'personal'
-  },
-  {
-    id: 'highlander',
-    name: 'Toyota Highlander',
-    image: 'https://images.unsplash.com/photo-1675747312933-94410c152364?q=80&w=2069&auto=format&fit=crop',
-    year: 2022,
-    capacity: '7 personnes',
-    consumption: '8,5L/100km',
-    pricePerDay: 65000,
-    description: 'Véhicule familial spacieux avec tout le confort nécessaire pour vos voyages.',
-    category: 'personal'
-  }
-];
-
-const specialVehicles = [
-  {
-    id: 'hiace',
-    name: 'Toyota Hiace',
-    image: 'https://images.unsplash.com/photo-1614106764087-719038e91211?q=80&w=2070&auto=format&fit=crop',
+    id: 'crane-mobile',
+    name: 'Grue Mobile 50T',
+    image: '/engins/crane-1.jpg',
     year: 2021,
-    capacity: '12 personnes',
-    consumption: '9L/100km',
-    pricePerDay: 70000,
-    description: 'Minibus idéal pour les groupes, événements ou transferts.',
-    category: 'special'
+    capacity: 'Levage : 50 tonnes',
+    power: '350 HP',
+    description: 'Grue mobile télescopique pour levage de charges lourdes et montage de structures.',
+    category: 'manutention'
   },
   {
-    id: 'camry',
-    name: 'Toyota Camry',
-    image: 'https://images.unsplash.com/photo-1621007690695-36e794710604?q=80&w=2070&auto=format&fit=crop',
+    id: 'telehandler',
+    name: 'Chariot Télescopique',
+    image: '/lovable-uploads/manutention-port-lome.jpg',
     year: 2023,
-    capacity: '5 personnes',
-    consumption: '7L/100km',
-    pricePerDay: 55000,
-    description: 'Voiture de prestige pour mariages, cérémonies et événements spéciaux.',
-    category: 'special'
-  },
-  {
-    id: 'coaster',
-    name: 'Toyota Coaster',
-    image: 'https://images.unsplash.com/photo-1650457053023-66b67305c00f?q=80&w=2070&auto=format&fit=crop',
-    year: 2022,
-    capacity: '30 personnes',
-    consumption: '12L/100km',
-    pricePerDay: 120000,
-    description: 'Autobus pour grands groupes, idéal pour les transferts d\'aéroport ou excursions.',
-    category: 'special'
-  },
-  {
-    id: 'lexus',
-    name: 'Lexus ES 350',
-    image: 'https://images.unsplash.com/photo-1549399542-7e8f2e928464?q=80&w=2031&auto=format&fit=crop',
-    year: 2023,
-    capacity: '5 personnes',
-    consumption: '8L/100km',
-    pricePerDay: 80000,
-    description: 'Berline de luxe pour vos déplacements VIP, mariages et occasions spéciales.',
-    category: 'special'
+    capacity: 'Levage : 3,5 tonnes',
+    power: '100 HP',
+    description: 'Chariot élévateur télescopique polyvalent pour manutention en hauteur et zones difficiles.',
+    category: 'manutention'
   }
 ];
 
-// Tous les véhicules combinés
-const allVehicles = [...professionalVehicles, ...personalVehicles, ...specialVehicles];
+const compactageEngins = [
+  {
+    id: 'compactor-single',
+    name: 'Compacteur Monocylindre',
+    image: '/lovable-uploads/engin-bank-of-africa.jpg',
+    year: 2022,
+    capacity: 'Largeur : 2,1 m',
+    power: '129 HP',
+    description: 'Compacteur vibrant pour routes, sols et bases de chaussée, finition professionnelle.',
+    category: 'compactage'
+  },
+  {
+    id: 'compactor-tandem',
+    name: 'Compacteur Tandem',
+    image: '/lovable-uploads/excavatrice-port-lome.jpg',
+    year: 2023,
+    capacity: 'Largeur : 1,5 m',
+    power: '45 HP',
+    description: 'Compacteur double cylindre pour asphalte, offrant une finition lisse et uniforme.',
+    category: 'compactage'
+  },
+  {
+    id: 'plate-compactor',
+    name: 'Plaque Vibrante',
+    image: '/engins/bulldozer-1.jpg',
+    year: 2023,
+    capacity: 'Largeur : 60 cm',
+    power: '5,5 HP',
+    description: 'Plaque vibrante compacte pour compactage de tranchées et espaces restreints.',
+    category: 'compactage'
+  },
+  {
+    id: 'sheepsfoot-roller',
+    name: 'Compacteur à Pieds Dameurs',
+    image: '/lovable-uploads/agent-elvec-chantier.jpg',
+    year: 2021,
+    capacity: 'Largeur : 2,0 m',
+    power: '145 HP',
+    description: 'Rouleau à pieds dameurs pour compactage de sols argileux et remblais.',
+    category: 'compactage'
+  }
+];
+
+// Tous les engins combinés
+const allEngins = [...terrassementEngins, ...manutentionEngins, ...compactageEngins];
 
 const VehicleCategories = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -159,8 +147,8 @@ const VehicleCategories = () => {
       <div className="container mx-auto px-4">
         <AnimatedSection>
           <SectionTitle 
-            title="Notre flotte de véhicules" 
-            subtitle="Découvrez nos véhicules adaptés à tous vos besoins de déplacement"
+            title="Notre parc d'engins lourds" 
+            subtitle="Découvrez nos engins de chantier performants pour tous vos travaux"
             centered
           />
         </AnimatedSection>
@@ -169,45 +157,45 @@ const VehicleCategories = () => {
           <Tabs defaultValue="all" className="w-full mt-8" onValueChange={setSelectedCategory}>
             <TabsList className="grid grid-cols-4 mb-8 w-full md:w-fit mx-auto">
               <TabsTrigger value="all">Tous</TabsTrigger>
-              <TabsTrigger value="professional" className="flex items-center gap-2">
-                <Briefcase className="h-4 w-4" /> Professionnels
+              <TabsTrigger value="terrassement" className="flex items-center gap-2">
+                <Hammer className="h-4 w-4" /> Terrassement
               </TabsTrigger>
-              <TabsTrigger value="personal" className="flex items-center gap-2">
-                <Users className="h-4 w-4" /> Particuliers
+              <TabsTrigger value="manutention" className="flex items-center gap-2">
+                <Package className="h-4 w-4" /> Manutention
               </TabsTrigger>
-              <TabsTrigger value="special" className="flex items-center gap-2">
-                <Sparkles className="h-4 w-4" /> Occasions spéciales
+              <TabsTrigger value="compactage" className="flex items-center gap-2">
+                <Construction className="h-4 w-4" /> Compactage
               </TabsTrigger>
             </TabsList>
             
             <TabsContent value="all" className="mt-0">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {allVehicles.map((vehicle) => (
-                  <VehicleCard key={vehicle.id} vehicle={vehicle} />
+                {allEngins.map((engin) => (
+                  <VehicleCard key={engin.id} vehicle={engin} />
                 ))}
               </div>
             </TabsContent>
             
-            <TabsContent value="professional" className="mt-0">
+            <TabsContent value="terrassement" className="mt-0">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {professionalVehicles.map((vehicle) => (
-                  <VehicleCard key={vehicle.id} vehicle={vehicle} />
+                {terrassementEngins.map((engin) => (
+                  <VehicleCard key={engin.id} vehicle={engin} />
                 ))}
               </div>
             </TabsContent>
             
-            <TabsContent value="personal" className="mt-0">
+            <TabsContent value="manutention" className="mt-0">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {personalVehicles.map((vehicle) => (
-                  <VehicleCard key={vehicle.id} vehicle={vehicle} />
+                {manutentionEngins.map((engin) => (
+                  <VehicleCard key={engin.id} vehicle={engin} />
                 ))}
               </div>
             </TabsContent>
             
-            <TabsContent value="special" className="mt-0">
+            <TabsContent value="compactage" className="mt-0">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {specialVehicles.map((vehicle) => (
-                  <VehicleCard key={vehicle.id} vehicle={vehicle} />
+                {compactageEngins.map((engin) => (
+                  <VehicleCard key={engin.id} vehicle={engin} />
                 ))}
               </div>
             </TabsContent>

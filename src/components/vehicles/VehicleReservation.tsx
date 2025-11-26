@@ -44,11 +44,11 @@ const VehicleReservation = ({ quoteDialogOpen, setQuoteDialogOpen }: VehicleRese
   });
 
   const reasons = [
-    "Large flotte de véhicules bien entretenus",
-    "Tarifs compétitifs et transparents",
+    "Large parc d'engins bien entretenus",
+    "Engins performants et récents",
     "Service client disponible 24/7",
-    "Assurance tous risques incluse",
-    "Livraison et récupération à domicile"
+    "Maintenance régulière garantie",
+    "Livraison sur site de chantier"
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -112,12 +112,12 @@ const VehicleReservation = ({ quoteDialogOpen, setQuoteDialogOpen }: VehicleRese
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <SectionTitle 
-            title="Réservez votre véhicule" 
+            title="Réservez votre engin" 
             subtitle="Simple, rapide et fiable"
             centered
           />
           <p className="text-lg text-gray-600 max-w-3xl mx-auto mt-4">
-            Profitez de notre service de location de voitures avec chauffeur pour vos déplacements professionnels et personnels au Togo.
+            Profitez de notre service de location d'engins lourds pour tous vos chantiers et travaux au Togo.
           </p>
         </div>
 
@@ -179,10 +179,10 @@ const VehicleReservation = ({ quoteDialogOpen, setQuoteDialogOpen }: VehicleRese
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="vehicle_id">Véhicule *</Label>
+                  <Label htmlFor="vehicle_id">Engin *</Label>
                   <Select value={formData.vehicle_id} onValueChange={(value) => setFormData({ ...formData, vehicle_id: value })}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Sélectionnez un véhicule" />
+                      <SelectValue placeholder="Sélectionnez un engin" />
                     </SelectTrigger>
                     <SelectContent>
                       {vehicles?.map((vehicle) => (
