@@ -13,7 +13,7 @@ import {
   X,
   ChevronRight,
   ArrowLeftRight,
-  Car
+  Truck
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
@@ -83,13 +83,13 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
       color: 'text-emerald-600'
     },
     { 
-      title: 'Gestion Véhicules', 
+      title: 'Gestion Engins', 
       path: '/admin/vehicles', 
-      icon: Car,
+      icon: Truck,
       color: 'text-blue-500'
     },
     { 
-      title: 'Réservations Véhicules', 
+      title: 'Réservations Engins', 
       path: '/admin/vehicle-reservations', 
       icon: Calendar,
       color: 'text-cyan-500'

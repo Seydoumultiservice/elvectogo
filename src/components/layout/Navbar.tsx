@@ -28,7 +28,7 @@ const Navbar = () => {
     { path: '/a-propos', label: 'À Propos' },
     { path: '/services', label: 'Services' },
     { path: '/produits', label: 'Produits' },
-    { path: '/vehicules', label: 'Véhicules' },
+    { path: '/vehicules', label: 'Nos Engins' },
     { path: '/formations', label: 'Formations' },
     { path: '/galerie', label: 'Galerie' },
     { path: '/contact', label: 'Contact' },
