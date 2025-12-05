@@ -1,20 +1,23 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import AnimatedSection from '../animations/AnimatedSection';
 
 const TikTokSection = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    // Load TikTok embed script
+    // Remove any existing TikTok scripts first
+    const existingScripts = document.querySelectorAll('script[src="https://www.tiktok.com/embed.js"]');
+    existingScripts.forEach(script => script.remove());
+
+    // Create and load new script
     const script = document.createElement('script');
     script.src = 'https://www.tiktok.com/embed.js';
     script.async = true;
     document.body.appendChild(script);
 
     return () => {
-      // Cleanup script on unmount
-      const existingScript = document.querySelector('script[src="https://www.tiktok.com/embed.js"]');
-      if (existingScript) {
-        existingScript.remove();
-      }
+      const scripts = document.querySelectorAll('script[src="https://www.tiktok.com/embed.js"]');
+      scripts.forEach(script => script.remove());
     };
   }, []);
 
@@ -31,13 +34,12 @@ const TikTokSection = () => {
             </p>
           </div>
           
-          <div className="flex justify-center">
+          <div ref={containerRef} className="flex justify-center">
             <blockquote 
               className="tiktok-embed" 
               cite="https://www.tiktok.com/@elvec.togo" 
               data-unique-id="elvec.togo" 
-              data-embed-type="creator" 
-              style={{ maxWidth: '780px', minWidth: '288px' }}
+              data-embed-type="creator"
             >
               <section>
                 <a 

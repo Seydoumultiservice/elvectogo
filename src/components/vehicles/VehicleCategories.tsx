@@ -11,7 +11,7 @@ const terrassementEngins = [
   {
     id: 'excavator-cat320',
     name: 'Excavatrice CAT 320',
-    image: '/engins/excavator-1.jpg',
+    image: '/engins/excavator-cat-320.jpg',
     year: 2022,
     capacity: 'Godet : 1,2 m³',
     power: '121 HP',
@@ -31,7 +31,7 @@ const terrassementEngins = [
   {
     id: 'grader-140',
     name: 'Niveleuse CAT 140',
-    image: '/engins/grader-1.jpg',
+    image: '/engins/grader-cat-140.jpg',
     year: 2023,
     capacity: 'Lame : 3,7 m',
     power: '170 HP',
@@ -64,7 +64,7 @@ const manutentionEngins = [
   {
     id: 'dump-truck',
     name: 'Camion-Benne 6x4',
-    image: '/engins/dump-truck-1.jpg',
+    image: '/engins/dump-truck-6x4.jpg',
     year: 2022,
     capacity: 'Benne : 15 m³',
     power: '380 HP',
@@ -74,7 +74,7 @@ const manutentionEngins = [
   {
     id: 'crane-mobile',
     name: 'Grue Mobile 50T',
-    image: '/engins/crane-1.jpg',
+    image: '/engins/crane-mobile-50t.jpg',
     year: 2021,
     capacity: 'Levage : 50 tonnes',
     power: '350 HP',
@@ -97,7 +97,7 @@ const compactageEngins = [
   {
     id: 'compactor-single',
     name: 'Compacteur Monocylindre',
-    image: '/lovable-uploads/engin-bank-of-africa.jpg',
+    image: '/engins/compactor-roller.jpg',
     year: 2022,
     capacity: 'Largeur : 2,1 m',
     power: '129 HP',
@@ -107,7 +107,7 @@ const compactageEngins = [
   {
     id: 'compactor-tandem',
     name: 'Compacteur Tandem',
-    image: '/lovable-uploads/excavatrice-port-lome.jpg',
+    image: '/engins/compactor-tandem.jpg',
     year: 2023,
     capacity: 'Largeur : 1,5 m',
     power: '45 HP',
@@ -117,7 +117,7 @@ const compactageEngins = [
   {
     id: 'plate-compactor',
     name: 'Plaque Vibrante',
-    image: '/engins/bulldozer-1.jpg',
+    image: '/engins/plate-compactor.jpg',
     year: 2023,
     capacity: 'Largeur : 60 cm',
     power: '5,5 HP',
