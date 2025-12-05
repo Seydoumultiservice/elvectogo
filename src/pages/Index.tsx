@@ -10,6 +10,7 @@ import CarRentalSection from '../components/home/CarRentalSection';
 import Partners from '../components/home/Partners';
 import CtaSection from '../components/home/CtaSection';
 import AppointmentCTA from '../components/common/AppointmentCTA';
+import TikTokSection from '../components/home/TikTokSection';
 import Layout from '../components/layout/Layout';
 
 const Index = () => {
@@ -27,6 +28,7 @@ const Index = () => {
       <EquipmentRental />
       <Gallery />
       <CarRentalSection />
+      <TikTokSection />
       <Partners />
       <CtaSection />
       <AppointmentCTA />
