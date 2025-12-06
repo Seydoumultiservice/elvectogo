@@ -11,6 +11,7 @@ import Partners from '../components/home/Partners';
 import CtaSection from '../components/home/CtaSection';
 import AppointmentCTA from '../components/common/AppointmentCTA';
 import TikTokSection from '../components/home/TikTokSection';
+import AdSenseBlock from '../components/common/AdSenseBlock';
 import Layout from '../components/layout/Layout';
 
 const Index = () => {
@@ -23,9 +24,11 @@ const Index = () => {
       <Hero />
       <VideoPresentation />
       <Services />
+      <AdSenseBlock />
       <TrainingSection />
       <AgriculturalServices />
       <EquipmentRental />
+      <AdSenseBlock />
       <Gallery />
       <CarRentalSection />
       <TikTokSection />
