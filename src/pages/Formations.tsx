@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Clock, DollarSign, GraduationCap, CheckCircle } from 'lucide-react';
+import { Clock, DollarSign, GraduationCap, CheckCircle, Calendar, MapPin, Award } from 'lucide-react';
 import TrainingRegistrationDialog from '@/components/common/TrainingRegistrationDialog';
 
 interface Formation {
@@ -23,6 +23,25 @@ interface Formation {
   prerequis: string;
   ordre: number;
 }
+
+// Formation en vedette (manuelle)
+const formationVedette = {
+  id: 'formation-vedette',
+  titre: 'Formation Conduite d\'Engins Lourds',
+  description: 'Notre formation sur tractopelle t\'apprends à manier un engin clé dans le BTP et l\'agriculture, et obtiens ton attestation de formation professionnelle.',
+  duree: '3 mois',
+  prix: 300000,
+  fraisInscription: 10000,
+  dateDebut: '10 novembre 2025',
+  lieu: 'Adidogomé Apédokoé Gbomamé, en face de l\'école SAKA VISION',
+  image_url: '/lovable-uploads/formation-conduite-engins-lourds.jpg',
+  avantages: [
+    'Attestation de formation professionnelle',
+    'EPI inclus avec l\'inscription',
+    'Pratique sur engins réels',
+    'Formateurs expérimentés'
+  ]
+};
 
 const Formations = () => {
   const [selectedFormation, setSelectedFormation] = useState<string | null>(null);
@@ -73,6 +92,96 @@ const Formations = () => {
           </div>
         </section>
 
+        {/* Formation Vedette */}
+        <section className="container mx-auto px-4 py-12">
+          <SectionTitle
+            title="Formation en Vedette"
+            subtitle="Inscrivez-vous maintenant - Places limitées !"
+          />
+          
+          <Card className="overflow-hidden bg-gradient-to-br from-orange-50 to-white dark:from-gray-800 dark:to-gray-900 border-2 border-orange-200 dark:border-orange-800 shadow-2xl">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+              {/* Image */}
+              <div className="relative h-80 lg:h-auto">
+                <img
+                  src={formationVedette.image_url}
+                  alt={formationVedette.titre}
+                  className="w-full h-full object-cover"
+                />
+                <Badge className="absolute top-4 left-4 bg-red-500 text-white text-sm px-4 py-2 animate-pulse">
+                  Places Limitées !
+                </Badge>
+              </div>
+
+              {/* Content */}
+              <div className="p-6 lg:p-8 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-5xl font-black text-orange-500">03</span>
+                    <span className="text-2xl font-bold text-elvec-600">MOIS</span>
+                    <span className="text-lg text-muted-foreground">pour devenir des opérateurs qualifiés !</span>
+                  </div>
+
+                  <h3 className="text-2xl font-bold text-foreground mb-4">{formationVedette.titre}</h3>
+                  <p className="text-muted-foreground mb-6">{formationVedette.description}</p>
+
+                  {/* Info Cards */}
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+                    <div className="bg-elvec-100 dark:bg-elvec-900/30 p-4 rounded-xl text-center">
+                      <Calendar className="w-6 h-6 mx-auto mb-2 text-elvec-600" />
+                      <p className="text-xs text-muted-foreground">Début</p>
+                      <p className="font-bold text-elvec-700 dark:text-elvec-400">{formationVedette.dateDebut}</p>
+                    </div>
+                    <div className="bg-elvec-100 dark:bg-elvec-900/30 p-4 rounded-xl text-center">
+                      <Clock className="w-6 h-6 mx-auto mb-2 text-elvec-600" />
+                      <p className="text-xs text-muted-foreground">Durée</p>
+                      <p className="font-bold text-elvec-700 dark:text-elvec-400">{formationVedette.duree}</p>
+                    </div>
+                    <div className="bg-orange-100 dark:bg-orange-900/30 p-4 rounded-xl text-center">
+                      <DollarSign className="w-6 h-6 mx-auto mb-2 text-orange-600" />
+                      <p className="text-xs text-muted-foreground">Prix</p>
+                      <p className="font-bold text-orange-600">{formationVedette.prix.toLocaleString()} FCFA</p>
+                    </div>
+                  </div>
+
+                  {/* Location */}
+                  <div className="bg-elvec-50 dark:bg-elvec-900/20 border-l-4 border-elvec-500 p-4 rounded-r-lg mb-6">
+                    <div className="flex items-start gap-2">
+                      <MapPin className="w-5 h-5 text-elvec-600 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <p className="font-semibold text-foreground">{formationVedette.lieu}</p>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Inscription : {formationVedette.fraisInscription.toLocaleString()} FCFA • Donne droit au EPI
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Avantages */}
+                  <div className="grid grid-cols-2 gap-2 mb-6">
+                    {formationVedette.avantages.map((avantage, idx) => (
+                      <div key={idx} className="flex items-center gap-2 text-sm">
+                        <Award className="w-4 h-4 text-orange-500 flex-shrink-0" />
+                        <span className="text-muted-foreground">{avantage}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* CTA Button */}
+                <Button
+                  onClick={() => handleInscription(formationVedette.titre)}
+                  size="lg"
+                  className="w-full bg-gradient-to-r from-orange-500 to-elvec-600 hover:from-orange-600 hover:to-elvec-700 text-white font-bold py-6 text-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  <GraduationCap className="w-5 h-5 mr-2" />
+                  S'inscrire Maintenant
+                </Button>
+              </div>
+            </div>
+          </Card>
+        </section>
+
         {/* Filters */}
         <section className="container mx-auto px-4 py-8">
           <div className="flex flex-wrap gap-2 justify-center">
@@ -92,7 +201,7 @@ const Formations = () => {
         {/* Formations List */}
         <section className="container mx-auto px-4 pb-20">
           <SectionTitle
-            title="Formations Disponibles"
+            title="Autres Formations Disponibles"
             subtitle="Choisissez la formation qui correspond à vos objectifs"
           />
 
@@ -108,7 +217,7 @@ const Formations = () => {
                 </Card>
               ))}
             </div>
-          ) : (
+          ) : filteredFormations && filteredFormations.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredFormations?.map((formation) => (
                 <Card key={formation.id} className="group hover:shadow-xl transition-all duration-300">
@@ -195,12 +304,10 @@ const Formations = () => {
                 </Card>
               ))}
             </div>
-          )}
-
-          {filteredFormations?.length === 0 && (
+          ) : (
             <div className="text-center py-12">
               <p className="text-muted-foreground">
-                Aucune formation disponible pour ce niveau.
+                Aucune autre formation disponible pour le moment.
               </p>
             </div>
           )}
