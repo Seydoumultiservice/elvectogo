@@ -68,10 +68,11 @@ serve(async (req) => {
         'Cache-Control': 'public, max-age=3600',
       },
     });
-  } catch (error) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     console.error('Error generating sitemap:', error);
     return new Response(
-      `<?xml version="1.0" encoding="UTF-8"?><error>${error.message}</error>`,
+      `<?xml version="1.0" encoding="UTF-8"?><error>${errorMessage}</error>`,
       {
         status: 500,
         headers: { 'Content-Type': 'application/xml' },

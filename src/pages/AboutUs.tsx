@@ -71,10 +71,17 @@ const AboutUs = () => {
                 <div className="group cursor-pointer" onClick={() => setZoomImage("/lovable-uploads/bureau-elvec.jpg")}>
                   <img 
                     src="/lovable-uploads/bureau-elvec.jpg" 
-                    alt="Chef Personnels ELVEC TOGO" 
+                    alt="Chef Personnel ELVEC TOGO" 
                     className="rounded-lg shadow-lg w-full h-64 object-cover hover:shadow-2xl transition-all duration-300 transform group-hover:scale-105" 
                   />
-                  <p className="text-center mt-2 font-semibold text-elvec-600">Bureau ELVEC</p>
+                  <p className="text-center mt-2 font-semibold text-elvec-600">Chef Personnel</p>
+                </div>
+                <div className="flex items-center justify-center bg-gradient-to-br from-elvec-50 to-elvec-100 rounded-lg shadow-lg p-6">
+                  <img 
+                    src="/lovable-uploads/logo-elvec-full.jpg" 
+                    alt="Logo ELVEC TOGO" 
+                    className="w-full max-w-[200px] h-auto object-contain" 
+                  />
                 </div>
                 <div className="group cursor-pointer" onClick={() => setZoomImage("/lovable-uploads/equipe-bureau-nouveau.jpg")}>
                   <img 
@@ -83,14 +90,6 @@ const AboutUs = () => {
                     className="rounded-lg shadow-lg w-full h-64 object-cover hover:shadow-2xl transition-all duration-300 transform group-hover:scale-105" 
                   />
                   <p className="text-center mt-2 font-semibold text-elvec-600">Équipe Bureau</p>
-                </div>
-                <div className="group cursor-pointer" onClick={() => setZoomImage("/lovable-uploads/equipe-directeur.jpg")}>
-                  <img 
-                    src="/lovable-uploads/equipe-elvec-2025.jpg" 
-                    alt="Équipe ELVEC TOGO" 
-                    className="rounded-lg shadow-lg w-full h-64 object-cover hover:shadow-2xl transition-all duration-300 transform group-hover:scale-105" 
-                  />
-                  <p className="text-center mt-2 font-semibold text-elvec-600">Équipe ELVEC TOGO</p>
                 </div>
               </div>
             </AnimatedSection>
